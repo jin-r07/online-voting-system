@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IoClose, IoEye, IoEyeOff } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { extractTextFromImage } from "../../utils/ocr";
+import { extractTextFromImage } from "../../../utils/ocr";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";

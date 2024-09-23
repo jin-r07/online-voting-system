@@ -1,13 +1,13 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/navbar/navbar"
+import Navbar from "./components/user/navbar/navbar"
 import Home from "./routes/user/home/home";
 import Vote from "./routes/user/vote/vote";
 import FAQ from "./routes/user/faq/faq";
 import Contact from "./routes/user/contact/contact";
 import UserProfile from "./routes/user/userProfile/userProfile";
 import UserSettings from "./routes/user/userSettings/userSettings";
-import AdminLogin from "./routes/admin/login/login";
+import AdminLogin from "./components/admin/login/login";
 import Dashboard from "./routes/admin/dashboard/dashboard";
 
 function App() {
