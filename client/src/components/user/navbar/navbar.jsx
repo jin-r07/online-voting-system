@@ -58,6 +58,7 @@ export default function Navbar() {
                 if (response.data) {
                     setIsLoggedIn(true);
                     setUserData(response.data);
+                    window.location.reload;
                 } else {
                     setIsLoggedIn(false);
                 }
@@ -103,7 +104,6 @@ export default function Navbar() {
             Cookies.remove("token");
             setIsLoggedIn(false);
             setUserData(null);
-            window.location.reload();
         } catch (error) {
             console.error("Logout failed:", error);
         }
@@ -124,7 +124,7 @@ export default function Navbar() {
                 <div className="flex items-center w-full md:w-auto">
                     <div className="hidden lg:flex lg:items-center lg:space-x-6 lg:ml-auto">
                         {navLinks.map((link, index) => (
-                            <Link key={index} to={link.href} onClick={() => {setIsOpen(false);}}
+                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }}
                                 className={`text-lg border-b-[1px] ${location.pathname === link.href ? 'border-black' : 'border-white'} hover:border-black`}>
                                 {link.name}
                             </Link>
@@ -144,48 +144,48 @@ export default function Navbar() {
                             <div className="relative flex items-center">
                                 <span
                                     className="text-lg cursor-pointer relative bg-[#372FDF] text-white rounded px-2"
-                                    onMouseEnter={() => setshwoMenu(true)}
-                                    onMouseLeave={() => setshwoMenu(false)}
+                                    onClick={handleMenuToggle}
                                 >
                                     {userData.voterIdCardNumber}
-                                    {shwoMenu && (
-                                        <div
-                                            className="absolute left-4 top-7 bg-white text-black border border-gray-300 shadow-lg rounded">
-                                            <ul className="py-1">
-                                                <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
-                                                    <BiSolidUser className="text-2xl" />
-                                                    <Link
-                                                        to="/user-profile"
-                                                        className="text-lg pl-3"
-                                                    >
-                                                        Profile
-                                                    </Link>
-                                                </li>
-                                                <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 hover:text-white">
-                                                    <RiSettings5Fill className="text-2xl" />
-                                                    <Link
-                                                        to="/user-settings"
-                                                        className="text-lg pl-3"
-                                                    >
-                                                        Settings
-                                                    </Link>
-                                                </li>
-                                                <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 group hover:text-white">
-                                                    <IoLogOut className="text-2xl ml-1" />
-                                                    <button
-                                                        onClick={handleLogout}
-                                                        className="text-red-600 group-hover:text-white pl-3"
-                                                    >
-                                                        Logout
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
                                 </span>
+                                {shwoMenu && (
+                                    <div
+                                        ref={dropdownRef}
+                                        className="absolute left-4 top-7 bg-white text-black border border-gray-300 shadow-lg rounded"
+                                    >
+                                        <ul className="py-1">
+                                            <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
+                                                <BiSolidUser className="text-2xl" />
+                                                <Link
+                                                    to="/user-profile"
+                                                    className="text-lg pl-3"
+                                                >
+                                                    Profile
+                                                </Link>
+                                            </li>
+                                            <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 hover:text-white">
+                                                <RiSettings5Fill className="text-2xl" />
+                                                <Link
+                                                    to="/user-settings"
+                                                    className="text-lg pl-3"
+                                                >
+                                                    Settings
+                                                </Link>
+                                            </li>
+                                            <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 group hover:text-white">
+                                                <IoLogOut className="text-2xl ml-1" />
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="text-red-600 group-hover:text-white pl-3"
+                                                >
+                                                    Logout
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
-                        )}
-                    </div>
+                        )}                    </div>
                     <div className="lg:hidden ml-auto">
                         <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
                             {isOpen ?
@@ -206,7 +206,7 @@ export default function Navbar() {
                     className={`lg:hidden absolute top-full right-0 border-t-[1px] border-[#9BF00B] w-full bg-white overflow-hidden drop-shadow-2xl ${isOpen ? "block" : "hidden"} z-50`}>
                     <div className="flex flex-col space-y-2 pt-2 pb-4 pl-4">
                         {navLinks.map((link, index) => (
-                            <Link key={index} to={link.href} onClick={() => {setIsOpen(false);}}
+                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }}
                                 className={`text-lg border-b-[1px] ${location.pathname === link.href ? "border-black" : "border-white"} hover:border-black w-fit`}>
                                 {link.name}
                             </Link>

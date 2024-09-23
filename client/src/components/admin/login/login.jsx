@@ -53,7 +53,6 @@ export default function AdminLogin() {
                     const data = await response.json();
                     console.log('Login successful:', data);
                     navigate('/admin-dashboard');
-                    window.location.reload();
                 }
             } catch (error) {
                 toast.error(error.message || 'Something went wrong. Please try again later.', {

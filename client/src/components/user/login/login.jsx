@@ -57,7 +57,6 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                     }
                 } else {
                     navigate("/vote");
-                    window.location.reload();
                     onClose();
                 }
             } catch (error) {

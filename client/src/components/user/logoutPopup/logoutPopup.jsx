@@ -3,7 +3,6 @@ import React from "react";
 export default function ConfirmLogout({ onConfirm, onCancel }) {
     const handleConfirm = () => {
         onConfirm();
-        window.location.reload();
     };
 
     return (
