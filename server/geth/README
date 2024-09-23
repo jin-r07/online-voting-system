@@ -1,0 +1,5 @@
+# Initialize the blockchain
+geth init genesis.json
+
+# Start the private blockchain
+geth --networkid 15 --http --http.addr "0.0.0.0" --http.port "8545" --http.api "eth,net,web3,personal" --nodiscover --allow-insecure-unlock --datadir "./data"

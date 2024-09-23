@@ -1,0 +1,11 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "sfpro";
+}
+
+@font-face {
+    font-family: "sfpro";
+    src: url("./assets/font/SFPRODISPLAYREGULAR.woff2") format("woff2");
+}
