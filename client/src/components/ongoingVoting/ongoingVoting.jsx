@@ -32,7 +32,11 @@ export default function OngoingVoting() {
 
     return (
         <div className="w-full h-full bg-[#9BF00B] lg:px-28 px-2 py-4 text-center lg:text-lg tracking-wide">
-            {votingData.length > 1 ? (
+            {votingData.length === 0 ? (
+                <p>No ongoing votes at the moment.</p>
+            ) : votingData.length === 1 ? (
+                <p>{votingData[0].title}</p>
+            ) : (
                 <>
                     <div className="slider-container overflow-hidden relative">
                         <div
@@ -59,8 +63,6 @@ export default function OngoingVoting() {
                         </button>
                     </div>
                 </>
-            ) : (
-                <p>{votingData[0]?.title}</p>
             )}
         </div>
     );

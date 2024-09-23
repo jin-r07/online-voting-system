@@ -1,5 +1,5 @@
 import React from "react";
-import TopCandidates from "../../components/topCandidates/topCandidates";
+import TopCandidates from "../../../components/topCandidates/topCandidates";
 
 export default function Home() {
     return (
