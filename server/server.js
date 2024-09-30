@@ -1,6 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const multichain = require("multichain-node")({
+    host: process.env.MULTICHAIN_HOST,
+    port: process.env.MULTICHAIN_PORT,
+    user: process.env.MULTICHAIN_USER,
+    pass: process.env.MULTICHAIN_PASS
+});
 const { createAdmin } = require("./scripts/setup");
 
 // User
@@ -23,6 +29,17 @@ app.use(cors({
 }));
 
 createAdmin();
+
+// Test Blockchain Connection
+app.get("/api/blockchain-info", (req, res) => {
+    multichain.getInfo((err, info) => {
+        if (err) {
+            console.error("Blockchain connection error:", err); // Log the error for debugging
+            return res.status(500).json({ error: "Failed to connect to blockchain" });
+        }
+        res.json(info);
+    });
+});
 
 // User
 app.use("/api", registerRoute);
