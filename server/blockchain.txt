@@ -1,0 +1,3 @@
+multichain-util create evs
+
+multichaind evs -daemon
