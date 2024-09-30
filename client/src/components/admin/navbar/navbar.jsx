@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaUsers, FaCalendarAlt, FaHistory, FaUserTie } from 'react-icons/fa';
-import { MdHowToVote } from "react-icons/md";
+import { FaHome, FaUsers, FaHistory, FaUserTie, FaAward, FaVoteYea } from 'react-icons/fa';
 
 export default function AdminNavbar() {
   return (
@@ -31,7 +30,7 @@ export default function AdminNavbar() {
             to="/admin-current-voting"
             className="flex items-center hover:bg-gray-700 p-3 rounded transition-colors"
           >
-            <MdHowToVote className="mr-3" /> Current Voting
+            <FaVoteYea className="mr-3" /> Create Event
           </Link>
         </li>
         <li>
@@ -47,7 +46,7 @@ export default function AdminNavbar() {
             to="/admin-events"
             className="flex items-center hover:bg-gray-700 p-3 rounded transition-colors"
           >
-            <FaCalendarAlt className="mr-3" /> Events
+            <FaAward className="mr-3" /> Parties
           </Link>
         </li>
         <li>
