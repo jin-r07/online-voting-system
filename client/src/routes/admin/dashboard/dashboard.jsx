@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUsers, FaUserTie, FaCalendarAlt, FaHistory } from 'react-icons/fa';
+import { FaUsers, FaUserTie, FaHistory, FaAward } from 'react-icons/fa';
 
 export default function Dashboard() {
   return (
@@ -23,12 +23,12 @@ export default function Dashboard() {
           </div>
         </div>
         
-        {/* Events Card */}
+        {/* Parties Card */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-center">
-            <FaCalendarAlt className="text-3xl text-purple-500 mr-4" />
+            <FaAward className="text-3xl text-purple-500 mr-4" />
             <div>
-              <h2 className="text-xl font-semibold">Events</h2>
+              <h2 className="text-xl font-semibold">Parties</h2>
               <p className="text-gray-600">Upcoming voting events</p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const OTP = require("../models/otp");
-const User = require("../models/user");
+const User = require("../models/users");
 const path = require("path");
 
 const transporter = nodemailer.createTransport({

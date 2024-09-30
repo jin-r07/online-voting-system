@@ -2,7 +2,7 @@ const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
 
-const uploadDir = path.join(__dirname, "uploads/users");
+const uploadDir = path.join(__dirname, "uploads/candidates");
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);

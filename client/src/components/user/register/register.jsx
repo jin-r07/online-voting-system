@@ -65,8 +65,9 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                     body: formData
                 });
 
+                const result = await response.json();
+                
                 if (!response.ok) {
-                    const result = await response.json();
                     if (response.status === 409) {
                         toast.error(result.message || "User with this email or Voter ID already exists.", {
                             position: "bottom-right",

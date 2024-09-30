@@ -1,5 +1,5 @@
 const fs = require("fs");
-const User = require("../models/user");
+const User = require("../models/users");
 const bcrypt = require("bcrypt");
 
 async function registerUser(req, res) {
