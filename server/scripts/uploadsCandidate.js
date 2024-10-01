@@ -13,10 +13,9 @@ const storage = multer.diskStorage({
         cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        // Use the voterIdCardNumber from the request body as the filename
-        const voterIdCardNumber = req.body.voterIdCardNumber;
+        const candidateName = req.body.name.replace(/\s+/g, '_');
         const extension = path.extname(file.originalname);
-        cb(null, `${voterIdCardNumber}${extension}`);
+        cb(null, `${candidateName}${extension}`);
     }
 });
 

@@ -7,6 +7,7 @@ const cors = require("cors");
 //     user: process.env.MULTICHAIN_USER,
 //     pass: process.env.MULTICHAIN_PASS
 // });
+const path = require('path');
 const { createAdmin } = require("./scripts/setup");
 
 // User
@@ -19,11 +20,13 @@ const otpRoute = require("./routes/otp");
 // Admin
 const adminLoginRoute = require("./routes/adminLogin");
 const candidateRoute = require("./routes/candidates");
+const partyRoute = require("./routes/parties");
 
 const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json());
+// Middleware to enable CORS
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -41,6 +44,10 @@ app.use("/api", otpRoute);
 // Admin
 app.use("/api-admin", adminLoginRoute);
 app.use("/api-admin", candidateRoute);
+app.use("/api-admin", partyRoute);
+
+// Middleware to serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'scripts/uploads')));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

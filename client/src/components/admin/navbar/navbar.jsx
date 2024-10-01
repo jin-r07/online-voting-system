@@ -27,10 +27,10 @@ export default function AdminNavbar() {
         </li>
         <li>
           <Link
-            to="/admin-current-voting"
+            to="/admin-create-events"
             className="flex items-center hover:bg-gray-700 p-3 rounded transition-colors"
           >
-            <FaVoteYea className="mr-3" /> Create Event
+            <FaVoteYea className="mr-3" /> Create Events
           </Link>
         </li>
         <li>
@@ -43,7 +43,7 @@ export default function AdminNavbar() {
         </li>
         <li>
           <Link
-            to="/admin-events"
+            to="/admin-parties"
             className="flex items-center hover:bg-gray-700 p-3 rounded transition-colors"
           >
             <FaAward className="mr-3" /> Parties
