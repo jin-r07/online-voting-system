@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const PartyForm = ({ party, onPartyUpdated }) => {
-    const [imagePreview, setImagePreview] = useState('');
+    const [imagePreview, setImagePreview] = useState("");
     const [initialValues, setInitialValues] = useState({
         name: '',
         image: null,
@@ -14,15 +14,15 @@ const PartyForm = ({ party, onPartyUpdated }) => {
 
     // Validation schema with Yup
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
+        name: Yup.string().required("Name is required"),
         image: Yup.mixed().nullable()
-            .test('fileType', 'Only PNG and JPG images are allowed', (value) => {
+            .test("fileType", "Only PNG and JPG images are allowed", (value) => {
                 return !value || (value && (value.type === "image/png" || value.type === "image/jpeg"));
             })
-            .test('required', function (value) {
+            .test("required", function (value) {
                 const { createError } = this;
                 if (!party && !value) { // Only require image if creating a new party
-                    return createError({ path: this.path, message: 'Image is required' });
+                    return createError({ path: this.path, message: "Image is required" });
                 }
                 return true; // If editing, we don't require a new image
             }),
