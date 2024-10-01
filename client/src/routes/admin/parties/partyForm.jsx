@@ -33,41 +33,37 @@ const PartyForm = ({ party, onPartyUpdated }) => {
             setInitialValues({ name: party.name, image: null });
             setImagePreview(`http://localhost:8080/uploads/parties/${party.image}`);
         } else {
-            // Reset initial values for new party
             setInitialValues({ name: '', image: null });
-            setImagePreview(''); // Clear preview for new party
+            setImagePreview('');
         }
     }, [party]);
 
-    // Handle form submission
     const handleSubmit = async (values, { resetForm }) => {
         const formData = new FormData();
 
-        // Prepare data to be updated
         if (values.name !== initialValues.name) {
-            formData.append('name', values.name); // Add name if it has changed
+            formData.append("name", values.name);
         }
 
-        // Only append image if a new image has been uploaded
         if (values.image) {
-            formData.append('image', values.image);
+            formData.append("image", values.image);
         }
 
         try {
             if (party) {
                 await axios.put(`http://localhost:8080/api-admin/update-party-byId/${party._id}`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
+                        "Content-Type": "multipart/form-data",
                     },
                 });
-                toast.success('Party updated successfully');
+                toast.success("Party updated successfully");
             } else {
                 await axios.post(`http://localhost:8080/api-admin/add-party`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
+                        "Content-Type": "multipart/form-data",
                     },
                 });
-                toast.success('Party created successfully');
+                toast.success("Party created successfully");
             }
             onPartyUpdated();
             resetForm(); // Reset the form after submission
