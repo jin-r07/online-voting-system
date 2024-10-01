@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const PartyForm = ({ party, onPartyUpdated }) => {
+export default function PartyForm({ party, onPartyUpdated }) {
     const [imagePreview, setImagePreview] = useState("");
 
     const [initialValues, setInitialValues] = useState({
@@ -142,6 +142,4 @@ const PartyForm = ({ party, onPartyUpdated }) => {
             <ToastContainer />
         </>
     );
-};
-
-export default PartyForm;
+}

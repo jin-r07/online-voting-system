@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import PartyForm from './PartyForm'; // Ensure the path is correct
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import PartyForm from "./PartyForm";
 
-const PartyList = () => {
+export default function PartyList() {
     const [parties, setParties] = useState([]);
-    const [editingParty, setEditingParty] = useState(null); // Change state to store the entire party object
+
+    const [editingParty, setEditingParty] = useState(null);
+
     const [modalOpen, setModalOpen] = useState(false);
 
     const fetchParties = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api-admin/get-all-parties');
+            const response = await axios.get("http://localhost:8080/api-admin/get-all-parties");
             if (Array.isArray(response.data)) {
                 setParties(response.data);
             } else {
-                console.error('Unexpected data structure:', response.data);
+                console.error("Unexpected data structure:", response.data);
                 setParties([]);
             }
         } catch (error) {
-            console.error('Error fetching parties:', error);
+            console.error("Error fetching parties:", error);
             setParties([]);
         }
     };
@@ -29,30 +31,29 @@ const PartyList = () => {
     const handlePartyUpdated = () => {
         fetchParties();
         setModalOpen(false);
-        setEditingParty(null); // Reset the editing party when a party is updated
+        setEditingParty(null);
     };
 
     const handleEdit = (party) => {
-        setEditingParty(party); // Store the entire party object
+        setEditingParty(party);
         setModalOpen(true);
     };
 
     const handleDelete = async (id) => {
-        // Add confirmation before deleting
-        const confirmed = window.confirm('Are you sure you want to delete this party?');
+        const confirmed = window.confirm("Are you sure you want to delete this party?");
         if (confirmed) {
             try {
                 await axios.delete(`http://localhost:8080/api-admin/delete-party/${id}`);
                 fetchParties();
             } catch (error) {
-                console.error('Error deleting party:', error);
+                console.error("Error deleting party:", error);
             }
         }
     };
 
     const closeModal = () => {
         setModalOpen(false);
-        setEditingParty(null); // Reset editing party when closing the modal
+        setEditingParty(null);
     };
 
     return (
@@ -63,27 +64,26 @@ const PartyList = () => {
                     className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mb-4 transition duration-200"
                     onClick={() => {
                         setModalOpen(true);
-                        setEditingParty(null); // Ensure we're in "Add" mode
+                        setEditingParty(null);
                     }}
                 >
                     Add Party
                 </button>
             </div>
 
-            {/* Modal */}
             {modalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white p-6 rounded shadow-lg w-96">
                         <h2 className="text-lg font-semibold mb-4">
-                            {editingParty ? 'Edit Party' : 'Add Party'}
+                            {editingParty ? "Edit Party" : "Add Party"}
                         </h2>
                         <PartyForm
-                            party={editingParty} // Pass the entire party object
+                            party={editingParty}
                             onPartyUpdated={handlePartyUpdated}
                         />
                         <button
                             className="mt-4 text-red-500 hover:underline"
-                            onClick={closeModal} // Use the closeModal function here
+                            onClick={closeModal}
                         >
                             Close
                         </button>
@@ -91,7 +91,6 @@ const PartyList = () => {
                 </div>
             )}
 
-            {/* Display message if no parties */}
             {parties.length === 0 ? (
                 <p className="text-gray-500 pl-8">No parties available. Please add a party.</p>
             ) : (
@@ -104,7 +103,7 @@ const PartyList = () => {
                                         src={`http://localhost:8080/uploads/parties/${party.image}`}
                                         alt={party.name}
                                         className="w-14 h-14 rounded-full border border-gray-300 mr-3"
-                                        onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150"; }} // Placeholder on error
+                                        onError={(e) => { e.target.onerror = null; e.target.src = "https://via.placeholder.com/150"; }}
                                     />
                                 )}
                                 <span className="text-lg">{party.name}</span>
@@ -129,6 +128,4 @@ const PartyList = () => {
             )}
         </div>
     );
-};
-
-export default PartyList;
+}
