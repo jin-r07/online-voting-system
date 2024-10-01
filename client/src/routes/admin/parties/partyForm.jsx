@@ -114,7 +114,7 @@ const PartyForm = ({ party, onPartyUpdated }) => {
                                             setImagePreview(URL.createObjectURL(file));
                                         } else {
                                             setFieldValue("image", null);
-                                            toast.error('Only PNG and JPG images are allowed');
+                                            toast.error("Only PNG and JPG images are allowed");
                                         }
                                     }}
                                     className="hidden"
