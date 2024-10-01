@@ -7,12 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 const PartyForm = ({ party, onPartyUpdated }) => {
     const [imagePreview, setImagePreview] = useState("");
+
     const [initialValues, setInitialValues] = useState({
         name: '',
         image: null,
     });
 
-    // Validation schema with Yup
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         image: Yup.mixed().nullable()
@@ -21,18 +21,17 @@ const PartyForm = ({ party, onPartyUpdated }) => {
             })
             .test("required", function (value) {
                 const { createError } = this;
-                if (!party && !value) { // Only require image if creating a new party
+                if (!party && !value) {
                     return createError({ path: this.path, message: "Image is required" });
                 }
-                return true; // If editing, we don't require a new image
+                return true;
             }),
     });
 
-    // Fetch party details if editing
     useEffect(() => {
         if (party) {
-            setInitialValues({ name: party.name, image: null }); // Reset image here since it will be uploaded
-            setImagePreview(`http://localhost:8080/uploads/parties/${party.image}`); // Set the image preview for editing
+            setInitialValues({ name: party.name, image: null });
+            setImagePreview(`http://localhost:8080/uploads/parties/${party.image}`);
         } else {
             // Reset initial values for new party
             setInitialValues({ name: '', image: null });
