@@ -93,7 +93,7 @@ const PartyList = () => {
 
             {/* Display message if no parties */}
             {parties.length === 0 ? (
-                <p>No parties available. Please add a party.</p>
+                <p className="text-gray-500 pl-8">No parties available. Please add a party.</p>
             ) : (
                 <ul className="space-y-4 px-8">
                     {parties.map((party) => (
