@@ -66,22 +66,22 @@ const PartyForm = ({ party, onPartyUpdated }) => {
                 toast.success("Party created successfully");
             }
             onPartyUpdated();
-            resetForm(); // Reset the form after submission
-            setImagePreview(''); // Clear image preview
+            resetForm()
+            setImagePreview("");
         } catch (error) {
             if (error.response && error.response.data.message) {
-                toast.error(error.response.data.message); // Display the server error
+                toast.error(error.response.data.message);
             } else {
-                toast.error('Error saving party');
+                toast.error("Error saving party");
             }
-            console.error('Error saving party:', error);
+            console.error("Error saving party:", error);
         }
     };
 
     return (
         <>
             <Formik
-                enableReinitialize // Ensure initial values are updated on changes
+                enableReinitialize
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
@@ -110,14 +110,14 @@ const PartyForm = ({ party, onPartyUpdated }) => {
                                     onChange={(event) => {
                                         const file = event.currentTarget.files[0];
                                         if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
-                                            setFieldValue("image", file); // Set the file in Formik state if it's a valid image
-                                            setImagePreview(URL.createObjectURL(file)); // Create a URL for image preview
+                                            setFieldValue("image", file);
+                                            setImagePreview(URL.createObjectURL(file));
                                         } else {
-                                            setFieldValue("image", null); // Reset image in case of invalid file type
+                                            setFieldValue("image", null);
                                             toast.error('Only PNG and JPG images are allowed');
                                         }
                                     }}
-                                    className="hidden" // Hide the default file input
+                                    className="hidden"
                                 />
                                 <p className="text-gray-500">Click here to upload image</p>
                                 {imagePreview && (
@@ -134,7 +134,7 @@ const PartyForm = ({ party, onPartyUpdated }) => {
                             type="submit"
                             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                         >
-                            {party ? 'Update' : 'Create'} Party
+                            {party ? "Update" : "Create"} Party
                         </button>
                     </Form>
                 )}
