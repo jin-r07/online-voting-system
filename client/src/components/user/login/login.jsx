@@ -119,7 +119,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
                                 onClick={() => setShowLoginPassword(!showLoginPassword)}
                             >
-                                {showLoginPassword ? <IoEyeOff size={20}/> : <IoEye size={20}/>}
+                                {showLoginPassword ? <IoEye size={20}/> : <IoEyeOff size={20}/>}
                             </button>
                         </div>
                         {formik.touched.password && formik.errors.password && (
