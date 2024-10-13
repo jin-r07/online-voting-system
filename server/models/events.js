@@ -1,9 +1,8 @@
 const mongoose = require("../configs/db");
 
-const EventSchema = new mongoose.Schema({
-    title: { type: String, unique: true, required: true },
-    candidates: [{ type: mongoose.Schema.Types.ObjectId, ref: "candidate" }],
-    date: { type: Date, required: true },
-}, { timestamps: true });
+const eventSchema = new mongoose.Schema({
+    eventName: { type: String, required: true },
+    candidates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Candidate', required: true }],
+});
 
-module.exports = mongoose.model("event", EventSchema);
+module.exports = mongoose.model("event", eventSchema);
