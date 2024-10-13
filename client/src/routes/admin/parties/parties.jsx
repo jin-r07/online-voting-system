@@ -1,48 +1,74 @@
 import React, { useState } from "react";
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Parties() {
-  // Set up Formik
   const formik = useFormik({
     initialValues: {
-      name: '',
-      shortName: '',
+      name: "",
+      shortName: "",
       image: null,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Party name is required'),
-      shortName: Yup.string().required('Short name is required'),
-      image: Yup.mixed().required('Image is required'), // Ensure an image file is selected
+      name: Yup.string().required("Party name is required"),
+      shortName: Yup.string().required("Short name is required"),
+      image: Yup.mixed().required("Image is required"),
     }),
     onSubmit: async (values) => {
       const formData = new FormData();
-      formData.append('name', values.name);
-      formData.append('shortName', values.shortName);
-      formData.append('image', values.image);
+      formData.append("name", values.name);
+      formData.append("shortName", values.shortName);
+      formData.append("image", values.image);
 
       try {
-        const response = await axios.post('http://localhost:8080/api-admin/add-party', formData, {
+        const response = await axios.post("/api/parties", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
-        toast.success('Party created successfully!'); // Notify success
-        console.log('Party created:', response.data);
+        toast.success("Party created successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        console.log("Party created:", response.data);
       } catch (err) {
         if (err.response && err.response.status === 400) {
-          // Specific error for existing party
-          toast.error(err.response.data.error); // Show the error message from backend
+          toast.error(err.response.data.error || "Party already exists.", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         } else {
-          toast.error('Error creating party');
+          toast.error("Error creating party", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
-        console.error('Error creating party:', err);
+        console.error("Error creating party:", err);
       }
     },
   });
+
   return (
     <div className="ml-96">
       <h2>Create Party</h2>
@@ -96,7 +122,7 @@ export default function Parties() {
         <button type="submit">Create Party</button>
       </form>
 
-      <ToastContainer /> {/* Toast notifications container */}
+      <ToastContainer />
     </div>
   );
 }
