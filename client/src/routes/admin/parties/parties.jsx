@@ -7,8 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Parties() {
   const [parties, setParties] = useState([]);
-  console.log(parties)
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [imagePreview, setImagePreview] = useState(null);
 
   const formik = useFormik({
@@ -50,9 +51,9 @@ export default function Parties() {
         });
         console.log("Party created:", response.data);
         fetchParties();
-        setIsModalOpen(false); // Close the modal on success
-        formik.resetForm(); // Reset the form fields
-        setImagePreview(null); // Reset image preview
+        setIsModalOpen(false);
+        formik.resetForm();
+        setImagePreview(null);
       } catch (err) {
         if (err.response && err.response.status === 400) {
           toast.error(err.response.data.error || "Party already exists.", {
@@ -82,7 +83,6 @@ export default function Parties() {
     },
   });
 
-  // Fetch existing parties
   const fetchParties = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-parties");
@@ -106,23 +106,21 @@ export default function Parties() {
     fetchParties();
   }, []);
 
-  // Handle image upload and preview
   const handleImageChange = (event) => {
     const file = event.currentTarget.files[0];
     if (file) {
       formik.setFieldValue("image", file);
       const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl); // Set image preview
+      setImagePreview(previewUrl);
     } else {
-      setImagePreview(null); // Reset preview if no file selected
+      setImagePreview(null);
     }
   };
 
-  // Clear form data on cancel
   const handleCancel = () => {
-    setIsModalOpen(false); // Close the modal
-    formik.resetForm(); // Reset form fields
-    setImagePreview(null); // Reset image preview
+    setIsModalOpen(false);
+    formik.resetForm();
+    setImagePreview(null);
   };
 
   return (
@@ -227,7 +225,6 @@ export default function Parties() {
           <li className="text-gray-500">No parties available.</li>
         )}
       </ul>
-
       <ToastContainer />
     </div>
   );
