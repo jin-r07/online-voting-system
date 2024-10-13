@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Candidates() {
   const [candidates, setCandidates] = useState([]);
-  console.log(candidates)
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
