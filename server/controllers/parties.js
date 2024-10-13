@@ -5,8 +5,8 @@ async function createParty(req, res) {
     const image = req.file.path;
 
     try {
-        const existingParty = await Party.findOne({ 
-            $or: [ { name }, { shortName } ] 
+        const existingParty = await Party.findOne({
+            $or: [{ name }, { shortName }]
         });
 
         if (existingParty) {
@@ -25,12 +25,17 @@ async function createParty(req, res) {
 async function getAllParties(req, res) {
     try {
         const parties = await Party.find();
-        res.status(200).json(parties);
+        const partiesWithImageURLs = parties.map(party => {
+            return {
+                ...party.toObject(),
+                image: `http://localhost:8080/uploads/parties/${party.image.split('\\').pop()}`
+            };
+        });
+        res.status(200).json(partiesWithImageURLs);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Error fetching parties" });
     }
-};
-
+}
 
 module.exports = { createParty, getAllParties, };

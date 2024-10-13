@@ -6,9 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Parties() {
-  const [parties, setParties] = useState([]); // State to hold existing parties
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-  const [imagePreview, setImagePreview] = useState(null); // State for image preview
+  const [parties, setParties] = useState([]);
+  console.log(parties)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const formik = useFormik({
     initialValues: {
