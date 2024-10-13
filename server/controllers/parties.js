@@ -1,6 +1,6 @@
 const Party = require("../models/parties");
 
-const createParty = async (req, res) => {
+async function createParty(req, res) {
     const { name, shortName } = req.body;
     const image = req.file.path;
 
@@ -8,7 +8,7 @@ const createParty = async (req, res) => {
         const existingParty = await Party.findOne({ 
             $or: [ { name }, { shortName } ] 
         });
-        
+
         if (existingParty) {
             return res.status(400).json({ error: "Party with this name or short name already exists" });
         }
@@ -22,4 +22,15 @@ const createParty = async (req, res) => {
     }
 };
 
-module.exports = { createParty, };
+async function getAllParties(req, res) {
+    try {
+        const parties = await Party.find();
+        res.status(200).json(parties);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error fetching parties" });
+    }
+};
+
+
+module.exports = { createParty, getAllParties, };
