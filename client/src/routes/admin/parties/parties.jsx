@@ -7,10 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Parties() {
   const [parties, setParties] = useState([]);
-
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [imagePreview, setImagePreview] = useState(null);
+  const [editPartyId, setEditPartyId] = useState(null);
+
+  const [currentImage, setCurrentImage] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -34,29 +36,13 @@ export default function Parties() {
       formData.append("image", values.image);
 
       try {
-        const response = await axios.post("http://localhost:8080/api-admin/add-party", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        toast.success("Party created successfully!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        console.log("Party created:", response.data);
-        fetchParties();
-        setIsModalOpen(false);
-        formik.resetForm();
-        setImagePreview(null);
-      } catch (err) {
-        if (err.response && err.response.status === 400) {
-          toast.error(err.response.data.error || "Party already exists.", {
+        if (editPartyId) {
+          await axios.put(`http://localhost:8080/api-admin/edit-party/${editPartyId}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          toast.success("Party updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -67,7 +53,12 @@ export default function Parties() {
             theme: "light",
           });
         } else {
-          toast.error("Error creating party", {
+          const response = await axios.post("http://localhost:8080/api-admin/add-party", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          toast.success("Party created successfully!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -77,8 +68,25 @@ export default function Parties() {
             progress: undefined,
             theme: "light",
           });
+          fetchParties();
         }
-        console.error("Error creating party:", err);
+
+        setIsModalOpen(false);
+        formik.resetForm();
+        setEditPartyId(null);
+        setCurrentImage(null);
+      } catch (err) {
+        toast.error("Error processing request", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        console.error("Error:", err);
       }
     },
   });
@@ -88,7 +96,6 @@ export default function Parties() {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-parties");
       setParties(response.data);
     } catch (err) {
-      console.error("Error fetching parties:", err);
       toast.error("Error fetching parties", {
         position: "bottom-right",
         autoClose: 5000,
@@ -99,6 +106,7 @@ export default function Parties() {
         progress: undefined,
         theme: "light",
       });
+      console.error("Error fetching parties:", err);
     }
   };
 
@@ -106,21 +114,49 @@ export default function Parties() {
     fetchParties();
   }, []);
 
-  const handleImageChange = (event) => {
-    const file = event.currentTarget.files[0];
-    if (file) {
-      formik.setFieldValue("image", file);
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
-    } else {
-      setImagePreview(null);
+  const handleDeleteParty = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this party?");
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:8080/api-admin/delete-party/${id}`);
+      toast.success("Party deleted successfully!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      fetchParties();
+    } catch (err) {
+      toast.error("Error deleting party", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.error("Error deleting party:", err);
     }
   };
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    formik.resetForm();
-    setImagePreview(null);
+  const handleEditParty = (party) => {
+    setEditPartyId(party._id);
+    formik.setValues({
+      name: party.name,
+      shortName: party.shortName,
+      image: null,
+    });
+    setCurrentImage(party.image);
+    setIsModalOpen(true);
   };
 
   return (
@@ -138,7 +174,7 @@ export default function Parties() {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg p-6 z-10 shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Create Party</h2>
+            <h2 className="text-xl font-bold mb-4 text-gray-800">{editPartyId ? 'Edit Party' : 'Create Party'}</h2>
             <form onSubmit={formik.handleSubmit} encType="multipart/form-data" className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Party Name</label>
@@ -174,13 +210,22 @@ export default function Parties() {
                 )}
               </div>
 
+              {currentImage && (
+                <div className="mb-4">
+                  <img src={currentImage} alt="Current Party" className="w-full h-auto rounded-md mb-2" />
+                </div>
+              )}
+
               <div>
                 <label htmlFor="image" className="block text-sm font-medium text-gray-700">Party Image</label>
                 <input
                   id="image"
                   name="image"
                   type="file"
-                  onChange={handleImageChange}
+                  onChange={(event) => {
+                    formik.setFieldValue("image", event.currentTarget.files[0]);
+                    setCurrentImage(URL.createObjectURL(event.currentTarget.files[0]));
+                  }}
                   onBlur={formik.handleBlur}
                   className={`mt-1 block w-full border ${formik.touched.image && formik.errors.image ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300`}
                 />
@@ -189,16 +234,14 @@ export default function Parties() {
                 )}
               </div>
 
-              {imagePreview && (
-                <div className="mt-4">
-                  <h3 className="text-sm font-medium text-gray-700">Image Preview</h3>
-                  <img src={imagePreview} alt="Preview" className="mt-2 w-full h-auto rounded-md shadow-md" />
-                </div>
-              )}
-
               <div className="flex justify-between">
-                <button type="button" onClick={handleCancel} className="bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition duration-200">Cancel</button>
-                <button type="submit" className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">Create Party</button>
+                <button type="button" onClick={() => {
+                  setIsModalOpen(false);
+                  formik.resetForm();
+                  setEditPartyId(null);
+                  setCurrentImage(null);
+                }} className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md">Cancel</button>
+                <button type="submit" className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">{editPartyId ? 'Update Party' : 'Add Party'}</button>
               </div>
             </form>
           </div>
@@ -209,15 +252,29 @@ export default function Parties() {
       <ul className="mt-4 space-y-4">
         {parties.length > 0 ? (
           parties.map((party) => (
-            <li key={party._id} className="flex items-center border rounded-md p-4 bg-gray-50 shadow-sm">
+            <li key={party._id} className="flex items-center border rounded-md p-4 bg-gray-50">
               <img
                 src={party.image}
                 alt={party.name}
-                className="w-16 h-16 mr-4 rounded-full shadow"
+                className="w-16 h-16 mr-4 rounded-full"
               />
               <div className="flex flex-col">
                 <span className="font-semibold text-lg text-gray-900">{party.name}</span>
                 <span className="text-sm text-gray-600">({party.shortName})</span>
+              </div>
+              <div className="ml-auto flex space-x-2">
+                <button
+                  onClick={() => handleEditParty(party)}
+                  className="bg-yellow-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-200"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteParty(party._id)}
+                  className="bg-red-600 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                >
+                  Delete
+                </button>
               </div>
             </li>
           ))
