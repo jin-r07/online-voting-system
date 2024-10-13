@@ -290,7 +290,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                                 className="absolute right-3 top-3"
                                 onClick={() => setShowRegisterPassword(!showRegisterPassword)}
                             >
-                                {showRegisterPassword ? <IoEyeOff size={20}/> : <IoEye size={20}/>}
+                                {showRegisterPassword ? <IoEye size={20}/> : <IoEyeOff size={20}/>}
                             </button>
                         </div>
                         {formik.touched.password && formik.errors.password && (
@@ -315,7 +315,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                                 className="absolute right-3 top-3"
                                 onClick={() => setShowRegisterConfirmPassword(!showRegisterConfirmPassword)}
                             >
-                                {showRegisterConfirmPassword ? <IoEyeOff size={20}/> : <IoEye size={20}/>}
+                                {showRegisterConfirmPassword ? <IoEye size={20}/> : <IoEyeOff size={20}/>}
                             </button>
                         </div>
                         {formik.touched.confirmPassword && formik.errors.confirmPassword && (
