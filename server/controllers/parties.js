@@ -38,4 +38,51 @@ async function getAllParties(req, res) {
     }
 }
 
-module.exports = { createParty, getAllParties, };
+async function editParty(req, res) {
+    const { id } = req.params; // Get the party ID from request params
+    const { name, shortName } = req.body; // Get name and shortName from request body
+    let image; // Variable for image path
+
+    try {
+        // Check if the party exists
+        const party = await Party.findById(id);
+        if (!party) {
+            return res.status(404).json({ error: "Party not found" });
+        }
+
+        // Update the party fields
+        if (req.file) {
+            image = req.file.path; // Use new image if provided
+        } else {
+            image = party.image; // Keep existing image if no new one is provided
+        }
+
+        party.name = name;
+        party.shortName = shortName;
+        party.image = image;
+
+        await party.save(); // Save the updated party
+        res.status(200).json(party); // Return the updated party
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error updating party" });
+    }
+}
+
+async function deleteParty(req, res) {
+    const { id } = req.params; // Get the party ID from request params
+
+    try {
+        const deletedParty = await Party.findByIdAndDelete(id);
+        if (!deletedParty) {
+            return res.status(404).json({ error: "Party not found" });
+        }
+
+        res.status(200).json({ message: "Party deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error deleting party" });
+    }
+}
+
+module.exports = { createParty, getAllParties, editParty, deleteParty };
