@@ -11,62 +11,62 @@ export default function AdminLogin() {
 
     const formik = useFormik({
         initialValues: {
-            adminIdNumber: '',
-            password: '',
+            adminIdNumber: "",
+            password: "",
         },
         validationSchema: Yup.object({
             adminIdNumber: Yup.string()
-                .required('Admin ID number is required'),
+                .required("Admin ID number is required"),
             password: Yup.string()
-                .required('Password is required')
+                .required("Password is required")
         }),
         onSubmit: async (values) => {
             setLoading(true);
 
             try {
-                const response = await fetch('http://localhost:8080/api-admin/login-admin', {
-                    method: 'POST',
+                const response = await fetch("http://localhost:8080/api-admin/login-admin", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
                     body: JSON.stringify(values),
-                    credentials: 'include',
+                    credentials: "include",
                 });
 
                 if (!response.ok) {
                     const result = await response.json();
                     if (response.status === 401) {
-                        toast.error(result.message || 'Invalid Admin ID number or password.', {
-                            position: 'bottom-right',
+                        toast.error(result.message || "Invalid Admin ID number or password.", {
+                            position: "bottom-right",
                             autoClose: 5000,
                             hideProgressBar: false,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
                             progress: undefined,
-                            theme: 'light',
+                            theme: "light",
                         });
                     } else {
-                        throw new Error(result.error || 'Network response was not ok.');
+                        throw new Error(result.error || "Network response was not ok.");
                     }
                 } else {
                     const data = await response.json();
-                    console.log('Login successful:', data);
-                    navigate('/admin-dashboard');
+                    console.log("Login successful:", data);
+                    navigate("/admin-dashboard");
                 }
             } catch (error) {
-                toast.error(error.message || 'Something went wrong. Please try again later.', {
-                    position: 'bottom-right',
+                toast.error(error.message || "Something went wrong. Please try again later.", {
+                    position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: 'light',
+                    theme: "light",
                 });
             } finally {
-                setLoading(false); // Set loading to false after the request
+                setLoading(false);
             }
         },
     });
@@ -86,7 +86,7 @@ export default function AdminLogin() {
                         onBlur={formik.handleBlur}
                         value={formik.values.adminIdNumber}
                         className={`mt-1 p-3 border rounded-md w-full transition duration-150 ease-in-out 
-                                    ${formik.touched.adminIdNumber && formik.errors.adminIdNumber ? 'border-red-500' : 'border-gray-300'}`}
+                                    ${formik.touched.adminIdNumber && formik.errors.adminIdNumber ? "border-red-500" : "border-gray-300"}`}
                         placeholder="Enter Admin ID"
                     />
                     {formik.touched.adminIdNumber && formik.errors.adminIdNumber ? (
@@ -103,7 +103,7 @@ export default function AdminLogin() {
                         onBlur={formik.handleBlur}
                         value={formik.values.password}
                         className={`mt-1 p-3 border rounded-md w-full transition duration-150 ease-in-out 
-                                    ${formik.touched.password && formik.errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                                    ${formik.touched.password && formik.errors.password ? "border-red-500" : "border-gray-300"}`}
                         placeholder="Enter Password"
                     />
                     {formik.touched.password && formik.errors.password ? (
