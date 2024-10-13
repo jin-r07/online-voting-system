@@ -21,6 +21,7 @@ const otpRoute = require("./routes/otp");
 const adminLoginRoute = require("./routes/adminLogin");
 const partyRoute = require("./routes/parties");
 const candidateRoute = require("./routes/candidates");
+const userRoute = require("./routes/users");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -45,6 +46,7 @@ app.use("/api", otpRoute);
 app.use("/api-admin", adminLoginRoute);
 app.use("/api-admin", partyRoute);
 app.use("/api-admin", candidateRoute);
+app.use("/api-admin", userRoute);
 
 // Middleware to serve static files
 app.use("/uploads", express.static(path.join(__dirname, "scripts/uploads")));
