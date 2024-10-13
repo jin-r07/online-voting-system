@@ -7,8 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [editUserId, setEditUserId] = useState(null);
+
   const [picturePreview, setPicturePreview] = useState(null);
 
   const formik = useFormik({
@@ -37,6 +40,7 @@ export default function Users() {
         formData.append("voterIdCardPicture", values.voterIdCardPicture);
       }
 
+      console.log(formData)
       try {
         if (editUserId) {
           await axios.put(`http://localhost:8080/api-admin/edit-user/${editUserId}`, formData, {
@@ -59,7 +63,7 @@ export default function Users() {
         setIsModalOpen(false);
         formik.resetForm();
         setEditUserId(null);
-        setPicturePreview(null); // Reset the preview state
+        setPicturePreview(null);
       } catch (err) {
         toast.error("Error processing request", {
           position: "bottom-right",
@@ -201,6 +205,11 @@ export default function Users() {
               </div>
 
               <div>
+                <div className="my-6 flex justify-center">
+                  {picturePreview && (
+                    <img src={picturePreview} alt="Voter ID Preview" className="h-auto w-52 object-cover rounded-md" />
+                  )}
+                </div>
                 <label htmlFor="voterIdCardPicture" className="block text-sm font-medium text-gray-700">Upload Voter ID Card Picture</label>
                 <input
                   id="voterIdCardPicture"
@@ -210,9 +219,6 @@ export default function Users() {
                   onChange={handleFileChange}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
                 />
-                {picturePreview && (
-                  <img src={picturePreview} alt="Voter ID Preview" className="mt-2 h-auto w-52 object-cover rounded-md" />
-                )}
               </div>
 
               <div>
