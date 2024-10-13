@@ -7,11 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Parties() {
   const [parties, setParties] = useState([]);
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [editPartyId, setEditPartyId] = useState(null);
-
   const [currentImage, setCurrentImage] = useState(null);
 
   const formik = useFormik({
@@ -24,16 +21,20 @@ export default function Parties() {
       name: Yup.string().required("Party name is required"),
       shortName: Yup.string().required("Short name is required"),
       image: Yup.mixed()
-        .required("Image is required")
+        .notRequired() // Change here: make image optional for edits
         .test("fileType", "Only .jpg and .png files are allowed", (value) => {
-          return value && (value.type === "image/jpeg" || value.type === "image/png");
+          return !value || (value && (value.type === "image/jpeg" || value.type === "image/png"));
         }),
     }),
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("shortName", values.shortName);
-      formData.append("image", values.image);
+
+      // Only append image if it's provided
+      if (values.image) {
+        formData.append("image", values.image);
+      }
 
       try {
         if (editPartyId) {
