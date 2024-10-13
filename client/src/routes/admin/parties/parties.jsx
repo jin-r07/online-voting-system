@@ -161,7 +161,7 @@ export default function Parties() {
   };
 
   return (
-    <div className="ml-72 mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="pl-80 mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Parties</h2>
 
       <button
