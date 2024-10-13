@@ -39,30 +39,28 @@ async function getAllParties(req, res) {
 }
 
 async function editParty(req, res) {
-    const { id } = req.params; // Get the party ID from request params
-    const { name, shortName } = req.body; // Get name and shortName from request body
-    let image; // Variable for image path
+    const { id } = req.params;
+    const { name, shortName } = req.body;
+    let image;
 
     try {
-        // Check if the party exists
         const party = await Party.findById(id);
         if (!party) {
             return res.status(404).json({ error: "Party not found" });
         }
 
-        // Update the party fields
         if (req.file) {
-            image = req.file.path; // Use new image if provided
+            image = req.file.path;
         } else {
-            image = party.image; // Keep existing image if no new one is provided
+            image = party.image;
         }
 
         party.name = name;
         party.shortName = shortName;
         party.image = image;
 
-        await party.save(); // Save the updated party
-        res.status(200).json(party); // Return the updated party
+        await party.save();
+        res.status(200).json(party);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Error updating party" });
@@ -70,7 +68,7 @@ async function editParty(req, res) {
 }
 
 async function deleteParty(req, res) {
-    const { id } = req.params; // Get the party ID from request params
+    const { id } = req.params;
 
     try {
         const deletedParty = await Party.findByIdAndDelete(id);
