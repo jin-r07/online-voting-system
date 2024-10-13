@@ -22,11 +22,12 @@ async function createCandidate(req, res) {
 
 async function getAllCandidates(req, res) {
     try {
-        const candidates = await Candidate.find();
+        const candidates = await Candidate.find().populate('party', 'name');
         const candidatesWithImageURLs = candidates.map(candidate => {
             return {
                 ...candidate.toObject(),
-                image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`
+                image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+                partyName: candidate.party ? candidate.party.name : null
             };
         });
 
