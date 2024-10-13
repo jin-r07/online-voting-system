@@ -11,8 +11,11 @@ import UserSettings from "./routes/user/userSettings/userSettings";
 import AdminLogin from "./components/admin/login/login";
 import Dashboard from "./routes/admin/dashboard/dashboard";
 import AdminNavbar from "./components/admin/navbar/navbar";
-import CandidateList from "./routes/admin/candidates/candidateList";
-import PartyList from "./routes/admin/parties/partyList";
+import CreateEvents from "./routes/admin/createEvents/createEvents";
+import Candidates from "./routes/admin/candidates/candidates";
+import Parties from "./routes/admin/parties/parties";
+import Users from "./routes/admin/users/users";
+import History from "./routes/admin/history/history";
 
 function App() {
   const location = useLocation();
@@ -43,8 +46,11 @@ function App() {
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<Dashboard />} />
-        <Route path="/admin-candidates" element={<CandidateList />} />
-        <Route path="/admin-parties" element={<PartyList />} />
+        <Route path="/admin-create-events" element={<CreateEvents />} />
+        <Route path="/admin-candidates" element={<Candidates />} />
+        <Route path="/admin-parties" element={<Parties />} />
+        <Route path="/admin-users" element={<Users />} />
+        <Route path="/admin-history" element={<History />} />
       </Routes>
     </>
   );
