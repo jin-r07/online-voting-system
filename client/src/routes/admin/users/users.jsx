@@ -9,27 +9,32 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editUserId, setEditUserId] = useState(null);
-  const [voterIdCardPicture, setVoterIdCardPicture] = useState(null); // State for picture
-  const [picturePreview, setPicturePreview] = useState(null); // State for picture preview
+  const [picturePreview, setPicturePreview] = useState(null);
 
   const formik = useFormik({
     initialValues: {
       email: "",
       voterIdCardNumber: "",
       role: "user",
+      voterIdCardPicture: null
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
       voterIdCardNumber: Yup.string().required("Voter ID Card Number is required"),
       role: Yup.string().required("Role is required"),
+      voterIdCardPicture: Yup.mixed()
+        .notRequired()
+        .test("fileType", "Only .jpg and .png files are allowed", (value) => {
+          return !value || (value && (value.type === "image/jpeg" || value.type === "image/png"));
+        }),
     }),
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("email", values.email);
       formData.append("voterIdCardNumber", values.voterIdCardNumber);
       formData.append("role", values.role);
-      if (voterIdCardPicture) {
-        formData.append("voterIdCardPicture", voterIdCardPicture); // Append the picture file
+      if (values.voterIdCardPicture) {
+        formData.append("voterIdCardPicture", values.voterIdCardPicture);
       }
 
       try {
@@ -49,28 +54,11 @@ export default function Users() {
             progress: undefined,
             theme: "light",
           });
-        } else {
-          await axios.post("http://localhost:8080/api-admin/add-user", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          toast.success("User created successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
         }
         fetchUsers();
         setIsModalOpen(false);
         formik.resetForm();
         setEditUserId(null);
-        setVoterIdCardPicture(null); // Reset the picture state
         setPicturePreview(null); // Reset the preview state
       } catch (err) {
         toast.error("Error processing request", {
@@ -152,16 +140,13 @@ export default function Users() {
       voterIdCardNumber: user.voterIdCardNumber,
       role: user.role,
     });
-    setVoterIdCardPicture(null); // Reset picture state on edit
-    setPicturePreview(user.voterIdCardPicture); // Set preview to existing user picture
+    setPicturePreview(user.voterIdCardPicture);
     setIsModalOpen(true);
   };
 
-  // Handle file change for voterIdCardPicture
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
-    setVoterIdCardPicture(file);
-    setPicturePreview(URL.createObjectURL(file)); // Create preview URL
+    setPicturePreview(URL.createObjectURL(file));
   };
 
   return (
@@ -255,7 +240,6 @@ export default function Users() {
                     setIsModalOpen(false);
                     formik.resetForm();
                     setEditUserId(null);
-                    setVoterIdCardPicture(null);
                     setPicturePreview(null);
                   }}
                   className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md"
