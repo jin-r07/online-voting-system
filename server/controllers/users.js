@@ -27,16 +27,14 @@ async function editUser(req, res) {
             return res.status(404).json({ error: "User not found" });
         }
 
-        // Check if a new file is uploaded
         if (req.file) {
-            voterIdCardPicture = req.file.path; // Get the path of the uploaded file
+            voterIdCardPicture = req.file.path;
         } else {
-            voterIdCardPicture = user.voterIdCardPicture; // Keep the existing path
+            voterIdCardPicture = user.voterIdCardPicture;
         }
 
-        // Update user details
         user.email = email;
-        user.voterIdCardPicture = voterIdCardPicture; // Use the correct picture path
+        user.voterIdCardPicture = voterIdCardPicture;
         user.voterIdCardNumber = voterIdCardNumber;
         user.role = role;
 
