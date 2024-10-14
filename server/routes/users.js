@@ -1,5 +1,5 @@
 const express = require('express');
-const upload = require("../scripts/uploadsCandidate");
+const upload = require("../scripts/uploads");
 const { getAllUsers, editUser, deleteUser } = require('../controllers/users');
 
 const router = express.Router();

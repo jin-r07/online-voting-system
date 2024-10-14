@@ -47,6 +47,7 @@ export default function Users() {
               "Content-Type": "multipart/form-data",
             },
           });
+
           toast.success("User updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,
@@ -157,6 +158,7 @@ export default function Users() {
 
   const handleFileChange = (event) => {
     const file = event.currentTarget.files[0];
+    formik.setFieldValue("voterIdCardPicture", file);
     setPicturePreview(URL.createObjectURL(file));
   };
 
