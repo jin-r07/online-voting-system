@@ -17,30 +17,29 @@ export default function Users() {
   const formik = useFormik({
     initialValues: {
       email: "",
+      voterIdCardPicture: null,
       voterIdCardNumber: "",
-      role: "user",
-      voterIdCardPicture: null
+      role: "user"
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
-      voterIdCardNumber: Yup.string().required("Voter ID Card Number is required"),
-      role: Yup.string().required("Role is required"),
       voterIdCardPicture: Yup.mixed()
         .notRequired()
         .test("fileType", "Only .jpg and .png files are allowed", (value) => {
           return !value || (value && (value.type === "image/jpeg" || value.type === "image/png"));
         }),
+      voterIdCardNumber: Yup.string().required("Voter ID Card Number is required"),
+      role: Yup.string().required("Role is required"),
     }),
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("email", values.email);
-      formData.append("voterIdCardNumber", values.voterIdCardNumber);
-      formData.append("role", values.role);
       if (values.voterIdCardPicture) {
         formData.append("voterIdCardPicture", values.voterIdCardPicture);
       }
+      formData.append("voterIdCardNumber", values.voterIdCardNumber);
+      formData.append("role", values.role);
 
-      console.log(formData)
       try {
         if (editUserId) {
           await axios.put(`http://localhost:8080/api-admin/edit-user/${editUserId}`, formData, {
@@ -49,6 +48,17 @@ export default function Users() {
             },
           });
           toast.success("User updated successfully!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } else {
+          toast.error("Error processing request", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,

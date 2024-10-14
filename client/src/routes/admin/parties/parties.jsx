@@ -7,8 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Parties() {
   const [parties, setParties] = useState([]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [editPartyId, setEditPartyId] = useState(null);
+
   const [currentImage, setCurrentImage] = useState(null);
 
   const formik = useFormik({
@@ -21,7 +24,7 @@ export default function Parties() {
       name: Yup.string().required("Party name is required"),
       shortName: Yup.string().required("Short name is required"),
       image: Yup.mixed()
-        .notRequired() // Change here: make image optional for edits
+        .notRequired()
         .test("fileType", "Only .jpg and .png files are allowed", (value) => {
           return !value || (value && (value.type === "image/jpeg" || value.type === "image/png"));
         }),
@@ -30,8 +33,6 @@ export default function Parties() {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("shortName", values.shortName);
-
-      // Only append image if it's provided
       if (values.image) {
         formData.append("image", values.image);
       }
@@ -54,12 +55,7 @@ export default function Parties() {
             theme: "light",
           });
         } else {
-          const response = await axios.post("http://localhost:8080/api-admin/add-party", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          toast.success("Party created successfully!", {
+          toast.error("Error processing request", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -69,9 +65,8 @@ export default function Parties() {
             progress: undefined,
             theme: "light",
           });
-          fetchParties();
         }
-
+        fetchParties();
         setIsModalOpen(false);
         formik.resetForm();
         setEditPartyId(null);
@@ -87,7 +82,6 @@ export default function Parties() {
           progress: undefined,
           theme: "light",
         });
-        console.error("Error:", err);
       }
     },
   });
@@ -107,7 +101,6 @@ export default function Parties() {
         progress: undefined,
         theme: "light",
       });
-      console.error("Error fetching parties:", err);
     }
   };
 
@@ -145,7 +138,6 @@ export default function Parties() {
         progress: undefined,
         theme: "light",
       });
-      console.error("Error deleting party:", err);
     }
   };
 
