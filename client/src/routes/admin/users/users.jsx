@@ -149,17 +149,12 @@ export default function Users() {
     setEditUserId(user._id);
     formik.setValues({
       email: user.email,
+      voterIdCardPicture: null,
       voterIdCardNumber: user.voterIdCardNumber,
       role: user.role,
     });
     setPicturePreview(user.voterIdCardPicture);
     setIsModalOpen(true);
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.currentTarget.files[0];
-    formik.setFieldValue("voterIdCardPicture", file);
-    setPicturePreview(URL.createObjectURL(file));
   };
 
   return (
@@ -225,7 +220,10 @@ export default function Users() {
                   name="voterIdCardPicture"
                   type="file"
                   accept="image/*"
-                  onChange={handleFileChange}
+                  onChange={(event) => {
+                    formik.setFieldValue("voterIdCardPicture", event.currentTarget.files[0]);
+                    setPicturePreview(URL.createObjectURL(event.currentTarget.files[0]));
+                  }}
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
                 />
               </div>

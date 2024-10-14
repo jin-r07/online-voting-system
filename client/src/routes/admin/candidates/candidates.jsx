@@ -58,12 +58,7 @@ export default function Candidates() {
             theme: "light",
           });
         } else {
-          const response = await axios.post("http://localhost:8080/api-admin/add-candidate", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-          toast.success("Candidate created successfully!", {
+          toast.error("Error processing request", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -73,9 +68,9 @@ export default function Candidates() {
             progress: undefined,
             theme: "light",
           });
-          fetchCandidates();
+          console.error("Error:", err);
         }
-
+        fetchCandidates();
         setIsModalOpen(false);
         formik.resetForm();
         setEditCandidateId(null);
