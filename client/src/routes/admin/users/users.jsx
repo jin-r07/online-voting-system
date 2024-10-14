@@ -85,7 +85,6 @@ export default function Users() {
           progress: undefined,
           theme: "light",
         });
-        console.error("Error:", err);
       }
     },
   });
@@ -105,7 +104,6 @@ export default function Users() {
         progress: undefined,
         theme: "light",
       });
-      console.error("Error fetching users:", err);
     }
   };
 
@@ -143,7 +141,6 @@ export default function Users() {
         progress: undefined,
         theme: "light",
       });
-      console.error("Error deleting user:", err);
     }
   };
 
