@@ -14,9 +14,19 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const voterIdCardNumber = req.body.voterIdCardNumber;
-        console.log(`Uploading file with voter ID: ${voterIdCardNumber}`);
         const extension = path.extname(file.originalname);
-        cb(null, `${voterIdCardNumber}${extension}`);
+        const newFileName = `${voterIdCardNumber}${extension}`;
+        
+        const existingFiles = fs.readdirSync(uploadDir).filter(f => f.startsWith(voterIdCardNumber));
+
+        if (existingFiles.length > 0) {
+            existingFiles.forEach(file => {
+                const filePath = path.join(uploadDir, file);
+                fs.unlinkSync(filePath);
+            });
+        }
+
+        cb(null, newFileName);
     }
 });
 

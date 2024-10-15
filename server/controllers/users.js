@@ -20,7 +20,6 @@ async function editUser(req, res) {
     const { id } = req.params;
     const { email, voterIdCardNumber, role } = req.body;
     let voterIdCardPicture;
-
     try {
         const user = await User.findById(id);
         if (!user) {

@@ -34,20 +34,18 @@ export default function Users() {
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("email", values.email);
+      formData.append("voterIdCardNumber", values.voterIdCardNumber);
+      formData.append("role", values.role);
       if (values.voterIdCardPicture) {
         formData.append("voterIdCardPicture", values.voterIdCardPicture);
       }
-      formData.append("voterIdCardNumber", values.voterIdCardNumber);
-      formData.append("role", values.role);
-
       try {
         if (editUserId) {
           await axios.put(`http://localhost:8080/api-admin/edit-user/${editUserId}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
-            },
+            }
           });
-
           toast.success("User updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,

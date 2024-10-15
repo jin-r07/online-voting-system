@@ -35,7 +35,6 @@ export default function Candidates() {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("partyId", values.partyId);
-
       if (values.image) {
         formData.append("image", values.image);
       }
