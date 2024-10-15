@@ -159,7 +159,7 @@ export default function Parties() {
 
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
-      <div className="sticky top-0 bg-white shadow-md p-6">
+      <div className="sticky top-0 bg-white shadow-md py-6">
         <h2 className="text-3xl mb-6 text-gray-800">Parties</h2>
         <button
           onClick={() => setIsModalOpen(true)}
