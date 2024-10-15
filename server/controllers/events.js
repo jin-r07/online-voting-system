@@ -34,4 +34,14 @@ async function getCandidates(req, res) {
   }
 }
 
-module.exports = { createEvent, getCandidates };
+async function getEvents (req, res) {
+  try {
+    const events = await Event.find().populate("candidateIds");
+    res.status(200).json(events);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error fetching events" });
+  }
+};
+
+module.exports = { createEvent, getCandidates, getEvents };

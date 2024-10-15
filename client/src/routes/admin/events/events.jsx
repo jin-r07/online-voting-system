@@ -100,7 +100,7 @@ export default function Events() {
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
       <div className="sticky top-0 bg-white shadow-md py-6">
-        <h2 className="text-3xl mb-6 text-gray-800">Candidates</h2>
+        <h2 className="text-3xl mb-6 text-gray-800">Events</h2>
         <button
           className="mb-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
           onClick={() => setIsModalOpen(true)}
@@ -113,12 +113,12 @@ export default function Events() {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="fixed inset-0 bg-black opacity-50" />
           <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg z-10">
-            <h3 className="text-xl font-semibold mb-4">Create Event</h3>
+            <h3 className="text-xl mb-4">Create Event</h3>
             <form onSubmit={formik.handleSubmit} className="space-y-6">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm text-gray-700 mb-2"
                 >
                   Event Name
                 </label>
@@ -138,7 +138,7 @@ export default function Events() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm mb-2">
                   Select Candidates
                 </label>
                 <div className="flex flex-col space-y-2 h-96 overflow-y-auto">
@@ -183,7 +183,7 @@ export default function Events() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="w-full py-3 px-4 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   Create Event
                 </button>
