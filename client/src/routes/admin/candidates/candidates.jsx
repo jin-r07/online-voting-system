@@ -259,7 +259,7 @@ export default function Candidates() {
                   formik.resetForm();
                   setEditCandidateId(null);
                   setCurrentImage(null);
-                }} className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md">Cancel</button>
+                }} className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md">Cancel</button>
                 <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">{editCandidateId ? 'Update Candidate' : 'Add Candidate'}</button>
               </div>
             </form>
@@ -284,7 +284,7 @@ export default function Candidates() {
               <div className="ml-auto flex space-x-2">
                 <button
                   onClick={() => handleEditCandidate(candidate)}
-                  className="bg-yellow-500 text-white py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-200"
+                  className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
                 >
                   Edit
                 </button>
