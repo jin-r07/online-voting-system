@@ -160,7 +160,7 @@ export default function Parties() {
   return (
     <div className="pl-80 mx-auto bg-white shadow-md rounded-lg">
       <div className="sticky top-0 bg-white shadow-md p-6">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Parties</h2>
+        <h2 className="text-3xl mb-6 text-gray-800">Parties</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className="mb-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
