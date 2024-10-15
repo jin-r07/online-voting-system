@@ -247,7 +247,7 @@ export default function Users() {
                     setEditUserId(null);
                     setPicturePreview(null);
                   }}
-                  className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md"
+                  className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md"
                 >
                   Cancel
                 </button>
