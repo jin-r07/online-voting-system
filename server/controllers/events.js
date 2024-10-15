@@ -20,7 +20,14 @@ async function createEvent(req, res) {
 async function getCandidates(req, res) {
   try {
     const candidates = await Candidate.find().populate("party", "name");
-    res.status(200).json(candidates);
+    const candidatesWithImageURLs = candidates.map(candidate => {
+      return {
+          ...candidate.toObject(),
+          image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+          partyName: candidate.party ? candidate.party.name : null
+      };
+  });
+    res.status(200).json(candidatesWithImageURLs);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Error fetching candidates" });
