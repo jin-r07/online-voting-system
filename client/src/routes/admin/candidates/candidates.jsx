@@ -89,7 +89,6 @@ export default function Candidates() {
           progress: undefined,
           theme: "light",
         });
-        console.error("Error:", err);
       }
     },
   });
@@ -109,7 +108,6 @@ export default function Candidates() {
         progress: undefined,
         theme: "light",
       });
-      console.error("Error fetching candidates:", err);
     }
   };
 
@@ -118,7 +116,16 @@ export default function Candidates() {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-parties");
       setParties(response.data);
     } catch (err) {
-      console.error("Error fetching parties:", err);
+      toast.error("Error fetching candidates", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -157,7 +164,6 @@ export default function Candidates() {
         progress: undefined,
         theme: "light",
       });
-      console.error("Error deleting candidate:", err);
     }
   };
 
