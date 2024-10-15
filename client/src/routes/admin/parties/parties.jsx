@@ -55,7 +55,12 @@ export default function Parties() {
             theme: "light",
           });
         } else {
-          toast.error("Error processing request", {
+          await axios.post("http://localhost:8080/api-admin/add-party", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          toast.success("Party added successfully!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
