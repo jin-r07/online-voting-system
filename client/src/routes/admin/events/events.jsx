@@ -196,33 +196,31 @@ export default function Events() {
         </div>
       )}
 
-      <h3 className="text-2xl mt-10 text-gray-800">Existing Events</h3>
+      <h3 className="text-2xl mt-10 text-gray-800 mb-8">Existing Events</h3>
       <div className="grid grid-cols-1 gap-6">
-        <div className="grid grid-cols-1 gap-6">
-          {events.length > 0 ? (
-            events.map((event) => (
-              <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                <h4 className="font-semibold text-xl text-gray-800 mb-2">{event.eventName}</h4>
-                <p className="text-gray-600 mb-4">Candidates:</p>
-                <ul className="list-disc pl-5 space-y-1">
-                  {event.candidates.map((candidate) => (
-                    <li key={candidate._id} className="text-gray-700 flex items-center">
-                      <img
-                        src={candidate.image}
-                        alt={candidate.name}
-                        className="w-8 h-auto rounded-sm mr-2"
-                      />
-                      <span>{candidate.name}</span>
-                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))
-          ) : (
-            <div className="py-3 text-gray-500">No events found.</div>
-          )}
-        </div>
+        {events.length > 0 ? (
+          events.map((event) => (
+            <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+              <h4 className="font-semibold text-xl text-gray-800 mb-2">{event.eventName}</h4>
+              <p className="text-gray-600 mb-4">Candidates:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                {event.candidates.map((candidate) => (
+                  <li key={candidate._id} className="text-gray-700 flex items-center">
+                    <img
+                      src={candidate.image}
+                      alt={candidate.name}
+                      className="w-8 h-auto rounded-sm mr-2"
+                    />
+                    <span>{candidate.name}</span>
+                    <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        ) : (
+          <div className="py-3 text-gray-500">No events found.</div>
+        )}
       </div>
       <ToastContainer />
     </div>
