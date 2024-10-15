@@ -264,7 +264,7 @@ export default function Users() {
       )}
 
       <h3 className="text-2xl mt-10 text-gray-800">Existing Users</h3>
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-4 space-y-4 overflow-y-auto">
         {users.length > 0 ? (
           users.map((user) => (
             <li key={user._id} className="flex items-center border rounded-md p-4 bg-gray-50">
