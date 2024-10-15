@@ -173,10 +173,10 @@ export default function Parties() {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg p-6 z-10 shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">{editPartyId ? 'Edit Party' : 'Create Party'}</h2>
+            <h2 className="text-xl mb-4 text-gray-800">{editPartyId ? 'Edit Party' : 'Create Party'}</h2>
             <form onSubmit={formik.handleSubmit} encType="multipart/form-data" className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Party Name</label>
+                <label htmlFor="name" className="block text-sm text-gray-700">Party Name</label>
                 <input
                   id="name"
                   name="name"
@@ -193,7 +193,7 @@ export default function Parties() {
               </div>
 
               <div>
-                <label htmlFor="shortName" className="block text-sm font-medium text-gray-700">Party Short Name</label>
+                <label htmlFor="shortName" className="block text-sm text-gray-700">Party Short Name</label>
                 <input
                   id="shortName"
                   name="shortName"
@@ -216,7 +216,7 @@ export default function Parties() {
               )}
 
               <div>
-                <label htmlFor="image" className="block text-sm font-medium text-gray-700">Party Image</label>
+                <label htmlFor="image" className="block text-sm text-gray-700">Party Image</label>
                 <input
                   id="image"
                   name="image"
