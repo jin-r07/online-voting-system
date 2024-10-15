@@ -7,10 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Events() {
   const [candidates, setCandidates] = useState([]);
-  const [events, setEvents] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to toggle modal visibility
 
-  // Fetch candidates and existing events on component mount
+  const [events, setEvents] = useState([]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
@@ -57,7 +58,7 @@ export default function Events() {
   const formik = useFormik({
     initialValues: {
       name: "",
-      candidateIds: [], // Store selected candidate IDs
+      candidateIds: [],
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Event name is required"),
@@ -77,9 +78,9 @@ export default function Events() {
           theme: "light",
         });
         console.log("Event created:", response.data);
-        setEvents([...events, response.data]); // Add the new event to the list
-        formik.resetForm(); // Reset the form after successful submission
-        setIsModalOpen(false); // Close the modal after submission
+        setEvents([...events, response.data]);
+        formik.resetForm();
+        setIsModalOpen(false);
       } catch (err) {
         toast.error("Error creating event", {
           position: "bottom-right",
@@ -97,25 +98,16 @@ export default function Events() {
   });
 
   return (
-    <div className="pl-72">
-      <h2 className="text-2xl font-semibold mb-6">Existing Events</h2>
-      <button
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Create New Event
-      </button>
-      <ul className="mb-6">
-        {events.length > 0 ? (
-          events.map((event) => (
-            <li key={event._id} className="p-3 border-b border-gray-300">
-              {event.name} - Candidates: {event.candidateIds.join(", ")}
-            </li>
-          ))
-        ) : (
-          <li className="p-3 text-gray-500">No events found.</li>
-        )}
-      </ul>
+    <div className="pl-80 mx-auto bg-white rounded-lg">
+      <div className="sticky top-0 bg-white shadow-md py-6">
+        <h2 className="text-3xl mb-6 text-gray-800">Candidates</h2>
+        <button
+          className="mb-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Create New Event
+        </button>
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -206,6 +198,19 @@ export default function Events() {
           </div>
         </div>
       )}
+
+      <h3 className="text-2xl mt-10 text-gray-800">Existing Events</h3>
+      <ul className="mb-6">
+        {events.length > 0 ? (
+          events.map((event) => (
+            <li key={event._id} className="p-3 border-b border-gray-300">
+              {event.name} - Candidates: {event.candidateIds.join(", ")}
+            </li>
+          ))
+        ) : (
+          <li className="py-3 text-gray-500">No events found.</li>
+        )}
+      </ul>
       <ToastContainer />
     </div>
   );
