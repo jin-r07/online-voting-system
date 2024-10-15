@@ -72,7 +72,6 @@ export default function Candidates() {
             progress: undefined,
             theme: "light",
           });
-          console.error("Error:", err);
         }
         fetchCandidates();
         setIsModalOpen(false);
