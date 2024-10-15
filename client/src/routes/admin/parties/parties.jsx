@@ -163,7 +163,7 @@ export default function Parties() {
 
       <button
         onClick={() => setIsModalOpen(true)}
-        className="mb-6 bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+        className="mb-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
       >
         Add Party
       </button>
@@ -238,8 +238,8 @@ export default function Parties() {
                   formik.resetForm();
                   setEditPartyId(null);
                   setCurrentImage(null);
-                }} className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md">Cancel</button>
-                <button type="submit" className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">{editPartyId ? 'Update Party' : 'Add Party'}</button>
+                }} className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md">Cancel</button>
+                <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">{editPartyId ? 'Update Party' : 'Add Party'}</button>
               </div>
             </form>
           </div>
@@ -254,22 +254,22 @@ export default function Parties() {
               <img
                 src={party.image}
                 alt={party.name}
-                className="w-16 h-16 mr-4 rounded-full"
+                className="w-16 h-16 mr-4 rounded-sm bg-cover bg-center"
               />
               <div className="flex flex-col">
-                <span className="font-semibold text-lg text-gray-900">{party.name}</span>
-                <span className="text-sm text-gray-600">({party.shortName})</span>
+                <span className="text-lg text-gray-900">{party.name}</span>
+                <span className="text-sm text-gray-600">Abbreviation: {party.shortName}</span>
               </div>
               <div className="ml-auto flex space-x-2">
                 <button
                   onClick={() => handleEditParty(party)}
-                  className="bg-yellow-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-200"
+                  className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeleteParty(party._id)}
-                  className="bg-red-600 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                  className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
                 >
                   Delete
                 </button>
