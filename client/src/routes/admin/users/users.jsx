@@ -156,16 +156,10 @@ export default function Users() {
   };
 
   return (
-    <div className="pl-80 mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Users</h2>
-
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="mb-6 bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
-      >
-        Add User
-      </button>
-
+    <div className="pl-80 mx-auto bg-white rounded-lg">
+      <div className="sticky top-0 bg-white shadow-md p-6">
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">Users</h2>
+      </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
