@@ -15,7 +15,18 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
         const partyName = req.body.name.replace(/\s+/g, '_');
         const extension = path.extname(file.originalname);
-        cb(null, `${partyName}${extension}`);
+        const newFileName = `${partyName}${extension}`;
+        
+        const existingFiles = fs.readdirSync(uploadDir).filter(f => f.startsWith(partyName));
+
+        if (existingFiles.length > 0) {
+            existingFiles.forEach(file => {
+                const filePath = path.join(uploadDir, file);
+                fs.unlinkSync(filePath);
+            });
+        }
+
+        cb(null, newFileName);
     }
 });
 
