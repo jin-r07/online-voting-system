@@ -7,7 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Events() {
   const [candidates, setCandidates] = useState([]);
+
   const [events, setEvents] = useState([]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -95,16 +97,17 @@ export default function Events() {
   });
 
   return (
-    <div className="pl-80 mx-auto bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-3xl mb-6 text-gray-800">Events</h2>
-      <button
-        className="mb-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none shadow"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Create New Event
-      </button>
+    <div className="pl-80 mx-auto bg-white rounded-lg">
+      <div className="sticky top-0 bg-white shadow-md py-6">
+        <h2 className="text-3xl mb-6 text-gray-800">Events</h2>
+        <button
+          className="mb-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none shadow"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Create New Event
+        </button>
+      </div>
 
-      {/* Modal for creating new event */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="fixed inset-0 bg-black opacity-50" />
@@ -156,9 +159,9 @@ export default function Events() {
                       />
                       <label htmlFor={`candidate-${candidate._id}`} className="flex items-center w-full">
                         <img
-                          src={candidate.image} // Assuming candidate object contains an image URL
+                          src={candidate.image}
                           alt={candidate.name}
-                          className="w-12 h-12 rounded-full mr-2" // Use rounded image for better aesthetics
+                          className="w-12 h-12 rounded-full mr-2"
                         />
                         <div className="text-sm text-gray-700">
                           <p>{candidate.name}</p>
@@ -207,7 +210,6 @@ export default function Events() {
           <div className="py-3 text-gray-500">No events found.</div>
         )}
       </div>
-
       <ToastContainer />
     </div>
   );
