@@ -158,15 +158,16 @@ export default function Parties() {
   };
 
   return (
-    <div className="pl-80 mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Parties</h2>
-
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="mb-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
-      >
-        Add Party
-      </button>
+    <div className="pl-80 mx-auto bg-white shadow-md rounded-lg">
+      <div className="sticky top-0 bg-white shadow-md p-6">
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">Parties</h2>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mb-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+        >
+          Add Party
+        </button>
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -247,7 +248,7 @@ export default function Parties() {
       )}
 
       <h3 className="text-2xl mt-10 text-gray-800">Existing Parties</h3>
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-4 space-y-4 overflow-y-auto">
         {parties.length > 0 ? (
           parties.map((party) => (
             <li key={party._id} className="flex items-center border rounded-md p-4 bg-gray-50">
