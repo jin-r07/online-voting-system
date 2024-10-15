@@ -158,16 +158,16 @@ export default function Users() {
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
       <div className="sticky top-0 bg-white shadow-md p-6">
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Users</h2>
+        <h2 className="text-3xl mb-1 text-gray-800">Users</h2>
       </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg p-6 z-10 shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">{editUserId ? 'Edit User' : 'Create User'}</h2>
+            <h2 className="text-xl mb-4 text-gray-800">{editUserId ? 'Edit User' : 'Create User'}</h2>
             <form onSubmit={formik.handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <label htmlFor="email" className="block text-sm text-gray-700">Email</label>
                 <input
                   id="email"
                   name="email"
@@ -184,7 +184,7 @@ export default function Users() {
               </div>
 
               <div>
-                <label htmlFor="voterIdCardNumber" className="block text-sm font-medium text-gray-700">Voter ID Card Number</label>
+                <label htmlFor="voterIdCardNumber" className="block text-sm text-gray-700">Voter ID Card Number</label>
                 <input
                   id="voterIdCardNumber"
                   name="voterIdCardNumber"
@@ -206,7 +206,7 @@ export default function Users() {
                     <img src={picturePreview} alt="Voter ID Preview" className="h-auto w-52 object-cover rounded-md" />
                   )}
                 </div>
-                <label htmlFor="voterIdCardPicture" className="block text-sm font-medium text-gray-700">Upload Voter ID Card Picture</label>
+                <label htmlFor="voterIdCardPicture" className="block text-sm text-gray-700">Upload Voter ID Card Picture</label>
                 <input
                   id="voterIdCardPicture"
                   name="voterIdCardPicture"
@@ -221,7 +221,7 @@ export default function Users() {
               </div>
 
               <div>
-                <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
+                <label htmlFor="role" className="block text-sm text-gray-700">Role</label>
                 <select
                   id="role"
                   name="role"
@@ -253,7 +253,7 @@ export default function Users() {
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                  className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
                 >
                   {editUserId ? 'Update User' : 'Add User'}
                 </button>
@@ -263,7 +263,7 @@ export default function Users() {
         </div>
       )}
 
-      <h3 className="text-2xl font-bold mt-10 text-gray-800">Existing Users</h3>
+      <h3 className="text-2xl mt-10 text-gray-800">Existing Users</h3>
       <ul className="mt-4 space-y-4">
         {users.length > 0 ? (
           users.map((user) => (
@@ -275,7 +275,7 @@ export default function Users() {
                   )}
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-lg text-gray-900">{user.email}</span>
+                  <span className="text-lg text-gray-900">{user.email}</span>
                   <span className="text-sm text-gray-600">Voter ID: {user.voterIdCardNumber}</span>
                   <span className="text-sm text-gray-600">Role: {user.role}</span>
                 </div>
@@ -283,13 +283,13 @@ export default function Users() {
               <div className="ml-auto flex space-x-2">
                 <button
                   onClick={() => handleEditUser(user)}
-                  className="bg-yellow-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-200"
+                  className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeleteUser(user._id)}
-                  className="bg-red-600 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                  className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
                 >
                   Delete
                 </button>
