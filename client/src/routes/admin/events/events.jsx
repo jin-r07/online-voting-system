@@ -179,22 +179,18 @@ export default function Events() {
                   <div className="text-red-500 text-sm mt-2">{formik.errors.candidateIds}</div>
                 ) : null}
               </div>
-
-              <div className="pt-4">
-                <button
-                  type="submit"
-                  className="w-full py-3 px-4 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  Create Event
-                </button>
-              </div>
             </form>
-            <button
-              className="mt-4 text-red-500 hover:underline"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Close
-            </button>
+            <div className="flex items-center justify-between mt-6">
+              <button type="button" onClick={() => {
+                setIsModalOpen(false);
+              }} className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md">Cancel</button>
+              <button
+                type="submit"
+                className="py-2 px-4 border border-transparent rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Create Event
+              </button>
+            </div>
           </div>
         </div>
       )}
