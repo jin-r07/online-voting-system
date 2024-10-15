@@ -57,7 +57,12 @@ export default function Candidates() {
             theme: "light",
           });
         } else {
-          toast.error("Error processing request", {
+          await axios.post("http://localhost:8080/api-admin/add-candidate", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          toast.success("Candidate addedd successfully!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -169,24 +174,25 @@ export default function Candidates() {
   };
 
   return (
-    <div className="pl-80 mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Candidates</h2>
-
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="mb-6 bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
-      >
-        Add Candidate
-      </button>
+    <div className="pl-80 mx-auto bg-white rounded-lg">
+      <div className="sticky top-0 bg-white shadow-md p-6">
+        <h2 className="text-3xl mb-6 text-gray-800">Candidates</h2>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mb-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+        >
+          Add Candidate
+        </button>
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="bg-white rounded-lg p-6 z-10 shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">{editCandidateId ? 'Edit Candidate' : 'Create Candidate'}</h2>
+            <h2 className="text-xl mb-4 text-gray-800">{editCandidateId ? 'Edit Candidate' : 'Create Candidate'}</h2>
             <form onSubmit={formik.handleSubmit} encType="multipart/form-data" className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Candidate Name</label>
+                <label htmlFor="name" className="block text-sm text-gray-700">Candidate Name</label>
                 <input
                   id="name"
                   name="name"
@@ -203,7 +209,7 @@ export default function Candidates() {
               </div>
 
               <div>
-                <label htmlFor="partyId" className="block text-sm font-medium text-gray-700">Select Party</label>
+                <label htmlFor="partyId" className="block text-sm text-gray-700">Select Party</label>
                 <select
                   id="partyId"
                   name="partyId"
@@ -231,7 +237,7 @@ export default function Candidates() {
               )}
 
               <div>
-                <label htmlFor="image" className="block text-sm font-medium text-gray-700">Candidate Image</label>
+                <label htmlFor="image" className="block text-sm text-gray-700">Candidate Image</label>
                 <input
                   id="image"
                   name="image"
@@ -255,15 +261,15 @@ export default function Candidates() {
                   setEditCandidateId(null);
                   setCurrentImage(null);
                 }} className="bg-gray-300 text-gray-800 py-2 px-4 rounded-md">Cancel</button>
-                <button type="submit" className="bg-blue-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">{editCandidateId ? 'Update Candidate' : 'Add Candidate'}</button>
+                <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">{editCandidateId ? 'Update Candidate' : 'Add Candidate'}</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      <h3 className="text-2xl font-bold mt-10 text-gray-800">Existing Candidates</h3>
-      <ul className="mt-4 space-y-4">
+      <h3 className="text-2xl mt-10 text-gray-800">Existing Candidates</h3>
+      <ul className="mt-4 space-y-4 overflow-y-auto">
         {candidates.length > 0 ? (
           candidates.map((candidate) => (
             <li key={candidate._id} className="flex items-center border rounded-md p-4 bg-gray-50">
@@ -273,19 +279,19 @@ export default function Candidates() {
                 className="w-16 h-16 mr-4 rounded-full"
               />
               <div className="flex flex-col">
-                <span className="font-semibold text-lg text-gray-900">{candidate.name}</span>
+                <span className="text-lg text-gray-900">{candidate.name}</span>
                 <span className="text-sm text-gray-600">Party: {candidate.party.name}</span>
               </div>
               <div className="ml-auto flex space-x-2">
                 <button
                   onClick={() => handleEditCandidate(candidate)}
-                  className="bg-yellow-500 text-white font-semibold py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-200"
+                  className="bg-yellow-500 text-white py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-200"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeleteCandidate(candidate._id)}
-                  className="bg-red-600 text-white font-semibold py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                  className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
                 >
                   Delete
                 </button>
