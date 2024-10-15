@@ -157,7 +157,7 @@ export default function Users() {
 
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
-      <div className="sticky top-0 bg-white shadow-md p-6">
+      <div className="sticky top-0 bg-white shadow-md py-6">
         <h2 className="text-3xl mb-1 text-gray-800">Users</h2>
       </div>
       {isModalOpen && (
