@@ -65,6 +65,7 @@ export default function Events() {
       candidateIds: Yup.array().min(1, "At least one candidate must be selected"),
     }),
     onSubmit: async (values) => {
+      console.log(values);
       try {
         const response = await axios.post("http://localhost:8080/api-admin/create-event", values);
         toast.success("Event created successfully!", {
@@ -137,13 +138,13 @@ export default function Events() {
                 <label className="block text-sm mb-2">Select Candidates</label>
                 <div className="flex flex-col space-y-2 h-96 overflow-y-auto border border-gray-300 p-4 rounded-md">
                   {candidates.map((candidate) => (
-                    <div key={candidate._id} className="flex items-center cursor-pointer">
+                    <div key={candidate._id} className="flex items-center">
                       <input
                         type="checkbox"
                         id={`candidate-${candidate._id}`}
                         name="candidateIds"
                         value={candidate._id}
-                        className="mr-2"
+                        className="mr-2 w-4 h-4 cursor-pointer"
                         onChange={(event) => {
                           const { checked } = event.target;
                           const selectedIds = formik.values.candidateIds;
@@ -161,7 +162,7 @@ export default function Events() {
                         <img
                           src={candidate.image}
                           alt={candidate.name}
-                          className="w-12 h-12 rounded-full mr-2"
+                          className="w-12 h-auto rounded-sm mr-2"
                         />
                         <div className="text-sm text-gray-700">
                           <p>{candidate.name}</p>
@@ -197,18 +198,31 @@ export default function Events() {
 
       <h3 className="text-2xl mt-10 text-gray-800">Existing Events</h3>
       <div className="grid grid-cols-1 gap-6">
-        {events.length > 0 ? (
-          events.map((event) => (
-            <div key={event._id} className="bg-gray-100 p-4 rounded-lg shadow-md">
-              <h4 className="font-semibold text-lg">{event.name}</h4>
-              <p className="text-gray-600">
-                Candidates: {event.candidateIds.join(", ")}
-              </p>
-            </div>
-          ))
-        ) : (
-          <div className="py-3 text-gray-500">No events found.</div>
-        )}
+        <div className="grid grid-cols-1 gap-6">
+          {events.length > 0 ? (
+            events.map((event) => (
+              <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                <h4 className="font-semibold text-xl text-gray-800 mb-2">{event.eventName}</h4>
+                <p className="text-gray-600 mb-4">Candidates:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  {event.candidates.map((candidate) => (
+                    <li key={candidate._id} className="text-gray-700 flex items-center">
+                      <img
+                        src={candidate.image}
+                        alt={candidate.name}
+                        className="w-8 h-auto rounded-sm mr-2"
+                      />
+                      <span>{candidate.name}</span>
+                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          ) : (
+            <div className="py-3 text-gray-500">No events found.</div>
+          )}
+        </div>
       </div>
       <ToastContainer />
     </div>
