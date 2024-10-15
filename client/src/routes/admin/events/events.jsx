@@ -7,10 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Events() {
   const [candidates, setCandidates] = useState([]);
-
   const [events, setEvents] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openedEvents, setOpenedEvents] = useState({}); // Track opened events
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -96,6 +95,13 @@ export default function Events() {
       }
     },
   });
+
+  const toggleCandidates = (eventId) => {
+    setOpenedEvents((prevOpenedEvents) => ({
+      ...prevOpenedEvents,
+      [eventId]: !prevOpenedEvents[eventId],
+    }));
+  };
 
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
@@ -201,21 +207,30 @@ export default function Events() {
         {events.length > 0 ? (
           events.map((event) => (
             <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-              <h4 className="font-semibold text-xl text-gray-800 mb-2">{event.eventName}</h4>
-              <p className="text-gray-600 mb-4">Candidates:</p>
-              <ul className="list-disc pl-5 space-y-1">
-                {event.candidates.map((candidate) => (
-                  <li key={candidate._id} className="text-gray-700 flex items-center">
-                    <img
-                      src={candidate.image}
-                      alt={candidate.name}
-                      className="w-8 h-auto rounded-sm mr-2"
-                    />
-                    <span>{candidate.name}</span>
-                    <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
-                  </li>
-                ))}
-              </ul>
+              <h4 className="font-semibold text-xl text-gray-800 mb-2 flex justify-between items-center">
+                {event.eventName}
+                <button
+                  onClick={() => toggleCandidates(event._id)}
+                  className="text-blue-600 hover:underline"
+                >
+                  {openedEvents[event._id] ? "Hide Candidates" : "Show Candidates"}
+                </button>
+              </h4>
+              {openedEvents[event._id] && (
+                <ul className="list-disc pl-5 space-y-1 mt-2">
+                  {event.candidates.map((candidate) => (
+                    <li key={candidate._id} className="text-gray-700 flex items-center">
+                      <img
+                        src={candidate.image}
+                        alt={candidate.name}
+                        className="w-8 h-auto rounded-sm mr-2"
+                      />
+                      <span>{candidate.name}</span>
+                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))
         ) : (
