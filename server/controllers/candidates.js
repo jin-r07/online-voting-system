@@ -22,7 +22,7 @@ async function createCandidate(req, res) {
 
 async function getAllCandidates(req, res) {
     try {
-        const candidates = await Candidate.find().populate('party', 'name');
+        const candidates = await Candidate.find().populate("party", "name");
         const candidatesWithImageURLs = candidates.map(candidate => {
             return {
                 ...candidate.toObject(),
