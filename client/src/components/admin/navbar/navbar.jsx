@@ -30,7 +30,7 @@ export default function AdminNavbar() {
             to="/admin-events"
             className={`flex items-center hover:bg-gray-700 p-3 rounded transition-colors ${location.pathname === '/admin-events' ? 'bg-gray-700' : ''}`}
           >
-            <FaVoteYea className="mr-3" /> Create Events
+            <FaVoteYea className="mr-3" /> Events
           </Link>
         </li>
         <li>
