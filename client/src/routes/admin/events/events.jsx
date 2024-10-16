@@ -298,7 +298,7 @@ export default function Events() {
               </h4>
 
               {openedEvents[event._id] && (
-                <ul className="list-none mx-h-72 pl-5 space-y-1 mt-2 overflow-y-auto">
+                <ul className="list-none max-h-72 pl-5 space-y-1 mt-2 overflow-y-auto">
                   <h3 className="text-lg">Candidates:</h3>
                   {event.candidates.map((candidate) => (
                     <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
