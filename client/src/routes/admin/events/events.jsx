@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -211,23 +212,23 @@ export default function Events() {
                 {event.eventName}
                 <button
                   onClick={() => toggleCandidates(event._id)}
-                  className="text-blue-600 hover:underline"
                 >
-                  {openedEvents[event._id] ? "Hide Candidates" : "Show Candidates"}
+                  {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
                 </button>
               </h4>
               {openedEvents[event._id] && (
                 <ul className="list-disc pl-5 space-y-1 mt-2">
+                  <h3>Candidates:</h3>
                   {event.candidates.map((candidate) => (
-                    <li key={candidate._id} className="text-gray-700 flex items-center">
+                    <div key={candidate._id} className="text-gray-700 flex items-center">
                       <img
                         src={candidate.image}
                         alt={candidate.name}
                         className="w-8 h-auto rounded-sm mr-2"
                       />
                       <span>{candidate.name}</span>
-                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
-                    </li>
+                      <span className="ml-2 text-gray-500">Party: {candidate.party?.name}</span>
+                    </div>
                   ))}
                 </ul>
               )}
