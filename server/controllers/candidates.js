@@ -83,4 +83,13 @@ async function deleteCandidate(req, res) {
     }
 }
 
-module.exports = { createCandidate, getAllCandidates, editCandidate, deleteCandidate };
+async function getTotalCandidates(req, res) {
+    try {
+        const totalCandidates = await Candidate.countDocuments();
+        res.status(200).json({ totalCandidates });
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching total candidates" });
+    }
+}
+
+module.exports = { createCandidate, getAllCandidates, editCandidate, deleteCandidate, getTotalCandidates };
