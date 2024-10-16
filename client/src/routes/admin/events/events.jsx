@@ -8,10 +8,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Events() {
   const [candidates, setCandidates] = useState([]);
+
   const [events, setEvents] = useState([]);
+
+  const [inactiveEvents, setInactiveEvents] = useState([]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isEditMode, setIsEditMode] = useState(false);
+
   const [editingEventId, setEditingEventId] = useState(null);
+
   const [openedEvents, setOpenedEvents] = useState({});
 
   const formik = useFormik({
@@ -52,6 +59,7 @@ export default function Events() {
           });
         }
         fetchEvents();
+        fetchInactiveEvents();
         setIsModalOpen(false);
         setIsEditMode(false);
         formik.resetForm();
@@ -88,9 +96,22 @@ export default function Events() {
     }
   };
 
+  const fetchInactiveEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-events-inactive");
+      setInactiveEvents(response.data);
+    } catch (err) {
+      toast.error("Error processing request", {
+        position: "bottom-right",
+        autoClose: 5000,
+      });
+    }
+  };
+
   useEffect(() => {
     fetchCandidates();
     fetchEvents();
+    fetchInactiveEvents();
   }, []);
 
   const handleEditEvent = (event) => {
@@ -120,6 +141,7 @@ export default function Events() {
         });
       }
       fetchEvents();
+      fetchInactiveEvents();
     }
   };
 
@@ -271,58 +293,117 @@ export default function Events() {
         </div>
       )}
 
-      <h3 className="text-2xl mt-10 text-gray-800 mb-8">Existing Events</h3>
-      <div className="grid grid-cols-1 gap-6">
-        {events.length > 0 ? (
-          events.map((event) => (
-            <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
-              <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
-                {event.eventName}
-                <div className="flex items-center space-x-2 text-base">
-                  <button
-                    onClick={() => handleEditEvent(event)}
-                    className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteEvent(event._id)}
-                    className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
-                  >
-                    Delete
-                  </button>
-                  <button onClick={() => toggleCandidates(event._id)}>
-                    {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
-                  </button>
-                </div>
-              </h4>
-
-              {openedEvents[event._id] && (
-                <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
-                  <div className="sticky top-0 bg-white text-gray-600 mt-2">
-                    <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
-                    <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
-                    <p><strong>Status:</strong> {event.status}</p>
-                    <p><strong>Candidates:</strong></p>
-                  </div>
-                  {event.candidates.map((candidate) => (
-                    <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
-                      <img
-                        src={candidate.image}
-                        alt={candidate.name}
-                        className="w-14 h-auto rounded-sm mr-2"
-                      />
-                      <span>{candidate.name}</span>
-                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+      <div className="flex flex-col w-full h-full">
+        <div className="w-full max-h-1/2 overflow-y-auto">
+          <h3 className="text-2xl mt-10 text-gray-800 mb-8">Ongoing Events</h3>
+          <div className="grid grid-cols-1 gap-6">
+            {events.length > 0 ? (
+              events.map((event) => (
+                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
+                  <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
+                    {event.eventName}
+                    <div className="flex items-center space-x-2 text-base">
+                      <button
+                        onClick={() => handleEditEvent(event)}
+                        className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteEvent(event._id)}
+                        className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                      >
+                        Delete
+                      </button>
+                      <button onClick={() => toggleCandidates(event._id)}>
+                        {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
+                      </button>
                     </div>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="py-3 text-gray-500">No events found.</div>
-        )}
+                  </h4>
+
+                  {openedEvents[event._id] && (
+                    <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
+                      <div className="sticky top-0 bg-white text-gray-600 mt-2">
+                        <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
+                        <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
+                        <p><strong>Status:</strong> {event.status}</p>
+                        <p><strong>Candidates:</strong></p>
+                      </div>
+                      {event.candidates.map((candidate) => (
+                        <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
+                          <img
+                            src={candidate.image}
+                            alt={candidate.name}
+                            className="w-14 h-auto rounded-sm mr-2"
+                          />
+                          <span>{candidate.name}</span>
+                          <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                        </div>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="py-3 text-gray-500">No events found.</div>
+            )}
+          </div>
+        </div>
+        <div className="w-full max-h-1/2 overflow-y-auto">
+          <h3 className="text-2xl mt-10 text-gray-800 mb-8">Upcoming Events</h3>
+          <div className="grid grid-cols-1 gap-6">
+            {inactiveEvents.length > 0 ? (
+              inactiveEvents.map((event) => (
+                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
+                  <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
+                    {event.eventName}
+                    <div className="flex items-center space-x-2 text-base">
+                      <button
+                        onClick={() => handleEditEvent(event)}
+                        className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteEvent(event._id)}
+                        className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                      >
+                        Delete
+                      </button>
+                      <button onClick={() => toggleCandidates(event._id)}>
+                        {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
+                      </button>
+                    </div>
+                  </h4>
+
+                  {openedEvents[event._id] && (
+                    <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
+                      <div className="sticky top-0 bg-white text-gray-600 mt-2">
+                        <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
+                        <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
+                        <p><strong>Status:</strong> {event.status}</p>
+                        <p><strong>Candidates:</strong></p>
+                      </div>
+                      {event.candidates.map((candidate) => (
+                        <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
+                          <img
+                            src={candidate.image}
+                            alt={candidate.name}
+                            className="w-14 h-auto rounded-sm mr-2"
+                          />
+                          <span>{candidate.name}</span>
+                          <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                        </div>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))
+            ) : (
+              <div className="py-3 text-gray-500">No events found.</div>
+            )}
+          </div>
+        </div>
       </div>
       <ToastContainer />
     </div>

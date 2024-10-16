@@ -33,9 +33,10 @@ async function getCandidates(req, res) {
     res.status(500).json({ error: "Error fetching candidates" });
   }
 }
-async function getEvents(req, res) {
+
+async function getActiveEvents(req, res) {
   try {
-    const events = await Event.find().populate({
+    const events = await Event.find({ status: 'active' }).populate({
       path: "candidates",
       populate: {
         path: "party",
@@ -57,11 +58,75 @@ async function getEvents(req, res) {
         end: event.end
       };
     });
+
     res.status(200).json(eventsWithCandidateDetails);
   } catch (err) {
-    res.status(500).json({ error: "Error fetching events" });
+    res.status(500).json({ error: "Error fetching active events" });
   }
 }
+
+async function getInactiveEvents(req, res) {
+  try {
+    const events = await Event.find({ status: 'inactive' }).populate({
+      path: "candidates",
+      populate: {
+        path: "party",
+        select: "name"
+      }
+    });
+
+    const eventsWithCandidateDetails = events.map(event => {
+      return {
+        ...event.toObject(),
+        candidates: event.candidates.map(candidate => {
+          return {
+            ...candidate.toObject(),
+            image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+            partyName: candidate.party ? candidate.party.name : null
+          };
+        }),
+        start: event.start,
+        end: event.end
+      };
+    });
+
+    res.status(200).json(eventsWithCandidateDetails);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching inactive events" });
+  }
+}
+
+async function getCompletedEvents(req, res) {
+  try {
+    const events = await Event.find({ status: 'completed' }).populate({
+      path: "candidates",
+      populate: {
+        path: "party",
+        select: "name"
+      }
+    });
+
+    const eventsWithCandidateDetails = events.map(event => {
+      return {
+        ...event.toObject(),
+        candidates: event.candidates.map(candidate => {
+          return {
+            ...candidate.toObject(),
+            image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+            partyName: candidate.party ? candidate.party.name : null
+          };
+        }),
+        start: event.start,
+        end: event.end
+      };
+    });
+
+    res.status(200).json(eventsWithCandidateDetails);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching completed events" });
+  }
+}
+
 
 async function editEvent(req, res) {
   try {
@@ -99,4 +164,4 @@ async function deleteEvent(req, res) {
   }
 }
 
-module.exports = { createEvent, getCandidates, getEvents, editEvent, deleteEvent };
+module.exports = { createEvent, getCandidates, getActiveEvents, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent };
