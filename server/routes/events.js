@@ -1,5 +1,5 @@
 const express = require("express");
-const { createEvent, getCandidates, getActiveEvents, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent } = require("../controllers/events");
+const { createEvent, getCandidates, getActiveEvents, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent, getTotalCompletedEvents } = require("../controllers/events");
 
 const router = express.Router();
 
@@ -10,5 +10,6 @@ router.get("/get-events-inactive", getInactiveEvents);
 router.get("/get-events-completed", getCompletedEvents);
 router.put("/edit-event/:id", editEvent);
 router.delete("/delete-event/:id", deleteEvent);
+router.get("/get-completed-events-total", getTotalCompletedEvents);
 
 module.exports = router;

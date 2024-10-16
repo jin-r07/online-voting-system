@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Dashboard() {
   const [totalCandidates, setTotalCandidates] = useState("");
 
+  const [totalCompletedEvents, setTotalCompletedEvents] = useState("");
+
   const fetchTotalCandidates = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api-admin/get-candidates-total");
@@ -26,8 +28,27 @@ export default function Dashboard() {
     }
   };
 
+  const fetchTotalCompletedEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-completed-events-total");
+      setTotalCompletedEvents(response.data.totalCompletedEvents);
+    } catch (err) {
+      toast.error("Error fetching candidates", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   useEffect(() => {
     fetchTotalCandidates();
+    fetchTotalCompletedEvents();
   }, []);
 
 
@@ -74,7 +95,7 @@ export default function Dashboard() {
             <FaHistory className="text-3xl text-red-500 mr-4" />
             <div>
               <h2 className="text-xl font-semibold">History</h2>
-              <p className="text-gray-600">Total: </p>
+              <p className="text-gray-600">Total: {totalCompletedEvents}</p>
             </div>
           </div>
         </div>

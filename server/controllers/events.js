@@ -164,4 +164,14 @@ async function deleteEvent(req, res) {
   }
 }
 
-module.exports = { createEvent, getCandidates, getActiveEvents, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent };
+async function getTotalCompletedEvents(req, res) {
+  try {
+      const totalCompletedEvents = await Event.find({ status: 'completed' }).countDocuments();
+      res.status(200).json({ totalCompletedEvents });
+  } catch (err) {
+      res.status(500).json({ error: "Error fetching total completed events" });
+  }
+}
+
+
+module.exports = { createEvent, getCandidates, getActiveEvents, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent, getTotalCompletedEvents };
