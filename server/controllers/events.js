@@ -44,7 +44,7 @@ async function getEvents(req, res) {
         select: "name"
       }
     });
-    
+
     const eventsWithCandidateDetails = events.map(event => {
       return {
         ...event.toObject(),
@@ -64,4 +64,39 @@ async function getEvents(req, res) {
   }
 }
 
-module.exports = { createEvent, getCandidates, getEvents };
+async function editEvent(req, res) {
+  try {
+    const eventId = req.params.id;
+    const { name, candidateIds } = req.body;
+
+    const updatedEvent = await Event.findByIdAndUpdate(
+      eventId,
+      { name, candidates: candidateIds },
+      { new: true }
+    );
+
+    if (updatedEvent) {
+      res.status(200).json(updatedEvent);
+    } else {
+      res.status(404).json({ message: 'Event not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating event', error });
+  }
+}
+
+async function deleteEvent(req, res) {
+  try {
+    const eventId = req.params.id;
+    const result = await Event.findByIdAndDelete(eventId);
+    if (result) {
+      res.status(200).json({ message: 'Event deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'Event not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting event', error });
+  }
+}
+
+module.exports = { createEvent, getCandidates, getEvents, editEvent, deleteEvent };

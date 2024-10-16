@@ -52,7 +52,7 @@ export default function Events() {
       try {
         if (isEditMode) {
           // Edit existing event
-          await axios.put(`http://localhost:8080/api-admin/update-event/${editingEventId}`, values);
+          await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, values);
           toast.success("Event updated successfully!");
         } else {
           // Create new event
@@ -233,7 +233,7 @@ export default function Events() {
 
               {/* Toggle to show/hide candidates */}
               {openedEvents[event._id] && (
-                <ul className="list-disc pl-5 space-y-1 mt-2 overflow-y-auto">
+                <ul className="list-none h-72 pl-5 space-y-1 mt-2 overflow-y-auto">
                   <h3 className="text-lg">Candidates:</h3>
                   {event.candidates.map((candidate) => (
                     <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
