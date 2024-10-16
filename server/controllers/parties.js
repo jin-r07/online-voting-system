@@ -83,4 +83,14 @@ async function deleteParty(req, res) {
     }
 }
 
-module.exports = { createParty, getAllParties, editParty, deleteParty };
+async function getTotalParties(req, res) {
+    try {
+        const totalParties = await Party.countDocuments();
+        res.status(200).json({ totalParties });
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching total parties" });
+    }
+}
+
+
+module.exports = { createParty, getAllParties, editParty, deleteParty, getTotalParties };
