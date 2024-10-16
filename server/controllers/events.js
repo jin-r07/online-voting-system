@@ -131,11 +131,11 @@ async function getCompletedEvents(req, res) {
 async function editEvent(req, res) {
   try {
     const eventId = req.params.id;
-    const { name, candidateIds, start, end } = req.body; // Extract start and end
+    const { name, candidateIds, start, end } = req.body;
 
     const updatedEvent = await Event.findByIdAndUpdate(
       eventId,
-      { eventName: name, candidates: candidateIds, start: new Date(start), end: new Date(end) }, // Include start and end
+      { eventName: name, candidates: candidateIds, start: new Date(start), end: new Date(end) },
       { new: true }
     );
 
