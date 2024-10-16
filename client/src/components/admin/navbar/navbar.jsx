@@ -35,18 +35,18 @@ export default function AdminNavbar() {
         </li>
         <li>
           <Link
-            to="/admin-candidates"
-            className={`flex items-center hover:bg-gray-700 p-3 rounded transition-colors ${location.pathname === '/admin-candidates' ? 'bg-gray-700' : ''}`}
-          >
-            <FaUserTie className="mr-3" /> Candidates
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/admin-parties"
             className={`flex items-center hover:bg-gray-700 p-3 rounded transition-colors ${location.pathname === '/admin-parties' ? 'bg-gray-700' : ''}`}
           >
             <FaAward className="mr-3" /> Parties
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin-candidates"
+            className={`flex items-center hover:bg-gray-700 p-3 rounded transition-colors ${location.pathname === '/admin-candidates' ? 'bg-gray-700' : ''}`}
+          >
+            <FaUserTie className="mr-3" /> Candidates
           </Link>
         </li>
         <li>
