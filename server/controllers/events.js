@@ -71,7 +71,7 @@ async function editEvent(req, res) {
 
     const updatedEvent = await Event.findByIdAndUpdate(
       eventId,
-      { name, candidates: candidateIds },
+      { eventName: name, candidates: candidateIds },
       { new: true }
     );
 
