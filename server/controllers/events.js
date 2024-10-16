@@ -2,18 +2,18 @@ const Event = require("../models/events");
 const Candidate = require("../models/candidates");
 
 async function createEvent(req, res) {
-  const { name, candidateIds } = req.body;
-  console.log(req.body);
+  const { name, candidateIds, start, end } = req.body;
   try {
     const event = new Event({
       eventName: name,
       candidates: candidateIds,
+      start: new Date(start),
+      end: new Date(end)
     });
 
     await event.save();
     res.status(201).json(event);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Error creating event" });
   }
 }
@@ -30,11 +30,9 @@ async function getCandidates(req, res) {
     });
     res.status(200).json(candidatesWithImageURLs);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Error fetching candidates" });
   }
 }
-
 async function getEvents(req, res) {
   try {
     const events = await Event.find().populate({
@@ -54,12 +52,13 @@ async function getEvents(req, res) {
             image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
             partyName: candidate.party ? candidate.party.name : null
           };
-        })
+        }),
+        start: event.start,
+        end: event.end
       };
     });
     res.status(200).json(eventsWithCandidateDetails);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Error fetching events" });
   }
 }
@@ -67,11 +66,11 @@ async function getEvents(req, res) {
 async function editEvent(req, res) {
   try {
     const eventId = req.params.id;
-    const { name, candidateIds } = req.body;
+    const { name, candidateIds, start, end } = req.body; // Extract start and end
 
     const updatedEvent = await Event.findByIdAndUpdate(
       eventId,
-      { eventName: name, candidates: candidateIds },
+      { eventName: name, candidates: candidateIds, start: new Date(start), end: new Date(end) }, // Include start and end
       { new: true }
     );
 
@@ -84,6 +83,7 @@ async function editEvent(req, res) {
     res.status(500).json({ message: 'Error updating event', error });
   }
 }
+
 
 async function deleteEvent(req, res) {
   try {

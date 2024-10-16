@@ -18,8 +18,8 @@ export default function Events() {
     initialValues: {
       name: "",
       candidateIds: [],
-      start: "", // New field for start date
-      end: "",   // New field for end date
+      start: "",
+      end: ""
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Event name is required"),
@@ -29,14 +29,22 @@ export default function Events() {
     }),
     onSubmit: async (values) => {
       try {
+        const { name, candidateIds, start, end } = values;
+
+        const eventData = {
+          name,
+          candidateIds,
+          start: new Date(start).toISOString(),
+          end: new Date(end).toISOString(),
+        };
         if (isEditMode) {
-          await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, values);
+          await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, eventData);
           toast.success("Event updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,
           });
         } else {
-          const response = await axios.post("http://localhost:8080/api-admin/create-event", values);
+          const response = await axios.post("http://localhost:8080/api-admin/create-event", eventData);
           setEvents([...events, response.data]);
           toast.success("Event created successfully!", {
             position: "bottom-right",
@@ -91,8 +99,8 @@ export default function Events() {
     setEditingEventId(event._id);
     formik.setFieldValue("name", event.eventName);
     formik.setFieldValue("candidateIds", event.candidates.map((candidate) => candidate._id));
-    formik.setFieldValue("start", new Date(event.start).toISOString().slice(0, 16)); // Convert to local date
-    formik.setFieldValue("end", new Date(event.end).toISOString().slice(0, 16)); // Convert to local date
+    formik.setFieldValue("start", new Date(new Date(event.start).getTime() + (5 * 60 + 45) * 60 * 1000).toISOString().slice(0, 16));
+    formik.setFieldValue("end", new Date(new Date(event.end).getTime() + (5 * 60 + 45) * 60 * 1000).toISOString().slice(0, 16));
   };
 
   const handleDeleteEvent = async (eventId) => {
@@ -290,8 +298,13 @@ export default function Events() {
               </h4>
 
               {openedEvents[event._id] && (
-                <ul className="list-none max-h-72 pl-5 space-y-1 mt-2 overflow-y-auto">
-                  <h3 className="text-lg">Candidates:</h3>
+                <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
+                  <div className="sticky top-0 bg-white text-gray-600 mt-2">
+                    <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
+                    <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
+                    <p><strong>Status:</strong> {event.status}</p>
+                    <p><strong>Candidates:</strong></p>
+                  </div>
                   {event.candidates.map((candidate) => (
                     <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
                       <img
