@@ -203,7 +203,7 @@ export default function Events() {
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
       <div className="sticky top-0 bg-white shadow-md py-6">
-        <h2 className="text-3xl mb-6 text-gray-800">Events</h2>
+        <h2 className="text-3xl mb-6 text-gray-800">Manage Events</h2>
         <button
           className="mb-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none shadow"
           onClick={() => {
