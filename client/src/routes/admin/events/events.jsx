@@ -19,47 +19,6 @@ export default function Events() {
 
   const [openedEvents, setOpenedEvents] = useState({});
 
-  useEffect(() => {
-    const fetchCandidates = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/api-admin/get-candidates");
-        setCandidates(response.data);
-      } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-    };
-
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/api-admin/get-events");
-        setEvents(response.data);
-      } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-    };
-
-    fetchCandidates();
-    fetchEvents();
-  }, []);
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -97,6 +56,7 @@ export default function Events() {
             theme: "light",
           });
         }
+        fetchEvents();
         setIsModalOpen(false);
         setIsEditMode(false);
         formik.resetForm();
@@ -114,6 +74,47 @@ export default function Events() {
       }
     },
   });
+
+  const fetchCandidates = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-candidates");
+      setCandidates(response.data);
+    } catch (err) {
+      toast.error("Error processing request", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-events");
+      setEvents(response.data);
+    } catch (err) {
+      toast.error("Error processing request", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchCandidates();
+    fetchEvents();
+  }, []);
 
   const handleEditEvent = (event) => {
     setIsModalOpen(true);
@@ -154,6 +155,7 @@ export default function Events() {
           theme: "light",
         });
       }
+      fetchEvents();
     }
   };
 
@@ -276,12 +278,18 @@ export default function Events() {
             <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
               <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
                 {event.eventName}
-                <div className="flex items-center space-x-2">
-                  <button onClick={() => handleEditEvent(event)}>
-                    <RiEdit2Fill className="text-2xl text-blue-500" />
+                <div className="flex items-center space-x-2 text-base">
+                  <button
+                    onClick={() => handleEditEvent(event)}
+                    className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
+                  >
+                    Edit
                   </button>
-                  <button onClick={() => handleDeleteEvent(event._id)}>
-                    <RiDeleteBin2Fill className="text-2xl text-red-500" />
+                  <button
+                    onClick={() => handleDeleteEvent(event._id)}
+                    className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                  >
+                    Delete
                   </button>
                   <button onClick={() => toggleCandidates(event._id)}>
                     {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
@@ -290,7 +298,7 @@ export default function Events() {
               </h4>
 
               {openedEvents[event._id] && (
-                <ul className="list-none h-72 pl-5 space-y-1 mt-2 overflow-y-auto">
+                <ul className="list-none mx-h-72 pl-5 space-y-1 mt-2 overflow-y-auto">
                   <h3 className="text-lg">Candidates:</h3>
                   {event.candidates.map((candidate) => (
                     <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
