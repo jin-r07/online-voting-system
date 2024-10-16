@@ -9,6 +9,8 @@ const cors = require("cors");
 // });
 const path = require('path');
 const { createAdmin } = require("./scripts/setup");
+const cron = require("node-cron");
+const Event = require("./models/events");
 
 // User
 const registerRoute = require("./routes/register");
@@ -52,6 +54,29 @@ app.use("/api-admin", eventRoute);
 
 // Middleware to serve static files
 app.use("/uploads", express.static(path.join(__dirname, "scripts/uploads")));
+
+// Scheduler to schedule events
+const updateEventStatuses = async () => {
+    const now = new Date();
+    try {
+        const events = await Event.find({});
+        for (const event of events) {
+            if (now < event.start) {
+                event.status = 'inactive';
+            } else if (now >= event.start && now <= event.end) {
+                event.status = 'active';
+            } else if (now > event.end) {
+                event.status = 'completed';
+            }
+            await event.save();
+        }
+        console.log("Event statuses updated successfully.");
+    } catch (error) {
+        console.error("Error updating event statuses:", error);
+    }
+};
+
+cron.schedule('* * * * *', updateEventStatuses);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

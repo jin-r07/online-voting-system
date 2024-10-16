@@ -2,31 +2,30 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { RiArrowUpSFill, RiArrowDownSFill, RiEdit2Fill, RiDeleteBin2Fill } from "react-icons/ri";
+import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Events() {
   const [candidates, setCandidates] = useState([]);
-
   const [events, setEvents] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [isEditMode, setIsEditMode] = useState(false);
-
   const [editingEventId, setEditingEventId] = useState(null);
-
   const [openedEvents, setOpenedEvents] = useState({});
 
   const formik = useFormik({
     initialValues: {
       name: "",
       candidateIds: [],
+      start: "", // New field for start date
+      end: "",   // New field for end date
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Event name is required"),
       candidateIds: Yup.array().min(1, "At least one candidate must be selected"),
+      start: Yup.date().required("Start date is required").nullable(),
+      end: Yup.date().required("End date is required").nullable(),
     }),
     onSubmit: async (values) => {
       try {
@@ -35,12 +34,6 @@ export default function Events() {
           toast.success("Event updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
           });
         } else {
           const response = await axios.post("http://localhost:8080/api-admin/create-event", values);
@@ -48,12 +41,6 @@ export default function Events() {
           toast.success("Event created successfully!", {
             position: "bottom-right",
             autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
           });
         }
         fetchEvents();
@@ -64,12 +51,6 @@ export default function Events() {
         toast.error("Error processing request", {
           position: "bottom-right",
           autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
         });
       }
     },
@@ -83,12 +64,6 @@ export default function Events() {
       toast.error("Error processing request", {
         position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
       });
     }
   };
@@ -101,12 +76,6 @@ export default function Events() {
       toast.error("Error processing request", {
         position: "bottom-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
       });
     }
   };
@@ -121,10 +90,9 @@ export default function Events() {
     setIsEditMode(true);
     setEditingEventId(event._id);
     formik.setFieldValue("name", event.eventName);
-    formik.setFieldValue(
-      "candidateIds",
-      event.candidates.map((candidate) => candidate._id)
-    );
+    formik.setFieldValue("candidateIds", event.candidates.map((candidate) => candidate._id));
+    formik.setFieldValue("start", new Date(event.start).toISOString().slice(0, 16)); // Convert to local date
+    formik.setFieldValue("end", new Date(event.end).toISOString().slice(0, 16)); // Convert to local date
   };
 
   const handleDeleteEvent = async (eventId) => {
@@ -136,23 +104,11 @@ export default function Events() {
         toast.success("Event deleted successfully!", {
           position: "bottom-right",
           autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
         });
       } catch (err) {
         toast.error("Error processing request", {
           position: "bottom-right",
           autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
         });
       }
       fetchEvents();
@@ -248,6 +204,42 @@ export default function Events() {
                 </div>
                 {formik.touched.candidateIds && formik.errors.candidateIds ? (
                   <div className="text-red-500 text-sm mt-2">{formik.errors.candidateIds}</div>
+                ) : null}
+              </div>
+
+              <div>
+                <label htmlFor="start" className="block text-sm text-gray-700 mb-2">
+                  Start Date
+                </label>
+                <input
+                  id="start"
+                  name="start"
+                  type="datetime-local"
+                  className="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.start}
+                />
+                {formik.touched.start && formik.errors.start ? (
+                  <div className="text-red-500 text-sm mt-2">{formik.errors.start}</div>
+                ) : null}
+              </div>
+
+              <div>
+                <label htmlFor="end" className="block text-sm text-gray-700 mb-2">
+                  End Date
+                </label>
+                <input
+                  id="end"
+                  name="end"
+                  type="datetime-local"
+                  className="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.end}
+                />
+                {formik.touched.end && formik.errors.end ? (
+                  <div className="text-red-500 text-sm mt-2">{formik.errors.end}</div>
                 ) : null}
               </div>
 
