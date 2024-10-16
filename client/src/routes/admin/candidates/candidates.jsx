@@ -181,7 +181,7 @@ export default function Candidates() {
   return (
     <div className="pl-80 mx-auto bg-white rounded-lg">
       <div className="sticky top-0 bg-white shadow-md py-6">
-        <h2 className="text-3xl mb-6 text-gray-800">Candidates</h2>
+        <h2 className="text-3xl mb-6 text-gray-800">Manage Candidates</h2>
         <button
           onClick={() => setIsModalOpen(true)}
           className="mb-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
