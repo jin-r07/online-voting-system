@@ -12,20 +12,20 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white shadow-md rounded-lg p-6">
           <div className="flex items-center">
-            <FaUserTie className="text-3xl text-blue-500 mr-4" />
-            <div>
-              <h2 className="text-xl font-semibold">Candidates</h2>
-              <p className="text-gray-600">Manage all candidates</p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <div className="flex items-center">
             <FaAward className="text-3xl text-purple-500 mr-4" />
             <div>
               <h2 className="text-xl font-semibold">Parties</h2>
-              <p className="text-gray-600">Upcoming voting events</p>
+              <p className="text-gray-600">Total: </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <div className="flex items-center">
+            <FaUserTie className="text-3xl text-blue-500 mr-4" />
+            <div>
+              <h2 className="text-xl font-semibold">Candidates</h2>
+              <p className="text-gray-600">Total: </p>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function Dashboard() {
             <FaUsers className="text-3xl text-green-500 mr-4" />
             <div>
               <h2 className="text-xl font-semibold">Users</h2>
-              <p className="text-gray-600">Manage registered users</p>
+              <p className="text-gray-600">Total: </p>
             </div>
           </div>
         </div>
@@ -45,7 +45,7 @@ export default function Dashboard() {
             <FaHistory className="text-3xl text-red-500 mr-4" />
             <div>
               <h2 className="text-xl font-semibold">History</h2>
-              <p className="text-gray-600">View voting history</p>
+              <p className="text-gray-600">Total: </p>
             </div>
           </div>
         </div>
