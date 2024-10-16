@@ -217,17 +217,17 @@ export default function Events() {
                 </button>
               </h4>
               {openedEvents[event._id] && (
-                <ul className="list-disc pl-5 space-y-1 mt-2">
-                  <h3>Candidates:</h3>
+                <ul className="list-disc pl-5 space-y-1 mt-2 overflow-y-auto">
+                  <h3 className="text-lg">Candidates:</h3>
                   {event.candidates.map((candidate) => (
-                    <div key={candidate._id} className="text-gray-700 flex items-center">
+                    <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
                       <img
                         src={candidate.image}
                         alt={candidate.name}
-                        className="w-8 h-auto rounded-sm mr-2"
+                        className="w-14 h-auto rounded-sm mr-2"
                       />
                       <span>{candidate.name}</span>
-                      <span className="ml-2 text-gray-500">Party: {candidate.party?.name}</span>
+                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
                     </div>
                   ))}
                 </ul>
