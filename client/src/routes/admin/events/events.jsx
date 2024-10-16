@@ -49,6 +49,12 @@ export default function Events() {
           toast.success("Event updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
           });
         } else {
           const response = await axios.post("http://localhost:8080/api-admin/create-event", eventData);
@@ -56,6 +62,12 @@ export default function Events() {
           toast.success("Event created successfully!", {
             position: "bottom-right",
             autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
           });
         }
         fetchEvents();
@@ -67,6 +79,12 @@ export default function Events() {
         toast.error("Error processing request", {
           position: "bottom-right",
           autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
         });
       }
     },
@@ -80,6 +98,12 @@ export default function Events() {
       toast.error("Error processing request", {
         position: "bottom-right",
         autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
     }
   };
@@ -92,6 +116,12 @@ export default function Events() {
       toast.error("Error processing request", {
         position: "bottom-right",
         autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
     }
   };
@@ -104,6 +134,12 @@ export default function Events() {
       toast.error("Error processing request", {
         position: "bottom-right",
         autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
     }
   };
@@ -133,11 +169,23 @@ export default function Events() {
         toast.success("Event deleted successfully!", {
           position: "bottom-right",
           autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
         });
       } catch (err) {
         toast.error("Error processing request", {
           position: "bottom-right",
           autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
         });
       }
       fetchEvents();
