@@ -61,4 +61,14 @@ async function deleteUser(req, res) {
     }
 }
 
-module.exports = { getAllUsers, editUser, deleteUser };
+async function getTotalUsers(req, res) {
+    try {
+        const totalUsers = await User.countDocuments();
+        res.status(200).json({ totalUsers });
+    } catch (err) {
+        res.status(500).json({ error: "Error fetching total candidates" });
+    }
+}
+
+
+module.exports = { getAllUsers, editUser, deleteUser, getTotalUsers };

@@ -12,6 +12,8 @@ export default function Dashboard() {
 
   const [totalParties, setTotalParties] = useState("");
 
+  const [totalUsers, setTotalUsers] = useState("");
+
   const fetchTotalCandidates = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api-admin/get-candidates-total");
@@ -66,10 +68,29 @@ export default function Dashboard() {
     }
   };
 
+  const fetchTotalUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-users-total");
+      setTotalUsers(response.data.totalUsers);
+    } catch (err) {
+      toast.error("Error fetching candidates", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   useEffect(() => {
     fetchTotalCandidates();
     fetchTotalCompletedEvents();
     fetchTotalParties();
+    fetchTotalUsers();
   }, []);
 
 
@@ -106,7 +127,7 @@ export default function Dashboard() {
             <FaUsers className="text-3xl text-green-500 mr-4" />
             <div>
               <h2 className="text-xl font-semibold">Users</h2>
-              <p className="text-gray-600">Total: </p>
+              <p className="text-gray-600">Total: {totalUsers}</p>
             </div>
           </div>
         </div>
