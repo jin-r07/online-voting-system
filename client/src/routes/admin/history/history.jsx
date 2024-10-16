@@ -2,51 +2,49 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function History() {
-  const [users, setUsers] = useState([]);
+  const [candidates, setCandidates] = useState([]);
+
+  const [completedEvents, setCompletedEvents] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [editUserId, setEditUserId] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
-  const [picturePreview, setPicturePreview] = useState(null);
+  const [editingEventId, setEditingEventId] = useState(null);
+
+  const [openedEvents, setOpenedEvents] = useState({});
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      voterIdCardPicture: null,
-      voterIdCardNumber: "",
-      role: "user"
+      name: "",
+      candidateIds: [],
+      start: "",
+      end: ""
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email").required("Email is required"),
-      voterIdCardPicture: Yup.mixed()
-        .notRequired()
-        .test("fileType", "Only .jpg and .png files are allowed", (value) => {
-          return !value || (value && (value.type === "image/jpeg" || value.type === "image/png"));
-        }),
-      voterIdCardNumber: Yup.string().required("Voter ID Card Number is required"),
-      role: Yup.string().required("Role is required"),
+      name: Yup.string().required("Event name is required"),
+      candidateIds: Yup.array().min(1, "At least one candidate must be selected"),
+      start: Yup.date().required("Start date is required").nullable(),
+      end: Yup.date().required("End date is required").nullable(),
     }),
     onSubmit: async (values) => {
-      const formData = new FormData();
-      formData.append("email", values.email);
-      formData.append("voterIdCardNumber", values.voterIdCardNumber);
-      formData.append("role", values.role);
-      if (values.voterIdCardPicture) {
-        formData.append("voterIdCardPicture", values.voterIdCardPicture);
-      }
       try {
-        if (editUserId) {
-          await axios.put(`http://localhost:8080/api-admin/edit-user/${editUserId}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            }
-          });
-          toast.success("User updated successfully!", {
+        const { name, candidateIds, start, end } = values;
+
+        const eventData = {
+          name,
+          candidateIds,
+          start: new Date(start).toISOString(),
+          end: new Date(end).toISOString(),
+        };
+        if (isEditMode) {
+          await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, eventData);
+          toast.success("Event updated successfully!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -57,7 +55,9 @@ export default function History() {
             theme: "light",
           });
         } else {
-          toast.error("Error processing request", {
+          const response = await axios.post("http://localhost:8080/api-admin/create-event", eventData);
+          setEvents([...events, response.data]);
+          toast.success("Event created successfully!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -68,11 +68,11 @@ export default function History() {
             theme: "light",
           });
         }
-        fetchUsers();
+        fetchEvents();
+        fetchInactiveEvents();
         setIsModalOpen(false);
+        setIsEditMode(false);
         formik.resetForm();
-        setEditUserId(null);
-        setPicturePreview(null);
       } catch (err) {
         toast.error("Error processing request", {
           position: "bottom-right",
@@ -88,12 +88,30 @@ export default function History() {
     },
   });
 
-  const fetchUsers = async () => {
+  const fetchCandidates = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api-admin/get-all-users");
-      setUsers(response.data);
+      const response = await axios.get("http://localhost:8080/api-admin/get-candidates");
+      setCandidates(response.data);
     } catch (err) {
-      toast.error("Error fetching users", {
+      toast.error("Error processing request", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  const fetchCompletedEvents = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-events-completed");
+      setCompletedEvents(response.data);
+    } catch (err) {
+      toast.error("Error processing request", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -107,52 +125,57 @@ export default function History() {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchCandidates();
+    fetchCompletedEvents();
   }, []);
 
-  const handleDeleteUser = async (id) => {
-    const confirmed = window.confirm("Are you sure you want to delete this user?");
-    if (!confirmed) {
-      return;
-    }
+  const handleEditEvent = (event) => {
+    setIsModalOpen(true);
+    setIsEditMode(true);
+    setEditingEventId(event._id);
+    formik.setFieldValue("name", event.eventName);
+    formik.setFieldValue("candidateIds", event.candidates.map((candidate) => candidate._id));
+    formik.setFieldValue("start", new Date(new Date(event.start).getTime() + (5 * 60 + 45) * 60 * 1000).toISOString().slice(0, 16));
+    formik.setFieldValue("end", new Date(new Date(event.end).getTime() + (5 * 60 + 45) * 60 * 1000).toISOString().slice(0, 16));
+  };
 
-    try {
-      await axios.delete(`http://localhost:8080/api-admin/delete-user/${id}`);
-      toast.success("User deleted successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      fetchUsers();
-    } catch (err) {
-      toast.error("Error deleting user", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+  const handleDeleteEvent = async (eventId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this event?");
+    if (confirmed) {
+      try {
+        await axios.delete(`http://localhost:8080/api-admin/delete-event/${eventId}`);
+        setEvents(events.filter((event) => event._id !== eventId));
+        toast.success("Event deleted successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } catch (err) {
+        toast.error("Error processing request", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      fetchCompletedEvents();
     }
   };
 
-  const handleEditUser = (user) => {
-    setEditUserId(user._id);
-    formik.setValues({
-      email: user.email,
-      voterIdCardPicture: null,
-      voterIdCardNumber: user.voterIdCardNumber,
-      role: user.role,
-    });
-    setPicturePreview(user.voterIdCardPicture);
-    setIsModalOpen(true);
+  const toggleCandidates = (eventId) => {
+    setOpenedEvents((prevOpenedEvents) => ({
+      ...prevOpenedEvents,
+      [eventId]: !prevOpenedEvents[eventId],
+    }));
   };
 
   return (
@@ -162,100 +185,122 @@ export default function History() {
       </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="bg-white rounded-lg p-6 z-10 shadow-lg max-w-md w-full">
-            <h2 className="text-xl mb-4 text-gray-800">{editUserId ? 'Edit User' : 'Create User'}</h2>
-            <form onSubmit={formik.handleSubmit} className="space-y-4">
+          <div className="fixed inset-0 bg-black opacity-50" />
+          <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg z-10">
+            <h3 className="text-xl mb-4">{isEditMode ? "Edit Event" : "Create Event"}</h3>
+            <form onSubmit={formik.handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm text-gray-700">Email</label>
+                <label htmlFor="name" className="block text-sm text-gray-700 mb-2">
+                  Event Name
+                </label>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.email}
-                  className={`mt-1 block w-full border ${formik.touched.email && formik.errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300`}
-                  placeholder="Enter email"
-                />
-                {formik.touched.email && formik.errors.email && (
-                  <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="voterIdCardNumber" className="block text-sm text-gray-700">Voter ID Card Number</label>
-                <input
-                  id="voterIdCardNumber"
-                  name="voterIdCardNumber"
+                  id="name"
+                  name="name"
                   type="text"
+                  className="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter event name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.voterIdCardNumber}
-                  className={`mt-1 block w-full border ${formik.touched.voterIdCardNumber && formik.errors.voterIdCardNumber ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300`}
-                  placeholder="Enter voter ID card number"
+                  value={formik.values.name}
                 />
-                {formik.touched.voterIdCardNumber && formik.errors.voterIdCardNumber && (
-                  <div className="text-red-500 text-sm mt-1">{formik.errors.voterIdCardNumber}</div>
-                )}
+                {formik.touched.name && formik.errors.name ? (
+                  <div className="text-red-500 text-sm mt-2">{formik.errors.name}</div>
+                ) : null}
               </div>
 
               <div>
-                <div className="my-6 flex justify-center">
-                  {picturePreview && (
-                    <img src={picturePreview} alt="Voter ID Preview" className="h-auto w-52 object-cover rounded-md" />
-                  )}
+                <label className="block text-sm mb-2">Select Candidates</label>
+                <div className="flex flex-col space-y-2 h-96 overflow-y-auto border border-gray-300 p-4 rounded-md">
+                  {candidates.map((candidate) => (
+                    <div key={candidate._id} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={`candidate-${candidate._id}`}
+                        name="candidateIds"
+                        value={candidate._id}
+                        className="mr-2 w-4 h-4 cursor-pointer"
+                        checked={formik.values.candidateIds.includes(candidate._id)}
+                        onChange={(event) => {
+                          const { checked } = event.target;
+                          const selectedIds = formik.values.candidateIds;
+                          if (checked) {
+                            formik.setFieldValue("candidateIds", [...selectedIds, candidate._id]);
+                          } else {
+                            formik.setFieldValue(
+                              "candidateIds",
+                              selectedIds.filter((id) => id !== candidate._id)
+                            );
+                          }
+                        }}
+                      />
+                      <label htmlFor={`candidate-${candidate._id}`} className="flex items-center w-full">
+                        <img
+                          src={candidate.image}
+                          alt={candidate.name}
+                          className="w-12 h-auto rounded-sm mr-2"
+                        />
+                        <div className="text-sm text-gray-700">
+                          <p>{candidate.name}</p>
+                          <p className="text-gray-500">Party: {candidate.party.name}</p>
+                        </div>
+                      </label>
+                    </div>
+                  ))}
                 </div>
-                <label htmlFor="voterIdCardPicture" className="block text-sm text-gray-700">Upload Voter ID Card Picture</label>
-                <input
-                  id="voterIdCardPicture"
-                  name="voterIdCardPicture"
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => {
-                    formik.setFieldValue("voterIdCardPicture", event.currentTarget.files[0]);
-                    setPicturePreview(URL.createObjectURL(event.currentTarget.files[0]));
-                  }}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
-                />
+                {formik.touched.candidateIds && formik.errors.candidateIds ? (
+                  <div className="text-red-500 text-sm mt-2">{formik.errors.candidateIds}</div>
+                ) : null}
               </div>
 
               <div>
-                <label htmlFor="role" className="block text-sm text-gray-700">Role</label>
-                <select
-                  id="role"
-                  name="role"
+                <label htmlFor="start" className="block text-sm text-gray-700 mb-2">
+                  Start Date
+                </label>
+                <input
+                  id="start"
+                  name="start"
+                  type="datetime-local"
+                  className="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.role}
-                  className={`mt-1 block w-full border ${formik.touched.role && formik.errors.role ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300`}
-                >
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-                {formik.touched.role && formik.errors.role && (
-                  <div className="text-red-500 text-sm mt-1">{formik.errors.role}</div>
-                )}
+                  value={formik.values.start}
+                />
+                {formik.touched.start && formik.errors.start ? (
+                  <div className="text-red-500 text-sm mt-2">{formik.errors.start}</div>
+                ) : null}
               </div>
 
-              <div className="flex justify-between">
+              <div>
+                <label htmlFor="end" className="block text-sm text-gray-700 mb-2">
+                  End Date
+                </label>
+                <input
+                  id="end"
+                  name="end"
+                  type="datetime-local"
+                  className="block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.end}
+                />
+                {formik.touched.end && formik.errors.end ? (
+                  <div className="text-red-500 text-sm mt-2">{formik.errors.end}</div>
+                ) : null}
+              </div>
+
+              <div className="flex items-center justify-between mt-6">
                 <button
                   type="button"
-                  onClick={() => {
-                    setIsModalOpen(false);
-                    formik.resetForm();
-                    setEditUserId(null);
-                    setPicturePreview(null);
-                  }}
+                  onClick={() => setIsModalOpen(false)}
                   className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+                  className="py-2 px-4 border border-transparent rounded-md text-white bg-blue-600 hover:bg-blue-700"
                 >
-                  {editUserId ? 'Update User' : 'Add User'}
+                  {isEditMode ? "Update Event" : "Create Event"}
                 </button>
               </div>
             </form>
@@ -263,44 +308,60 @@ export default function History() {
         </div>
       )}
 
-      <h3 className="text-2xl mt-10 text-gray-800">Previous Events</h3>
-      <ul className="mt-4 space-y-4 overflow-y-auto">
-        {users.length > 0 ? (
-          users.map((user) => (
-            <li key={user._id} className="flex items-center border rounded-md p-4 bg-gray-50 mr-12">
-              <div className="flex">
-                <div className="mr-8">
-                  {user.voterIdCardPicture && (
-                    <img src={user.voterIdCardPicture} alt="Voter ID" className="mt-2 h-auto w-24 object-cover object-center rounded-md" />
-                  )}
+      <h3 className="text-2xl mt-10 text-gray-800 mb-8">Previous Voting Events</h3>
+      <div className="grid grid-cols-1 gap-6">
+        {completedEvents.length > 0 ? (
+          completedEvents.map((event) => (
+            <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
+              <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
+                {event.eventName}
+                <div className="flex items-center space-x-2 text-base">
+                  <button
+                    onClick={() => handleEditEvent(event)}
+                    className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteEvent(event._id)}
+                    className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
+                  >
+                    Delete
+                  </button>
+                  <button onClick={() => toggleCandidates(event._id)}>
+                    {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
+                  </button>
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-lg text-gray-900">{user.email}</span>
-                  <span className="text-sm text-gray-600">Voter ID: {user.voterIdCardNumber}</span>
-                  <span className="text-sm text-gray-600">Role: {user.role}</span>
-                </div>
-              </div>
-              <div className="ml-auto flex space-x-2">
-                <button
-                  onClick={() => handleEditUser(user)}
-                  className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteUser(user._id)}
-                  className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
+              </h4>
+
+              {openedEvents[event._id] && (
+                <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
+                  <div className="sticky top-0 bg-white text-gray-600 mt-2">
+                    <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
+                    <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
+                    <p><strong>Status:</strong> {event.status}</p>
+                    <p><strong>Candidates:</strong></p>
+                  </div>
+                  {event.candidates.map((candidate) => (
+                    <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
+                      <img
+                        src={candidate.image}
+                        alt={candidate.name}
+                        className="w-14 h-auto rounded-sm mr-2"
+                      />
+                      <span>{candidate.name}</span>
+                      <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                    </div>
+                  ))}
+                </ul>
+              )}
+            </div>
           ))
         ) : (
-          <li className="text-gray-500">No users available.</li>
+          <div className="py-3 text-gray-500">No events found.</div>
         )}
-      </ul>
+      </div>
       <ToastContainer />
-    </div>
+    </div >
   );
 }
