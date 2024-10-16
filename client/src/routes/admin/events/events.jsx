@@ -16,7 +16,7 @@ export default function Events() {
   const [isEditMode, setIsEditMode] = useState(false);
 
   const [editingEventId, setEditingEventId] = useState(null);
-  
+
   const [openedEvents, setOpenedEvents] = useState({});
 
   useEffect(() => {
@@ -25,8 +25,16 @@ export default function Events() {
         const response = await axios.get("http://localhost:8080/api-admin/get-candidates");
         setCandidates(response.data);
       } catch (err) {
-        toast.error("Error fetching candidates");
-        console.error(err);
+        toast.error("Error processing request", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     };
 
@@ -35,8 +43,16 @@ export default function Events() {
         const response = await axios.get("http://localhost:8080/api-admin/get-events");
         setEvents(response.data);
       } catch (err) {
-        toast.error("Error fetching events");
-        console.error(err);
+        toast.error("Error processing request", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     };
 
@@ -57,18 +73,44 @@ export default function Events() {
       try {
         if (isEditMode) {
           await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, values);
-          toast.success("Event updated successfully!");
+          toast.success("Event updated successfully!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         } else {
           const response = await axios.post("http://localhost:8080/api-admin/create-event", values);
           setEvents([...events, response.data]);
-          toast.success("Event created successfully!");
+          toast.success("Event created successfully!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
         setIsModalOpen(false);
         setIsEditMode(false);
         formik.resetForm();
       } catch (err) {
-        toast.error(isEditMode ? "Error updating event" : "Error creating event");
-        console.error(err);
+        toast.error("Error processing request", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     },
   });
@@ -90,10 +132,27 @@ export default function Events() {
       try {
         await axios.delete(`http://localhost:8080/api-admin/delete-event/${eventId}`);
         setEvents(events.filter((event) => event._id !== eventId));
-        toast.success("Event deleted successfully!");
+        toast.success("Event deleted successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       } catch (err) {
-        toast.error("Error deleting event");
-        console.error("Error deleting event:", err);
+        toast.error("Error processing request", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     }
   };
