@@ -119,7 +119,7 @@ export default function Events() {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="fixed inset-0 bg-black opacity-50" />
           <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg z-10">
-            <h3 className="text-xl mb-4 font-semibold">Create Event</h3>
+            <h3 className="text-xl mb-4">Create Event</h3>
             <form onSubmit={formik.handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm text-gray-700 mb-2">
@@ -172,7 +172,7 @@ export default function Events() {
                         />
                         <div className="text-sm text-gray-700">
                           <p>{candidate.name}</p>
-                          <p className="text-gray-500">({candidate.party.name})</p>
+                          <p className="text-gray-500">Party: {candidate.party.name}</p>
                         </div>
                       </label>
                     </div>
@@ -206,8 +206,8 @@ export default function Events() {
       <div className="grid grid-cols-1 gap-6">
         {events.length > 0 ? (
           events.map((event) => (
-            <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-              <h4 className="font-semibold text-xl text-gray-800 mb-2 flex justify-between items-center">
+            <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
+              <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
                 {event.eventName}
                 <button
                   onClick={() => toggleCandidates(event._id)}
