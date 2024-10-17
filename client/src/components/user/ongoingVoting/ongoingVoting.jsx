@@ -8,7 +8,7 @@ export default function OngoingVoting() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [ongoingEvents, setOngoingEvents] = useState([]);
-
+    
     const handlePrevClick = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? ongoingEvents.length - 1 : prevIndex - 1
