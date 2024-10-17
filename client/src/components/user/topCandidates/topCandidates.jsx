@@ -9,19 +9,16 @@ export default function TopCandidates() {
                     id: 1,
                     name: 'John Doe',
                     votes: 1500,
-                    image: 'https://via.placeholder.com/100?text=John+Doe'
                 },
                 {
                     id: 2,
                     name: 'Jane Smith',
                     votes: 1200,
-                    image: 'https://via.placeholder.com/100?text=Jane+Smith'
                 },
                 {
                     id: 3,
                     name: 'Emily Johnson',
                     votes: 900,
-                    image: 'https://via.placeholder.com/100?text=Emily+Johnson'
                 }
             ]
         },
@@ -32,19 +29,16 @@ export default function TopCandidates() {
                     id: 4,
                     name: 'Michael Brown',
                     votes: 1800,
-                    image: 'https://via.placeholder.com/100?text=Michael+Brown'
                 },
                 {
                     id: 5,
                     name: 'Sarah Davis',
                     votes: 1400,
-                    image: 'https://via.placeholder.com/100?text=Sarah+Davis'
                 },
                 {
                     id: 6,
                     name: 'David Wilson',
                     votes: 1300,
-                    image: 'https://via.placeholder.com/100?text=David+Wilson'
                 }
             ]
         },
@@ -55,19 +49,16 @@ export default function TopCandidates() {
                     id: 7,
                     name: 'Jessica Taylor',
                     votes: 2000,
-                    image: 'https://via.placeholder.com/100?text=Jessica+Taylor'
                 },
                 {
                     id: 8,
                     name: 'Paul Martinez',
                     votes: 1600,
-                    image: 'https://via.placeholder.com/100?text=Paul+Martinez'
                 },
                 {
                     id: 9,
                     name: 'Laura Garcia',
                     votes: 1500,
-                    image: 'https://via.placeholder.com/100?text=Laura+Garcia'
                 }
             ]
         }

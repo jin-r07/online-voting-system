@@ -25,7 +25,7 @@ export default function Navbar() {
 
     const [loading, setLoading] = useState(true);
 
-    const [shwoMenu, setshwoMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -40,36 +40,36 @@ export default function Navbar() {
         { name: "Contact", href: "/contact" }
     ];
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            const token = Cookies.get("token");
-            if (!token) {
-                setLoading(false);
-                return;
-            }
+    const fetchUserData = async () => {
+        const token = Cookies.get("token");
+        if (!token) {
+            setLoading(false);
+            return;
+        }
 
-            try {
-                const response = await axios.get("http://localhost:8080/api/user-authenticated", {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-
-                if (response.data) {
-                    setIsLoggedIn(true);
-                    setUserData(response.data);
-                    window.location.reload;
-                } else {
-                    setIsLoggedIn(false);
+        try {
+            const response = await axios.get("http://localhost:8080/api/user-authenticated", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
                 }
-            } catch (error) {
-                setIsLoggedIn(false);
-                setUserData(null);
-            } finally {
-                setLoading(false);
-            }
-        };
+            });
 
+            if (response.data) {
+                setIsLoggedIn(true);
+                setUserData(response.data);
+                window.location.reload;
+            } else {
+                setIsLoggedIn(false);
+            }
+        } catch (error) {
+            setIsLoggedIn(false);
+            setUserData(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchUserData();
     }, []);
 
@@ -148,7 +148,7 @@ export default function Navbar() {
                                 >
                                     {userData.voterIdCardNumber}
                                 </span>
-                                {shwoMenu && (
+                                {showMenu && (
                                     <div
                                         ref={dropdownRef}
                                         className="absolute left-4 top-7 bg-white text-black border border-gray-300 shadow-lg rounded"
@@ -230,11 +230,11 @@ export default function Navbar() {
                             <div className="relative flex items-center">
                                 <span
                                     className="text-lg cursor-pointer relative"
-                                    onMouseEnter={() => setshwoMenu(true)}
-                                    onMouseLeave={() => setshwoMenu(false)}
+                                    onMouseEnter={() => setShowMenu(true)}
+                                    onMouseLeave={() => setShowMenu(false)}
                                 >
                                     {userData.voterIdCardNumber}
-                                    {shwoMenu && (
+                                    {showMenu && (
                                         <div
                                             className="absolute left-[5rem] -top-32 bg-white border border-gray-300 shadow-lg rounded">
                                             <ul className="py-1">

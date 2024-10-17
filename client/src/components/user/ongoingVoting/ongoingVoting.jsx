@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function OngoingVoting() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const [ongoingEvents, setOngoingEvents] = useState("");
+    const [ongoingEvents, setOngoingEvents] = useState([]);
 
     const handlePrevClick = () => {
         setCurrentIndex((prevIndex) =>
@@ -65,9 +65,9 @@ export default function OngoingVoting() {
                             className="slider flex transition-transform duration-500"
                             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                         >
-                            {votingData.map((item, index) => (
+                            {ongoingEvents.map((item, index) => (
                                 <div key={index} className="slide flex-shrink-0 w-full">
-                                    <p>{item.title}</p>
+                                    <p>{item.eventName}</p>
                                 </div>
                             ))}
                         </div>
