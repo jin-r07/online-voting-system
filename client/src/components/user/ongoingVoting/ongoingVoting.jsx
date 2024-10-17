@@ -8,27 +8,6 @@ export default function OngoingVoting() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [ongoingEvents, setOngoingEvents] = useState([]);
-    
-    const handlePrevClick = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? ongoingEvents.length - 1 : prevIndex - 1
-        );
-    };
-
-    const handleNextClick = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === ongoingEvents.length - 1 ? 0 : prevIndex + 1
-        );
-    };
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            handleNextClick();
-        }, 3000);
-
-        return () => clearInterval(interval);
-    }, []);
-
 
     const fetchOngoingEvents = async () => {
         try {
@@ -52,6 +31,26 @@ export default function OngoingVoting() {
         fetchOngoingEvents();
     }, []);
 
+    const handlePrevClick = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? ongoingEvents.length - 1 : prevIndex - 1
+        );
+    };
+
+    const handleNextClick = () => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === ongoingEvents.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            handleNextClick();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [ongoingEvents]);
+
     return (
         <div className="w-full h-full bg-[#9BF00B] lg:px-28 px-2 py-4 text-center lg:text-lg tracking-wide">
             {ongoingEvents.length === 0 ? (
@@ -62,7 +61,7 @@ export default function OngoingVoting() {
                 <>
                     <div className="slider-container overflow-hidden relative">
                         <div
-                            className="slider flex transition-transform duration-500"
+                            className="slider flex transition-transform duration-500 ease-in-out"
                             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                         >
                             {ongoingEvents.map((item, index) => (
