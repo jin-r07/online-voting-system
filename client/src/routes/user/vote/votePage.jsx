@@ -108,7 +108,8 @@ export default function VotePage() {
                                             className="w-36 h-auto rounded-md mr-4"
                                         />
                                     )}
-                                    <h3 className="text-lg font-semibold mt-4">{selectedCandidate.party.name}</h3>
+                                    <h3 className="text-xl font-semibold mt-4">{selectedCandidate.party.name}</h3>
+                                    <h3 className="text-lg mt-4">Candidate: {selectedCandidate.name}</h3>
                                 </div>
                             </div>
                         )}
