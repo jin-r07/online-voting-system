@@ -125,7 +125,7 @@ export default function Navbar() {
                     <div className="hidden lg:flex lg:items-center lg:space-x-6 lg:ml-auto">
                         {navLinks.map((link, index) => (
                             <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }}
-                                className={`text-lg border-b-[1px] ${location.pathname === link.href ? 'border-black' : 'border-white'} hover:border-black`}>
+                                className={`text-lg border-b-[1px] ${(link.href !== '/' && location.pathname.startsWith(link.href)) || (link.href === '/' && location.pathname === '/') ? 'border-black' : 'border-white'} hover:border-black`}>
                                 {link.name}
                             </Link>
                         ))}
