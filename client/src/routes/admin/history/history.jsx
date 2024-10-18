@@ -43,6 +43,7 @@ export default function History() {
           start: new Date(start).toISOString(),
           end: new Date(end).toISOString(),
         };
+
         if (isEditMode) {
           await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, eventData);
           toast.success("Event updated successfully!", {
@@ -57,7 +58,8 @@ export default function History() {
           });
         } else {
           const response = await axios.post("http://localhost:8080/api-admin/create-event", eventData);
-          setEvents([...events, response.data]);
+          // Ensure you define events state to use setEvents
+          setEvents((prevEvents) => [...prevEvents, response.data]);
           toast.success("Event created successfully!", {
             position: "bottom-right",
             autoClose: 5000,
@@ -69,8 +71,9 @@ export default function History() {
             theme: "light",
           });
         }
-        fetchEvents();
-        fetchInactiveEvents();
+
+        // Refetch events after creation or update
+        fetchCompletedEvents(); // Assuming this fetches all events
         setIsModalOpen(false);
         setIsEditMode(false);
         formik.resetForm();
@@ -86,7 +89,7 @@ export default function History() {
           theme: "light",
         });
       }
-    },
+    }
   });
 
   const fetchCandidates = async () => {
