@@ -65,14 +65,14 @@ export default function VotePage() {
     };
 
     return (
-        <div className="mb-6 lg:px-28 px-4 pt-10 bg-gray-50 min-h-screen">
+        <div className="mb-8 lg:px-28 px-4 pt-10 bg-gray-50 w-full h-full">
             <h2 className="text-4xl font-semibold mb-8">Event: {eventData.eventName}</h2>
             <div className="mb-4 text-xl">
                 <p><strong>Status:&nbsp;</strong><span>{capitalizeFirstLetter(eventData.status)}</span></p>
                 <p><strong>Start Date:&nbsp;</strong><span>{startDate}</span></p>
                 <p><strong>End Date:&nbsp;</strong><span>{endDate}</span></p>
             </div>
-            <h2 className="text-2xl my-8">All Candidates:</h2>
+            <h2 className="text-xl font-semibold my-8">All Candidates:</h2>
             <ul className="space-y-6">
                 {eventData.candidates.map((candidate) => (
                     <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
@@ -81,7 +81,7 @@ export default function VotePage() {
                             <h3 className="text-xl font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
                             <div className="flex items-center">
                                 <img src={candidate.image} alt={candidate.name} className="w-10 h-auto rounded-md mr-2" />
-                                <p className="text-gray-700">{candidate.name} - Votes: {candidate.votes}</p>
+                                <p className="text-gray-700">{candidate.name}</p>
                             </div>
                         </div>
                         <button
