@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function VotePage() {
     const { eventId } = useParams();
-    
+
     const [eventData, setEventData] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,7 +86,7 @@ export default function VotePage() {
                                 <p className="text-gray-500">Votes: {candidate.votes}</p>
                             </div>
                             <button
-                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
+                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
                                 onClick={() => openModal(candidate)}
                             >
                                 Vote
@@ -98,14 +98,31 @@ export default function VotePage() {
 
             {isModalOpen && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white rounded-lg shadow-lg p-6 w-96 mx-auto">
-                        <h2 className="text-xl font-semibold mb-4">Confirm Your Vote</h2>
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-96 h-auto mx-auto">
+                        <h2 className="text-xl mb-4 text-center">Confirm Your Vote ?</h2>
                         {selectedCandidate && (
-                            <div className="text-center">
-                                <img src={selectedCandidate.image} alt={selectedCandidate.name} className="w-24 h-24 rounded-full mb-2" />
-                                <h3 className="text-lg font-semibold">{selectedCandidate.name}</h3>
-                                <p className="text-gray-700">Party: {selectedCandidate.party.name}</p>
-                                <p className="text-gray-500">Votes: {selectedCandidate.votes}</p>
+                            <div className="text-center my-12">
+                                <div className="flex items-center justify-center mb-4">
+                                    {selectedCandidate.partyImage && (
+                                        <img
+                                            src={selectedCandidate.partyImage}
+                                            alt={selectedCandidate.party.name}
+                                            className="w-24 h-auto rounded-md mr-4"
+                                        />
+                                    )}
+                                    <h3 className="text-lg font-semibold">{selectedCandidate.party.name}</h3>
+                                </div>
+                                <div className="flex items-center justify-center mb-4">
+                                    <img
+                                        src={selectedCandidate.image}
+                                        alt={selectedCandidate.name}
+                                        className="w-14 h-auto rounded-md mr-4"
+                                    />
+                                    <div className="flex flex-col text-left text-lg">
+                                        <p>Candidate:</p>
+                                        <p>{selectedCandidate.name}</p>
+                                    </div>
+                                </div>
                             </div>
                         )}
                         <div className="flex justify-between mt-6">
@@ -128,7 +145,6 @@ export default function VotePage() {
                     </div>
                 </div>
             )}
-
             <ToastContainer />
         </div>
     );
