@@ -65,6 +65,40 @@ async function getActiveEvents(req, res) {
   }
 }
 
+async function getActiveEventsById(req, res) {
+  try {
+    const { eventId } = req.params;
+
+    const event = await Event.findOne({ _id: eventId, status: 'active' }).populate({
+      path: "candidates",
+      populate: {
+        path: "party",
+        select: "name"
+      }
+    });
+
+    if (!event) {
+      return res.status(404).json({ error: "Event not found or is not active" });
+    }
+
+    const eventWithCandidateDetails = {
+      ...event.toObject(),
+      candidates: event.candidates.map(candidate => ({
+        ...candidate.toObject(),
+        image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+        partyName: candidate.party ? candidate.party.name : null
+      })),
+      start: event.start,
+      end: event.end
+    };
+
+    res.status(200).json(eventWithCandidateDetails);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching the event by ID" });
+  }
+}
+
+
 async function getInactiveEvents(req, res) {
   try {
     const events = await Event.find({ status: 'inactive' }).populate({
@@ -166,12 +200,12 @@ async function deleteEvent(req, res) {
 
 async function getTotalCompletedEvents(req, res) {
   try {
-      const totalCompletedEvents = await Event.find({ status: 'completed' }).countDocuments();
-      res.status(200).json({ totalCompletedEvents });
+    const totalCompletedEvents = await Event.find({ status: 'completed' }).countDocuments();
+    res.status(200).json({ totalCompletedEvents });
   } catch (err) {
-      res.status(500).json({ error: "Error fetching total completed events" });
+    res.status(500).json({ error: "Error fetching total completed events" });
   }
 }
 
 
-module.exports = { createEvent, getCandidates, getActiveEvents, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent, getTotalCompletedEvents };
+module.exports = { createEvent, getCandidates, getActiveEvents, getActiveEventsById, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent, getTotalCompletedEvents };

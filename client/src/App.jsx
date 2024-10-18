@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/user/navbar/navbar";
 import Home from "./routes/user/home/home";
 import Vote from "./routes/user/vote/vote";
+import VotePage from "./routes/user/vote/votePage";
 import FAQ from "./routes/user/faq/faq";
 import Contact from "./routes/user/contact/contact";
 import UserProfile from "./routes/user/userProfile/userProfile";
@@ -38,6 +39,7 @@ function App() {
         {/* User Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/vote" element={<Vote />} />
+        <Route path="/vote/:eventId" element={<VotePage />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/user-profile" element={<UserProfile />} />
