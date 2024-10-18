@@ -10,7 +10,9 @@ export default function VotePage() {
     const { eventId } = useParams();
 
     const [eventData, setEventData] = useState(null);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+    
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const fetchEventData = async () => {
@@ -41,15 +43,15 @@ export default function VotePage() {
 
     const formatDate = (dateString) => {
         const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZone: 'Asia/Kathmandu',
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Asia/Kathmandu",
             hour12: true,
         };
-        return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+        return new Intl.DateTimeFormat("en-US", options).format(new Date(dateString));
     };
 
     const startDate = formatDate(eventData.start);
@@ -68,8 +70,8 @@ export default function VotePage() {
     return (
         <>
             <div className="mb-8 lg:px-28 px-4 pt-10 bg-gray-50 w-full h-full">
-                <h2 className="text-3xl font-semibold mb-8">Event: {eventData.eventName}</h2>
-                <div className="mb-4 text-xl">
+                <h2 className="xl:text-2xl text-xl font-semibold mb-8">Event: {eventData.eventName}</h2>
+                <div className="mb-4 xl:text-xl text-lg">
                     <p><strong>Status:&nbsp;</strong><span>{capitalizeFirstLetter(eventData.status)}</span></p>
                     <p><strong>Start Date:&nbsp;</strong><span>{startDate}</span></p>
                     <p><strong>End Date:&nbsp;</strong><span>{endDate}</span></p>
@@ -80,7 +82,7 @@ export default function VotePage() {
                         <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
                             <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md mr-4" />
                             <div className="flex-1">
-                                <h3 className="text-xl font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
+                                <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
                                 <div className="flex items-center">
                                     <img src={candidate.image} alt={candidate.name} className="w-10 h-auto rounded-md mr-2" />
                                     <p className="text-gray-700">{candidate.name}</p>
@@ -110,8 +112,8 @@ export default function VotePage() {
                                                 className="w-36 h-auto rounded-md mr-4"
                                             />
                                         )}
-                                        <h3 className="text-xl font-semibold mt-4">{selectedCandidate.party.name}</h3>
-                                        <h3 className="text-lg mt-4">Candidate: {selectedCandidate.name}</h3>
+                                        <h3 className="lg:text-xl text-lg font-semibold mt-4">{selectedCandidate.party.name}</h3>
+                                        <h3 className="lg:text-lg text-base mt-4">Candidate: {selectedCandidate.name}</h3>
                                     </div>
                                 </div>
                             )}
