@@ -35,9 +35,23 @@ export default function VotePage() {
         return <div>Loading...</div>;
     }
 
-    const startDate = new Date(eventData.start.$date).toLocaleString();
+    // Function to format date to a more readable format
+    const formatDate = (dateString) => {
+        const options = {
+            year: 'numeric',
+            month: 'long', // '2-digit' for numerical representation
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'Asia/Kathmandu', // Set the desired timezone
+            hour12: true, // Use 12-hour time format
+        };
+        return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+    };
 
-    const endDate = new Date(eventData.end.$date).toLocaleString();
+    const startDate = formatDate(eventData.start);
+    const endDate = formatDate(eventData.end);
 
     return (
         <div className="mb-6 px-4">
