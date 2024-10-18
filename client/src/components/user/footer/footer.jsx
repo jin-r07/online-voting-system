@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-800 text-white py-4 mt-10 w-full h-full lg:px-28 px-4">
+        <footer className="relative bottom-0 bg-black text-white py-4 mt-10 w-full h-fit lg:px-28 px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="mb-4 md:mb-0">
                     <h4 className="text-lg">Electronic Voting System (EVS)</h4>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Footer from "../../../components/user/footer/footer";
 
 const faqs = [
     {
@@ -46,21 +47,24 @@ export default function FAQ() {
         );
     };
     return (
-        <div className="w-full lg:px-28 px-4 pt-10">
-            <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
-            {faqs.map((faq, index) => (
-                <div key={index} className="border-b border-gray-300 mb-4 cursor-pointer" onClick={() => handleToggle(index)}>
-                    <div className="flex justify-between items-center py-4 cursor-pointer hover:bg-gray-100">
-                        <h2 className="text-xl font-semibold">{faq.question}</h2>
-                        <span className="text-lg font-bold">{openIndexes.includes(index) ? '-' : '+'}</span>
-                    </div>
-                    {openIndexes.includes(index) && (
-                        <div className="p-4">
-                            <p>{faq.answer}</p>
+        <>
+            <div className="w-full h-full lg:px-28 px-4 pt-10">
+                <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
+                {faqs.map((faq, index) => (
+                    <div key={index} className="border-b border-gray-300 mb-4 cursor-pointer" onClick={() => handleToggle(index)}>
+                        <div className="flex justify-between items-center py-4 cursor-pointer hover:bg-gray-100">
+                            <h2 className="text-xl font-semibold">{faq.question}</h2>
+                            <span className="text-lg font-bold">{openIndexes.includes(index) ? '-' : '+'}</span>
                         </div>
-                    )}
-                </div>
-            ))}
-        </div>
+                        {openIndexes.includes(index) && (
+                            <div className="p-4">
+                                <p>{faq.answer}</p>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+            <Footer />
+        </>
     );
 }
