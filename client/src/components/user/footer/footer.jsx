@@ -16,17 +16,14 @@ export default function Footer() {
                     <a href="/contact" className="mx-2 hover:underline">Contact Us</a>
                 </div>
                 <div className="flex mt-4 md:mt-0">
-                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-500">
+                    <a href="https://www.facebook.com/JaeJin2003/" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-500">
                         <FaFacebook />
                     </a>
-                    <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-400">
+                    <a href="https://x.com/John0707Rai" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-400">
                         <BsTwitterX />
                     </a>
                     <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-600">
                         <FaLinkedin />
-                    </a>
-                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-pink-500">
-                        <FaInstagram />
                     </a>
                 </div>
             </div>
