@@ -79,11 +79,14 @@ export default function VotePage() {
                 {eventData.candidates.map((candidate) => (
                     <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
                         <div className="flex flex-col items-center p-6 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-200">
-                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-24 h-auto rounded-md mb-4" />
+                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-28 h-auto rounded-md mb-4" />
                             <h3 className="text-xl font-semibold text-gray-800 mb-2">{candidate.party.name}</h3>
-                            <div className="flex flex-col text-lg items-center">
-                                <p className="text-gray-700">{candidate.name}</p>
-                                <p className="text-gray-500">Votes: {candidate.votes}</p>
+                            <div className="flex text-lg items-center mb-4">
+                                <img src={candidate.image} alt={candidate.name} className="w-12 h-auto rounded-md mb-2" />
+                                <div className="flex flex-col ml-4">
+                                    <p className="text-gray-700">{candidate.name}</p>
+                                    <p className="text-gray-500">Votes: {candidate.votes}</p>
+                                </div>
                             </div>
                             <button
                                 className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
@@ -99,29 +102,18 @@ export default function VotePage() {
             {isModalOpen && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-96 h-auto mx-auto">
-                        <h2 className="text-xl mb-4 text-center">Confirm Your Vote ?</h2>
+                        <h2 className="text-xl mb-4 text-center font-semibold">Confirm Your Vote ?</h2>
                         {selectedCandidate && (
                             <div className="text-center my-12">
-                                <div className="flex items-center justify-center mb-4">
+                                <div className="flex flex-col items-center justify-center mb-4">
                                     {selectedCandidate.partyImage && (
                                         <img
                                             src={selectedCandidate.partyImage}
                                             alt={selectedCandidate.party.name}
-                                            className="w-24 h-auto rounded-md mr-4"
+                                            className="w-36 h-auto rounded-md mr-4"
                                         />
                                     )}
-                                    <h3 className="text-lg font-semibold">{selectedCandidate.party.name}</h3>
-                                </div>
-                                <div className="flex items-center justify-center mb-4">
-                                    <img
-                                        src={selectedCandidate.image}
-                                        alt={selectedCandidate.name}
-                                        className="w-14 h-auto rounded-md mr-4"
-                                    />
-                                    <div className="flex flex-col text-left text-lg">
-                                        <p>Candidate:</p>
-                                        <p>{selectedCandidate.name}</p>
-                                    </div>
+                                    <h3 className="text-lg font-semibold mt-4">{selectedCandidate.party.name}</h3>
                                 </div>
                             </div>
                         )}
