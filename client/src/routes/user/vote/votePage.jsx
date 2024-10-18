@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -35,22 +36,22 @@ export default function VotePage() {
         return <div>Loading...</div>;
     }
 
-    // Function to format date to a more readable format
     const formatDate = (dateString) => {
         const options = {
             year: 'numeric',
-            month: 'long', // '2-digit' for numerical representation
+            month: 'long',
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit',
-            timeZone: 'Asia/Kathmandu', // Set the desired timezone
-            hour12: true, // Use 12-hour time format
+            timeZone: 'Asia/Kathmandu',
+            hour12: true,
         };
         return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
     };
 
     const startDate = formatDate(eventData.start);
+    
     const endDate = formatDate(eventData.end);
 
     return (
@@ -58,7 +59,7 @@ export default function VotePage() {
             <h2 className="text-2xl font-bold mb-4">{eventData.eventName}</h2>
             <h2 className="text-2xl font-bold mb-4">All Candidates</h2>
             <div className="mb-4">
-                <p className="text-lg">Status: <span className="font-semibold">{eventData.status}</span></p>
+                <p className="text-lg">Status: <span className="font-semibold">{capitalizeFirstLetter(eventData.status)}</span></p>
                 <p className="text-lg">Start Date: <span className="font-semibold">{startDate}</span></p>
                 <p className="text-lg">End Date: <span className="font-semibold">{endDate}</span></p>
             </div>
