@@ -1,5 +1,6 @@
 import React from "react";
 import TopCandidates from "../../../components/user/topCandidates/topCandidates";
+import Footer from "../../../components/user/footer/footer";
 
 export default function Home() {
     return (
@@ -47,6 +48,7 @@ export default function Home() {
                     <a href="/contact" className="text-blue-600 hover:underline">Contact Information</a>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
