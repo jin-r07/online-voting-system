@@ -67,20 +67,20 @@ export default function VotePage() {
                     return (
                         <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
                             <div className="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-200">
-                                <img src={candidate.partyImage} alt={candidate.name} className="w-24 h-auto rounded-md mb-2" />
-                                <h3 className="text-lg text-gray-800">{candidate.name}</h3>
+                                <img src={candidate.partyImage} alt={candidate.party.name} className="w-24 h-auto rounded-md mb-2" />
+                                <h3 className="text-lg text-gray-800">{candidate.party.name}</h3>
                                 {candidate.party ? (
                                     <div className="flex items-center mt-2">
                                         {candidate.partyImage ? (
                                             <img
                                                 src={candidate.image}
-                                                alt={candidate.party.name}
-                                                className="w-8 h-8 rounded-full border border-gray-300 mr-2"
+                                                alt={candidate.name}
+                                                className="w-12 h-auto rounded-md border border-gray-300 mr-2"
                                             />
                                         ) : (
                                             <p className="text-sm text-gray-500">Party image not available</p>
                                         )}
-                                        <p className="text-sm text-gray-700">{candidate.party.name}</p>
+                                        <p className="text-sm text-gray-700">{candidate.name}</p>
                                     </div>
                                 ) : (
                                     <p className="text-sm text-gray-500">No party associated</p>
