@@ -43,7 +43,6 @@ export default function VotePage() {
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit',
             timeZone: 'Asia/Kathmandu',
             hour12: true,
         };
