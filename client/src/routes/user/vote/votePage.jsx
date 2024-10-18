@@ -9,9 +9,7 @@ export default function VotePage() {
     const { eventId } = useParams();
 
     const [eventData, setEventData] = useState(null);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const fetchEventData = async () => {
@@ -75,34 +73,31 @@ export default function VotePage() {
                 <p><strong>End Date:&nbsp;</strong><span>{endDate}</span></p>
             </div>
             <h2 className="text-2xl my-8">All Candidates:</h2>
-            <div className="flex flex-wrap -mx-4 justify-center">
+            <ul className="space-y-6">
                 {eventData.candidates.map((candidate) => (
-                    <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
-                        <div className="flex flex-col items-center p-6 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-200">
-                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-28 h-auto rounded-md mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-800 mb-2">{candidate.party.name}</h3>
-                            <div className="flex text-lg items-center mb-4">
-                                <img src={candidate.image} alt={candidate.name} className="w-12 h-auto rounded-md mb-2" />
-                                <div className="flex flex-col ml-4">
-                                    <p className="text-gray-700">{candidate.name}</p>
-                                    <p className="text-gray-500">Votes: {candidate.votes}</p>
-                                </div>
+                    <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
+                        <img src={candidate.partyImage} alt={candidate.party.name} className="w-16 h-auto rounded-md mr-4" />
+                        <div className="flex-1">
+                            <h3 className="text-xl font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
+                            <div className="flex items-center">
+                                <img src={candidate.image} alt={candidate.name} className="w-10 h-auto rounded-md mr-2" />
+                                <p className="text-gray-700">{candidate.name} - Votes: {candidate.votes}</p>
                             </div>
-                            <button
-                                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
-                                onClick={() => openModal(candidate)}
-                            >
-                                Vote
-                            </button>
                         </div>
-                    </div>
+                        <button
+                            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
+                            onClick={() => openModal(candidate)}
+                        >
+                            Vote
+                        </button>
+                    </li>
                 ))}
-            </div>
+            </ul>
 
             {isModalOpen && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-96 h-auto mx-auto">
-                        <h2 className="text-xl mb-4 text-center font-semibold">Confirm Your Vote ?</h2>
+                        <h2 className="text-xl mb-4 text-center font-semibold">Confirm Your Vote?</h2>
                         {selectedCandidate && (
                             <div className="text-center my-12">
                                 <div className="flex flex-col items-center justify-center mb-4">
