@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function VotePage() {
     const { eventId } = useParams();
-    
+
     const [eventData, setEventData] = useState(null);
 
     const fetchEventData = async () => {
@@ -51,18 +51,18 @@ export default function VotePage() {
     };
 
     const startDate = formatDate(eventData.start);
-    
+
     const endDate = formatDate(eventData.end);
 
     return (
-        <div className="mb-6 px-4">
-            <h2 className="text-2xl font-bold mb-4">{eventData.eventName}</h2>
-            <h2 className="text-2xl font-bold mb-4">All Candidates</h2>
-            <div className="mb-4">
-                <p className="text-lg">Status: <span className="font-semibold">{capitalizeFirstLetter(eventData.status)}</span></p>
-                <p className="text-lg">Start Date: <span className="font-semibold">{startDate}</span></p>
-                <p className="text-lg">End Date: <span className="font-semibold">{endDate}</span></p>
+        <div className="mb-6 lg:px-28 px-4 pt-10">
+            <h2 className="text-4xl font-semibold mb-8">Event: {eventData.eventName}</h2>
+            <div className="mb-4 text-lg">
+                <p>Status: <span className="font-semibold">{capitalizeFirstLetter(eventData.status)}</span></p>
+                <p>Start Date: <span className="font-semibold">{startDate}</span></p>
+                <p>End Date: <span className="font-semibold">{endDate}</span></p>
             </div>
+            <h2 className="text-2xl mb-4">All Candidates</h2>
             <div className="flex flex-wrap -mx-4">
                 {eventData.candidates.map((candidate, index) => (
                     <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
