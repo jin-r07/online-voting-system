@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { BsTwitterX } from "react-icons/bs";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
