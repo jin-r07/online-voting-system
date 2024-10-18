@@ -5,6 +5,7 @@ import axios from "axios";
 import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 
 export default function History() {
   const [candidates, setCandidates] = useState([]);
@@ -339,7 +340,7 @@ export default function History() {
                   <div className="sticky top-0 bg-white text-gray-600 mt-2">
                     <p><strong>Start:&nbsp;</strong>{new Date(event.start).toLocaleString()}</p>
                     <p><strong>End:&nbsp;</strong>{new Date(event.end).toLocaleString()}</p>
-                    <p><strong>Status:&nbsp;</strong>{event.status}</p>
+                    <p><strong>Status:&nbsp;</strong>{capitalizeFirstLetter(event.status)}</p>
                     <p><strong>Candidates:</strong></p>
                   </div>
                   {event.candidates.map((candidate) => (
