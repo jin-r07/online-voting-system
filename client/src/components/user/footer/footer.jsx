@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { BsTwitterX } from "react-icons/bs";
 
 export default function Footer() {
     return (
@@ -19,7 +20,7 @@ export default function Footer() {
                         <FaFacebook />
                     </a>
                     <a href="https://www.x.com" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-400">
-                        <FaTwitter />
+                        <BsTwitterX />
                     </a>
                     <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-600">
                         <FaLinkedin />
