@@ -58,7 +58,6 @@ export default function History() {
           });
         } else {
           const response = await axios.post("http://localhost:8080/api-admin/create-event", eventData);
-          // Ensure you define events state to use setEvents
           setEvents((prevEvents) => [...prevEvents, response.data]);
           toast.success("Event created successfully!", {
             position: "bottom-right",
@@ -72,8 +71,7 @@ export default function History() {
           });
         }
 
-        // Refetch events after creation or update
-        fetchCompletedEvents(); // Assuming this fetches all events
+        fetchCompletedEvents();
         setIsModalOpen(false);
         setIsEditMode(false);
         formik.resetForm();
