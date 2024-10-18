@@ -70,9 +70,9 @@ export default function VotePage() {
         <div className="mb-6 lg:px-28 px-4 pt-10 bg-gray-50 min-h-screen">
             <h2 className="text-4xl font-semibold mb-8">Event: {eventData.eventName}</h2>
             <div className="mb-4 text-xl">
-                <p><strong>Status: </strong><span>{capitalizeFirstLetter(eventData.status)}</span></p>
-                <p><strong>Start Date: </strong><span>{startDate}</span></p>
-                <p><strong>End Date: </strong><span>{endDate}</span></p>
+                <p><strong>Status:&nbsp;</strong><span>{capitalizeFirstLetter(eventData.status)}</span></p>
+                <p><strong>Start Date:&nbsp;</strong><span>{startDate}</span></p>
+                <p><strong>End Date:&nbsp;</strong><span>{endDate}</span></p>
             </div>
             <h2 className="text-2xl my-8">All Candidates:</h2>
             <div className="flex flex-wrap -mx-4 justify-center">
