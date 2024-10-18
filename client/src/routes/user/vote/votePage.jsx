@@ -65,12 +65,10 @@ export default function VotePage() {
             <div className="flex flex-wrap -mx-4">
                 {eventData.candidates.map((candidate, index) => (
                     <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
-                        <div className="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-xl transition-shadow duration-200">
-                            <img src={candidate.image} alt={candidate.name}
-                                className="w-24 h-24 rounded-full border-2 border-gray-300 mb-2" />
+                        <div className="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-200">
+                            <img src={candidate.image} alt={candidate.name} className="w-24 h-auto rounded-md mb-2" />
                             <h3 className="text-lg text-gray-800">{candidate.name}</h3>
-                            <p className="text-sm text-gray-500">Votes: {candidate.votes}</p>
-                            <p className="text-sm text-gray-400">Rank: {index + 1}</p>
+                            <p className="text-lg text-gray-500">Votes: {candidate.votes}</p>
                         </div>
                     </div>
                 ))}
