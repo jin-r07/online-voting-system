@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function TopCandidates() {
     const [votingData, setVotingData] = useState([]);
-    const navigate = useNavigate(); // Initialize useNavigate hook
+
+    const navigate = useNavigate();
 
     const fetchOngoingEvents = async () => {
         try {
@@ -31,7 +32,6 @@ export default function TopCandidates() {
     }, []);
 
     const handleRedirectToVote = (eventId) => {
-        // Redirect to /vote page with the event ID as a parameter
         navigate(`/vote/${eventId}`);
     };
 
@@ -68,10 +68,10 @@ export default function TopCandidates() {
                                     ))}
                                 </div>
                                 <button
-                                    onClick={() => handleRedirectToVote(event._id)} // Redirect when clicked
+                                    onClick={() => handleRedirectToVote(event._id)}
                                     className="mt-4 text-blue-500 underline"
                                 >
-                                    See All Candidates
+                                    See more
                                 </button>
                             </div>
                         ))}
