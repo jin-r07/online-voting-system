@@ -4,12 +4,15 @@ import axios from "axios";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BsPatchCheckFill } from "react-icons/bs";
 
 export default function VotePage() {
     const { eventId } = useParams();
     
     const [eventData, setEventData] = useState(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const fetchEventData = async () => {
         try {
@@ -53,38 +56,79 @@ export default function VotePage() {
     const startDate = formatDate(eventData.start);
     const endDate = formatDate(eventData.end);
 
+    const openModal = (candidate) => {
+        setSelectedCandidate(candidate);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedCandidate(null);
+    };
+
     return (
         <div className="mb-6 lg:px-28 px-4 pt-10 bg-gray-50 min-h-screen">
-            <h2 className="text-4xl font-semibold mb-8 text-gray-800">Event: {eventData.eventName}</h2>
+            <h2 className="text-4xl font-semibold mb-8">Event: {eventData.eventName}</h2>
             <div className="mb-4 text-xl">
-                <p className="flex items-center"><strong>Status:&nbsp;</strong><span>{capitalizeFirstLetter(eventData.status)}</span><BsPatchCheckFill className="ml-2" /></p>
-                <p><strong>Start Date:&nbsp;</strong><span>{startDate}</span></p>
-                <p><strong>End Date:&nbsp;</strong><span>{endDate}</span></p>
+                <p><strong>Status: </strong><span>{capitalizeFirstLetter(eventData.status)}</span></p>
+                <p><strong>Start Date: </strong><span>{startDate}</span></p>
+                <p><strong>End Date: </strong><span>{endDate}</span></p>
             </div>
             <h2 className="text-2xl my-8">All Candidates:</h2>
             <div className="flex flex-wrap -mx-4 justify-center">
-                {eventData.candidates.map((candidate) => {
-                    return (
-                        <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
-                            <div className="flex flex-col items-center p-6 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-200">
-                                <h3 className="text-xl font-semibold text-gray-800 mb-2">{candidate.party.name}</h3>
-                                <img src={candidate.partyImage} alt={candidate.party.name} className="w-24 h-auto rounded-md mb-4" />
-                                <div className="flex items-center mb-2">
-                                    <img
-                                        src={candidate.image}
-                                        alt={candidate.name}
-                                        className="w-16 h-auto rounded-md border border-gray-300 mr-3"
-                                    />
-                                    <div className="flex flex-col">
-                                        <p className="text-lg font-medium text-gray-700">{candidate.name}</p>
-                                        <p className="text-md text-gray-500">Votes: <span className="font-bold">{candidate.votes}</span></p>
-                                    </div>
-                                </div>
+                {eventData.candidates.map((candidate) => (
+                    <div key={candidate._id} className="w-full md:w-1/3 px-4 mb-6">
+                        <div className="flex flex-col items-center p-6 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-200">
+                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-24 h-24 rounded-full mb-4 shadow-md" />
+                            <h3 className="text-xl font-semibold text-gray-800 mb-2">{candidate.party.name}</h3>
+                            <div className="flex flex-col text-lg items-center">
+                                <p className="text-gray-700">{candidate.name}</p>
+                                <p className="text-gray-500">Votes: {candidate.votes}</p>
                             </div>
+                            <button
+                                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
+                                onClick={() => openModal(candidate)}
+                            >
+                                Vote
+                            </button>
                         </div>
-                    );
-                })}
+                    </div>
+                ))}
             </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-96 mx-auto">
+                        <h2 className="text-xl font-semibold mb-4">Confirm Your Vote</h2>
+                        {selectedCandidate && (
+                            <div className="text-center">
+                                <img src={selectedCandidate.image} alt={selectedCandidate.name} className="w-24 h-24 rounded-full mb-2" />
+                                <h3 className="text-lg font-semibold">{selectedCandidate.name}</h3>
+                                <p className="text-gray-700">Party: {selectedCandidate.party.name}</p>
+                                <p className="text-gray-500">Votes: {selectedCandidate.votes}</p>
+                            </div>
+                        )}
+                        <div className="flex justify-between mt-6">
+                            <button
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+                                onClick={closeModal}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
+                                onClick={() => {
+                                    toast.success(`You voted for ${selectedCandidate.name}!`);
+                                    closeModal();
+                                }}
+                            >
+                                Confirm Vote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <ToastContainer />
         </div>
     );
