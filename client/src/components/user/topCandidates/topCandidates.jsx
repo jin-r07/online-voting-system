@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 export default function TopCandidates() {
     const [votingData, setVotingData] = useState([]);
 
+    console.log(votingData);
+
     const navigate = useNavigate();
 
     const fetchOngoingEvents = async () => {
@@ -55,10 +57,9 @@ export default function TopCandidates() {
                                     {event.candidates.slice(0, 3).map((candidate, idx) => (
                                         <div key={candidate._id}
                                             className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
-                                            <img src={candidate.image} alt={candidate.name}
-                                                className="w-20 h-auto rounded-md border-2 border-gray-300" />
+                                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
                                             <div className="ml-4">
-                                                <p className="text-lg text-gray-800">{candidate.name}</p>
+                                                <p className="text-lg text-gray-800">{candidate.party.name}</p>
                                                 <p className="text-sm text-gray-500">Votes: {candidate.votes}</p>
                                             </div>
                                             <div className="ml-auto text-right">
@@ -69,7 +70,7 @@ export default function TopCandidates() {
                                 </div>
                                 <button
                                     onClick={() => handleRedirectToVote(event._id)}
-                                    className="mt-4 text-blue-500 underline"
+                                    className="mt-4 text-lg text-blue-500 no-underline hover:underline"
                                 >
                                     See more
                                 </button>
