@@ -373,9 +373,9 @@ export default function Events() {
                   {openedEvents[event._id] && (
                     <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
                       <div className="sticky top-0 bg-white text-gray-600 mt-2">
-                        <p><strong>Start:</strong> {new Date(event.start).toLocaleString()}</p>
-                        <p><strong>End:</strong> {new Date(event.end).toLocaleString()}</p>
-                        <p><strong>Status:</strong> {capitalizeFirstLetter(event.status)}</p>
+                        <p><strong>Start:&nbsp;</strong>{new Date(event.start).toLocaleString()}</p>
+                        <p><strong>End:&nbsp;</strong>{new Date(event.end).toLocaleString()}</p>
+                        <p><strong>Status:&nbsp;</strong>{capitalizeFirstLetter(event.status)}</p>
                         <p><strong>Candidates:</strong></p>
                       </div>
                       {event.candidates.map((candidate) => (
