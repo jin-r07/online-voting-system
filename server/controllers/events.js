@@ -73,7 +73,7 @@ async function getActiveEventsById(req, res) {
       path: "candidates",
       populate: {
         path: "party",
-        select: "name"
+        select: "name image"
       }
     });
 
@@ -86,7 +86,8 @@ async function getActiveEventsById(req, res) {
       candidates: event.candidates.map(candidate => ({
         ...candidate.toObject(),
         image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
-        partyName: candidate.party ? candidate.party.name : null
+        partyName: candidate.party ? candidate.party.name : null,
+        partyImage: `http://localhost:8080/uploads/parties/${candidate.party.image.split('\\').pop()}`
       })),
       start: event.start,
       end: event.end
