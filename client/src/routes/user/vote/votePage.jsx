@@ -5,6 +5,7 @@ import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../components/user/footer/footer";
+import { formatDate } from "../../../utils/formatDate&Time";
 
 export default function VotePage() {
     const { eventId } = useParams();
@@ -40,19 +41,6 @@ export default function VotePage() {
     if (!eventData) {
         return <div>Loading...</div>;
     }
-
-    const formatDate = (dateString) => {
-        const options = {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            timeZone: "Asia/Kathmandu",
-            hour12: true,
-        };
-        return new Intl.DateTimeFormat("en-US", options).format(new Date(dateString));
-    };
 
     const startDate = formatDate(eventData.start);
     const endDate = formatDate(eventData.end);
