@@ -13,7 +13,7 @@ export default function VotePage() {
     const [eventData, setEventData] = useState(null);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const fetchEventData = async () => {
@@ -39,7 +39,7 @@ export default function VotePage() {
     }, [eventId]);
 
     if (!eventData) {
-        return <div>Loading...</div>;
+        return <div className="text-center text-xl py-10">Loading...</div>;
     }
 
     const startDate = formatDate(eventData.start);
