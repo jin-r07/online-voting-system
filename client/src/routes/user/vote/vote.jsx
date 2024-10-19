@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Footer from "../../../components/user/footer/footer";
+import { formatDate } from "../../../utils/formatDate&Time";
 
 export default function Vote() {
     const [eventData, setEventData] = useState(null);
@@ -28,6 +29,9 @@ export default function Vote() {
         fetchEventData();
     }, []);
 
+    if (!eventData) {
+        return <div>Loading...</div>;
+    }
     return (
         <div className="w-full h-full min-h-screen flex flex-col">
             <div className="flex-grow p-6">
@@ -44,11 +48,10 @@ export default function Vote() {
                         ))}
                     </ul>
                 ) : (
-                    <p>Loading event data...</p>
+                    <p>No Active Events</p>
                 )}
             </div>
             <Footer />
         </div>
     );
 }
-    
