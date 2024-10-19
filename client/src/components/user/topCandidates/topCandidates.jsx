@@ -46,11 +46,10 @@ export default function TopCandidates() {
                 </div>
             ) : (
                 <div>
-                    <h2 className="text-xl mb-4 font-semibold">Top Candidates,</h2>
                     <div className="flex flex-wrap -mx-4">
                         {votingData.map((event, index) => (
                             <div key={index} className="w-full md:w-1/2 px-4 mb-10">
-                                <h3 className="text-xl mb-4 font-semibold">Event: {event.eventName}</h3>
+                                <h3 className="text-xl mb-4 font-semibold">{event.eventName}</h3>
                                 <div className="space-y-6">
                                     {event.candidates.slice(0, 3).map((candidate, idx) => (
                                         <div key={candidate._id}
