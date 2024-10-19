@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
-        <footer className="bg-white border-t-[1px] border-[#9BF00B] py-4 mt-10 w-full h-fit lg:px-28 px-4">
+        <footer className="bg-white border-t-[1px] border-[#9BF00B] py-4 mt-16 w-full h-fit lg:px-28 px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
-                <div className="mb-4 md:mb-0">
+                <div className="mb-4 md:mb-0 md:text-left text-center">
                     <h4 className="text-lg">Electronic Voting System (EVS)</h4>
                     <p className="text-sm">&copy; {new Date().getFullYear()} All rights reserved.</p>
                 </div>
