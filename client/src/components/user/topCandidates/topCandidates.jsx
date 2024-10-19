@@ -7,8 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 export default function TopCandidates() {
     const [votingData, setVotingData] = useState([]);
 
-    console.log(votingData);
-
     const navigate = useNavigate();
 
     const fetchOngoingEvents = async () => {

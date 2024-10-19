@@ -35,6 +35,10 @@ export default function Vote() {
         return <div className="text-center text-xl py-10">Loading...</div>;
     }
 
+    const handleRedirectToVote = (eventId) => {
+        navigate(`/vote/${eventId}`);
+    };
+
     return (
         <div className="w-full h-screen flex flex-col bg-gradient-to-b from-gray-100 via-white to-gray-50">
             <div className="flex-grow py-10 px-4 lg:px-28">
