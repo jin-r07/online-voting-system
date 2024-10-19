@@ -5,9 +5,12 @@ import Footer from "../../../components/user/footer/footer";
 import { formatDate } from "../../../utils/formatDate&Time";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
+import { useNavigate } from "react-router-dom";
 
 export default function Vote() {
     const [eventData, setEventData] = useState(null);
+
+    const navigate = useNavigate();
 
     const fetchEventData = async () => {
         try {
@@ -69,7 +72,8 @@ export default function Vote() {
                                     <strong>End Date:</strong>&nbsp;{formatDate(event.end)}
                                 </p>
                                 <div className="flex justify-end">
-                                    <button className="mt-6 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+                                    <button onClick={() => handleRedirectToVote(event._id)}
+                                        className="mt-6 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
                                         Vote Now
                                     </button>
                                 </div>
