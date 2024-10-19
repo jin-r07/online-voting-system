@@ -36,7 +36,7 @@ export default function Vote() {
     }
 
     return (
-        <div className="w-full h-full min-h-screen flex flex-col bg-gradient-to-b from-gray-100 via-white to-gray-50">
+        <div className="w-full h-screen flex flex-col bg-gradient-to-b from-gray-100 via-white to-gray-50">
             <div className="flex-grow py-10 px-4 lg:px-28">
                 <h2 className="text-3xl font-extrabold mb-8">Vote for an Event</h2>
 
