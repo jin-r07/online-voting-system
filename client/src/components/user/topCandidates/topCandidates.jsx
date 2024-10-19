@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function TopCandidates() {
-    const [votingData, setVotingData] = useState([]);
+    const [votingData, setVotingData] = useState(null);
 
     const navigate = useNavigate();
 
