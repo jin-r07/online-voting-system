@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import Footer from "../../../components/user/footer/footer";
 import { formatDate } from "../../../utils/formatDate&Time";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
+import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 
 export default function Vote() {
     const [eventData, setEventData] = useState(null);
@@ -55,7 +56,7 @@ export default function Vote() {
                                     )}
                                 </div>
                                 <p className="text-gray-600 text-lg mb-2">
-                                    <strong>Status:</strong>&nbsp;{event.status}
+                                    <strong>Status:</strong>&nbsp;{capitalizeFirstLetter(event.status)}
                                 </p>
                                 <p className="text-gray-600 text-lg mb-2">
                                     <strong>Start Date:</strong>&nbsp;{formatDate(event.start)}
