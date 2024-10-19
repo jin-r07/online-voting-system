@@ -58,7 +58,7 @@ export default function VotePage() {
     return (
         <>
             <div className="mb-8 lg:px-28 px-4 pt-10 bg-gray-50 w-full h-full">
-                <h2 className="xl:text-2xl text-xl font-semibold mb-8">Event: {eventData.eventName}</h2>
+                <h2 className="xl:text-2xl text-xl font-semibold mb-8">{eventData.eventName}</h2>
                 <div className="mb-4 xl:text-xl text-lg">
                     <p><strong>Status:&nbsp;</strong><span>{capitalizeFirstLetter(eventData.status)}</span></p>
                     <p><strong>Start Date:&nbsp;</strong><span>{startDate}</span></p>
