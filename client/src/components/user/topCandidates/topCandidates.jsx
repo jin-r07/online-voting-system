@@ -48,7 +48,7 @@ export default function TopCandidates() {
                 </div>
             ) : (
                 <div>
-                    <h2 className="text-xl mb-4 font-semibold">Top 3 Candidates of ongoing events,</h2>
+                    <h2 className="text-xl mb-4 font-semibold">Top Candidates,</h2>
                     <div className="flex flex-wrap -mx-4">
                         {votingData.map((event, index) => (
                             <div key={index} className="w-full md:w-1/2 px-4 mb-10">
