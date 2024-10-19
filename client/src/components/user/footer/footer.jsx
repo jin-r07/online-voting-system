@@ -1,5 +1,6 @@
 import React from "react";
-import { FaFacebook, FaLinkedin } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaFacebookSquare } from "react-icons/fa";
 import { BsTwitterX } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
@@ -17,13 +18,13 @@ export default function Footer() {
                     <Link to="/contact" className="mx-4 hover:underline">Contact Us</Link>
                 </div>
                 <div className="flex mt-4 md:mt-0">
-                    <a href="https://www.facebook.com/JaeJin2003/" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-500">
-                        <FaFacebook />
+                    <a href="https://www.facebook.com/JaeJin2003/" target="_blank" rel="noopener noreferrer" className="mx-2 text-[1.4rem] hover:text-[#0866FF]">
+                        <FaFacebookSquare />
                     </a>
-                    <a href="https://x.com/John0707Rai" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-400">
+                    <a href="https://x.com/John0707Rai" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl">
                         <BsTwitterX />
                     </a>
-                    <a href="https://www.linkedin.com/in/john-hang-rai-b844a7266/" target="_blank" rel="noopener noreferrer" className="mx-2 text-xl hover:text-blue-600">
+                    <a href="https://www.linkedin.com/in/john-hang-rai-b844a7266/" target="_blank" rel="noopener noreferrer" className="mx-2 text-[1.4rem] hover:text-blue-600">
                         <FaLinkedin />
                     </a>
                 </div>
