@@ -44,7 +44,7 @@ export default function Vote() {
                         {eventData.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:-translate-y-1"
+                                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform"
                             >
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-2xl font-semibold text-gray-900">{event.eventName}</h3>
@@ -55,13 +55,16 @@ export default function Vote() {
                                     )}
                                 </div>
                                 <p className="text-gray-600 text-lg mb-2">
-                                    <strong>Start Date:</strong> {formatDate(event.start)}
+                                    <strong>Status:</strong>&nbsp;{event.status}
                                 </p>
                                 <p className="text-gray-600 text-lg mb-2">
-                                    <strong>End Date:</strong> {formatDate(event.end)}
+                                    <strong>Start Date:</strong>&nbsp;{formatDate(event.start)}
+                                </p>
+                                <p className="text-gray-600 text-lg mb-2">
+                                    <strong>End Date:</strong>&nbsp;{formatDate(event.end)}
                                 </p>
                                 <div className="flex justify-end">
-                                    <button className="mt-6 py-2 px-6 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+                                    <button className="mt-6 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
                                         Vote Now
                                     </button>
                                 </div>
