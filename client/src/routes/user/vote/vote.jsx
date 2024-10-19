@@ -44,7 +44,7 @@ export default function Vote() {
                         {eventData.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform"
+                                className="bg-white p-6 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform"
                             >
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-2xl font-semibold text-gray-900">{event.eventName}</h3>
