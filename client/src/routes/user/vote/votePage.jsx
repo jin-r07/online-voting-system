@@ -67,7 +67,7 @@ export default function VotePage() {
                 <h2 className="text-xl font-semibold my-8">All Candidates:</h2>
                 <ul className="space-y-6">
                     {eventData.candidates.map((candidate) => (
-                        <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
+                        <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg hover:shadow-xl border border-gray-200">
                             <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-sm mr-4" />
                             <div className="flex-1">
                                 <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
