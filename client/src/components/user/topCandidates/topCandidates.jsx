@@ -56,9 +56,6 @@ export default function TopCandidates() {
                                             <p className="text-lg text-gray-800">{candidate.party.name}</p>
                                             <p className="text-sm text-gray-500">Votes: {candidate.votes}</p>
                                         </div>
-                                        <div className="ml-auto text-right">
-                                            <p className="text-sm text-gray-400">Rank: {idx + 1}</p>
-                                        </div>
                                     </div>
                                 ))}
                             </div>
