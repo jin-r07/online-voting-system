@@ -54,7 +54,7 @@ export default function OngoingVoting() {
     return (
         <div className="w-full h-full bg-[#9BF00B] lg:px-28 px-2 py-4 text-center lg:text-lg tracking-wide">
             {ongoingEvents.length === 0 ? (
-                <p>No ongoing votes at the moment.</p>
+                <p>No active voting events available at the moment.</p>
             ) : ongoingEvents.length === 1 ? (
                 <p>{ongoingEvents[0].eventName}</p>
             ) : (
