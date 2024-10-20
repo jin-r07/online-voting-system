@@ -1,11 +1,5 @@
 const Candidate = require("../models/candidates");
 const Party = require("../models/parties");
-const multichain = require("multichain-node")({
-    host: process.env.MULTICHAIN_HOST,
-    port: process.env.MULTICHAIN_PORT,
-    user: process.env.MULTICHAIN_USER,
-    pass: process.env.MULTICHAIN_PASS
-});
 
 async function createCandidate(req, res) {
     const { name, partyId } = req.body;
@@ -19,29 +13,12 @@ async function createCandidate(req, res) {
 
         const newCandidate = new Candidate({ name, image, party: partyId });
         await newCandidate.save();
-
-        const candidateData = {
-            candidateId: newCandidate._id,
-            name: newCandidate.name,
-            partyId: newCandidate.party,
-            image: newCandidate.image
-        };
-
-        await multichain.publish({
-            stream: "candidates",
-            key: newCandidate._id.toString(),
-            data: {
-                json: candidateData
-            }
-        });
-
         res.status(201).json(newCandidate);
     } catch (err) {
-        console.error("Error creating candidate:", err);
+        console.error(err);
         res.status(500).json({ error: "Error creating candidate" });
     }
 }
-
 
 async function getAllCandidates(req, res) {
     try {
