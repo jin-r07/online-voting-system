@@ -81,7 +81,10 @@ export default function Vote() {
                         ))}
                     </div>
                 ) : (
-                    <p className="text-center text-gray-500 text-lg">No Active Events</p>
+                    <div className="text-center py-10 border-black border-[1px] rounded-md">
+                        <p className="text-2xl">No active voting events available at the moment.</p>
+                        <p className="text-lg">Please check back later for updates on upcoming vote events.</p>
+                    </div>
                 )}
             </div>
             <Footer />
