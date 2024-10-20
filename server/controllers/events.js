@@ -1,5 +1,11 @@
 const Event = require("../models/events");
 const Candidate = require("../models/candidates");
+const multichain = require("multichain-node")({
+  host: process.env.MULTICHAIN_HOST,
+  port: process.env.MULTICHAIN_PORT,
+  user: process.env.MULTICHAIN_USER,
+  pass: process.env.MULTICHAIN_PASS
+});
 
 async function createEvent(req, res) {
   const { name, candidateIds, start, end } = req.body;
@@ -12,6 +18,13 @@ async function createEvent(req, res) {
     });
 
     await event.save();
+
+    await multichain.publish({ 
+      stream: 'events', 
+      key: event._id.toString(),
+      data: ''
+    });
+
     res.status(201).json(event);
   } catch (err) {
     res.status(500).json({ error: "Error creating event" });

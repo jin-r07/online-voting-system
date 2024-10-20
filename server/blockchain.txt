@@ -8,30 +8,11 @@ multichaind evs -daemon
 multichain-cli evs create stream events true
 multichain-cli evs subscribe events
 
-// Create candidates stream
-multichain-cli evs create stream candidates true
-multichain-cli evs subscribe candidates
-
-// Create votes stream
-multichain-cli evs create stream votes true
-multichain-cli evs subscribe votes
-
 // List all candidates in the multichain
-multichain-cli evs liststreamitems candidates
+multichain-cli evs liststreamitems events
 
-//multichain.conf
-# RPC configuration
-rpcbind=127.0.0.1
-rpcallowip=127.0.0.1
-rpcport=9226
+// Multichain.conf
+rpchost=127.0.0.1
+rpcport=4352
 rpcuser=multichainrpc
-rpcpassword=4myyMiFEFXhVLETC6qP6YAGLKVLHTGfnBuH4GVKDct6v
-daemon=1
-
-# Enable the RPC server
-server=1
-
-# Specify the blockchain name
-chain=evs
-
-
+rpcpassword=9umeLGKCaEhXrtgAwQTDaPBGntgioQ3t74gBMhrHiEu
