@@ -70,7 +70,6 @@ const updateEventStatuses = async () => {
             }
             await event.save();
         }
-        console.log("Event statuses updated successfully.");
     } catch (error) {
         console.error("Error updating event statuses:", error);
     }
