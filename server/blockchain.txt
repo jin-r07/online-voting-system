@@ -1,3 +1,17 @@
+// Create evs private blockchain
 multichain-util create evs
 
+// Start the multichain
 multichaind evs -daemon
+
+// Create events stream
+multichain-cli evs create stream events true
+multichain-cli evs subscribe events
+
+// Create candidates stream
+multichain-cli evs create stream candidates true
+multichain-cli evs subscribe candidates
+
+// Create votes stream
+multichain-cli evs create stream votes true
+multichain-cli evs subscribe votes

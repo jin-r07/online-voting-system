@@ -360,7 +360,7 @@ export default function History() {
             </div>
           ))
         ) : (
-          <div className="py-3 text-gray-500">No events found.</div>
+          <div className="text-gray-500">No events found.</div>
         )}
       </div>
       <ToastContainer />
