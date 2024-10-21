@@ -12,11 +12,6 @@ export default function Footer() {
                     <h4 className="text-lg">Electronic Voting System (EVS)</h4>
                     <p className="text-sm">&copy; {new Date().getFullYear()} All rights reserved.</p>
                 </div>
-                <div className="flex flex-col md:flex-row items-center text-base">
-                    <Link to="/privacy-policy" className="mx-4 hover:underline">Privacy Policy</Link>
-                    <Link to="/terms-of-service" className="mx-3 hover:underline">Terms of Service</Link>
-                    <Link to="/contact" className="mx-4 hover:underline">Contact Us</Link>
-                </div>
                 <div className="flex mt-4 md:mt-0">
                     <a href="https://www.facebook.com/JaeJin2003/" target="_blank" rel="noopener noreferrer" className="mx-2 text-[1.4rem] hover:text-[#0866FF]">
                         <FaFacebookSquare />
