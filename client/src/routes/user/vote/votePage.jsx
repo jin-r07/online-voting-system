@@ -77,7 +77,7 @@ export default function VotePage() {
                                 </div>
                             </div>
                             <button
-                                className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
+                                className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 hover:scale-110 transition-all duration-300"
                                 onClick={() => openModal(candidate)}
                             >
                                 Vote
