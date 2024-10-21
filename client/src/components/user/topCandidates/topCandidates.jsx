@@ -6,7 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function TopCandidates() {
     const [votingData, setVotingData] = useState(null);
+
     const [votesData, setVotesData] = useState({});
+
     const navigate = useNavigate();
 
     const fetchOngoingEvents = async () => {
@@ -14,7 +16,6 @@ export default function TopCandidates() {
             const eventsResponse = await axios.get("http://localhost:8080/api-admin/get-events");
             setVotingData(eventsResponse.data);
 
-            // Fetch total votes data
             const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
             setVotesData(votesResponse.data);
         } catch (err) {
@@ -52,7 +53,7 @@ export default function TopCandidates() {
                             <h3 className="text-xl mb-4 font-semibold">{event.eventName}</h3>
                             <div className="space-y-6">
                                 {event.candidates.slice(0, 3).map((candidate) => {
-                                    const totalVotes = votesData[candidate._id] || 0; // Get votes for the candidate
+                                    const totalVotes = votesData[candidate._id] || 0;
                                     return (
                                         <div key={candidate._id}
                                             className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
