@@ -52,7 +52,7 @@ export default function Vote() {
                         {eventData.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white p-6 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform"
+                                className="bg-white p-6 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
                             >
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-2xl font-semibold text-gray-900">{event.eventName}</h3>
@@ -73,7 +73,7 @@ export default function Vote() {
                                 </p>
                                 <div className="flex justify-end">
                                     <button onClick={() => handleRedirectToVote(event._id)}
-                                        className="mt-6 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+                                        className="mt-6 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
                                         Vote Now
                                     </button>
                                 </div>

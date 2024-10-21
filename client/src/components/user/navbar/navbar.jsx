@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { VscMenu } from "react-icons/vsc";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { gsap } from "gsap";
 import { Link, useLocation } from "react-router-dom";
 import LoginForm from "../login/login";
@@ -16,21 +17,15 @@ import { IoLogOut } from "react-icons/io5";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-
     const [activeForm, setActiveForm] = useState(null);
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     const [userData, setUserData] = useState(null);
-
     const [loading, setLoading] = useState(true);
-
-    const [showMenu, setShowMenu] = useState(false);
-
+    const [showDropdown, setShowDropdown] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const dropdownRef = useRef(null);
-
+    const navRef = useRef(null);
     const location = useLocation();
 
     const navLinks = [
@@ -57,7 +52,6 @@ export default function Navbar() {
             if (response.data) {
                 setIsLoggedIn(true);
                 setUserData(response.data);
-                window.location.reload;
             } else {
                 setIsLoggedIn(false);
             }
@@ -76,13 +70,26 @@ export default function Navbar() {
     useEffect(() => {
         if (dropdownRef.current) {
             gsap.to(dropdownRef.current, {
-                height: isOpen ? "auto" : 0,
-                opacity: isOpen ? 1 : 0,
+                height: showDropdown ? "auto" : 0,
+                opacity: showDropdown ? 1 : 0,
                 duration: 0.5,
                 ease: "power2.out"
             });
         }
-    }, [isOpen]);
+    }, [showDropdown]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (navRef.current && !navRef.current.contains(event.target)) {
+                setIsOpen(false);
+                setShowDropdown(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const handleFormToggle = (form) => {
         setActiveForm(prevForm => prevForm === form ? null : form);
@@ -102,10 +109,11 @@ export default function Navbar() {
                 }
             });
             Cookies.remove("token");
+            Cookies.remove("userId");
             setIsLoggedIn(false);
             setUserData(null);
+            window.location.reload;
         } catch (error) {
-            console.error("Logout failed:", error);
         }
     };
 
@@ -119,12 +127,12 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="sticky top-0 bg-white w-full h-16 border-b-[1px] border-[#9BF00B] z-50 flex items-center justify-between lg:px-28 px-4">
+            <nav ref={navRef} className="sticky top-0 bg-white w-full h-16 border-b-[1px] border-[#9BF00B] z-50 flex items-center justify-between lg:px-28 px-4">
                 <Link to="/"><img src="/logo.png" alt="Logo" className="lg:h-10 h-auto lg:w-auto w-20" title="EVS" /></Link>
                 <div className="flex items-center w-full md:w-auto">
                     <div className="hidden lg:flex lg:items-center lg:space-x-6 lg:ml-auto">
                         {navLinks.map((link, index) => (
-                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }}
+                            <Link key={index} to={link.href} onClick={() => setIsOpen(false)}
                                 className={`text-lg border-b-[1px] ${(link.href !== '/' && location.pathname.startsWith(link.href)) || (link.href === '/' && location.pathname === '/') ? 'border-black' : 'border-white'} hover:border-black`}>
                                 {link.name}
                             </Link>
@@ -142,42 +150,83 @@ export default function Navbar() {
                             </>
                         ) : (
                             <div className="relative flex items-center">
-                                <span
-                                    className="text-lg cursor-pointer relative border-l-[1px] pl-6 border-black"
-
-                                >
+                                <span className="text-lg cursor-pointer flex items-center border-l-[1px] pl-6 border-black" onClick={() => setShowDropdown(!showDropdown)}>
                                     {userData.voterIdCardNumber}
+                                    {showDropdown ? <IoIosArrowUp className="ml-2" /> : <IoIosArrowDown className="ml-2" />}
                                 </span>
-                                {showMenu && (
+                                {showDropdown && (
                                     <div
                                         ref={dropdownRef}
-                                        className="absolute left-4 top-7 bg-white text-black border border-gray-300 shadow-lg rounded"
+                                        className="absolute left-0 top-10 bg-white text-black border border-gray-300 shadow-lg rounded w-48"
                                     >
+                                        <ul className="py-1">
+                                            <Link to="/user-profile" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
+                                                <BiSolidUser className="text-2xl" />
+                                                <p className="text-lg pl-3">Profile</p>
+                                            </Link>
+                                            <Link to="/user-settings" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
+                                                <RiSettings5Fill className="text-2xl" />
+                                                <p className="text-lg pl-3">Settings</p>
+                                            </Link>
+                                            <button onClick={handleLogout} className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 group">
+                                                <IoLogOut className="text-2xl text-black group-hover:text-white" />
+                                                <p className="text-red-600 group-hover:text-white pl-3">
+                                                    Logout
+                                                </p>
+                                            </button>
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="lg:hidden ml-auto">
+                        <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
+                            {isOpen ? <IoClose size={24} className="transition-transform duration-300 transform rotate-180" /> : <VscMenu size={24} className="transition-transform duration-300 transform" />}
+                        </button>
+                    </div>
+                </div>
+
+                {isOpen && (
+                    <div className="fixed inset-x-0 top-16 bg-black opacity-50 z-40 lg:hidden" style={{ height: "calc(100vh - 4rem)" }} onClick={() => setIsOpen(false)} />
+                )}
+                <div ref={dropdownRef} className={`lg:hidden absolute top-full right-0 border-t-[1px] border-[#9BF00B] w-full bg-white overflow-hidden drop-shadow-2xl ${isOpen ? "block" : "hidden"} z-50`}>
+                    <div className="flex flex-col space-y-2 pt-2 pb-4 pl-4">
+                        {navLinks.map((link, index) => (
+                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }} className={`text-lg border-b-[1px] ${location.pathname === link.href ? "border-black" : "border-white"} hover:border-black w-fit`}>
+                                {link.name}
+                            </Link>
+                        ))}
+                        {!isLoggedIn ? (
+                            <div className="flex gap-5">
+                                <button onClick={() => { handleFormToggle('login'); setIsOpen(false); }} className="text-lg bg-blue-600 hover:bg-blue-700 rounded w-fit px-4 py-1 text-white">
+                                    Login
+                                </button>
+                                <button onClick={() => { handleFormToggle('register'); setIsOpen(false); }} className="text-lg bg-blue-600 hover:bg-blue-700 rounded w-fit px-4 py-1 text-white">
+                                    Register
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex items-center">
+                                <span className="text-lg cursor-pointer flex items-center" onClick={() => setShowDropdown(!showDropdown)}>
+                                    {userData.voterIdCardNumber}
+                                    {showDropdown ? <IoIosArrowUp className="ml-2" /> : <IoIosArrowDown className="ml-2" />}
+                                </span>
+                                {showDropdown && (
+                                    <div className="absolute left-32 top-8 bg-white border border-gray-300 shadow-lg">
                                         <ul className="py-1">
                                             <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
                                                 <BiSolidUser className="text-2xl" />
-                                                <Link
-                                                    to="/user-profile"
-                                                    className="text-lg pl-3"
-                                                >
-                                                    Profile
-                                                </Link>
+                                                <Link to="/user-profile" className="text-lg pl-3">Profile</Link>
                                             </li>
-                                            <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 hover:text-white">
+                                            <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
                                                 <RiSettings5Fill className="text-2xl" />
-                                                <Link
-                                                    to="/user-settings"
-                                                    className="text-lg pl-3"
-                                                >
-                                                    Settings
-                                                </Link>
+                                                <Link to="/user-settings" className="text-lg pl-3">Settings</Link>
                                             </li>
-                                            <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 group hover:text-white">
-                                                <IoLogOut className="text-2xl ml-1" />
-                                                <button
-                                                    onClick={handleLogout}
-                                                    className="text-red-600 group-hover:text-white pl-3"
-                                                >
+                                            <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 group">
+                                                <IoLogOut className="text-2xl" />
+                                                <button onClick={handleLogout} className="text-red-600 group-hover:text-white pl-3">
                                                     Logout
                                                 </button>
                                             </li>
@@ -185,96 +234,13 @@ export default function Navbar() {
                                     </div>
                                 )}
                             </div>
-                        )}                    </div>
-                    <div className="lg:hidden ml-auto">
-                        <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
-                            {isOpen ?
-                                <IoClose size={24}
-                                    className="transition-transform duration-300 transform rotate-180" /> :
-                                <VscMenu size={24} className="transition-transform duration-300 transform" />
-                            }
-                        </button>
-                    </div>
-                </div>
-                {isOpen && (
-                    <div className="fixed inset-x-0 top-16 bg-black opacity-50 z-40 lg:hidden"
-                        style={{ height: "calc(100vh - 4rem)" }}
-                        onClick={() => setIsOpen(false)}
-                    />
-                )}
-                <div ref={dropdownRef}
-                    className={`lg:hidden absolute top-full right-0 border-t-[1px] border-[#9BF00B] w-full bg-white overflow-hidden drop-shadow-2xl ${isOpen ? "block" : "hidden"} z-50`}>
-                    <div className="flex flex-col space-y-2 pt-2 pb-4 pl-4">
-                        {navLinks.map((link, index) => (
-                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }}
-                                className={`text-lg border-b-[1px] ${location.pathname === link.href ? "border-black" : "border-white"} hover:border-black w-fit`}>
-                                {link.name}
-                            </Link>
-                        ))}
-                        {!isLoggedIn ? (
-                            <div className="flex gap-5">
-                                <button onClick={() => {
-                                    handleFormToggle('login');
-                                    setIsOpen(false);
-                                }} className="text-lg bg-blue-600 hover:bg-blue-700 rounded w-fit px-4 py-1 text-white">
-                                    Login
-                                </button>
-                                <button onClick={() => {
-                                    handleFormToggle('register');
-                                    setIsOpen(false);
-                                }} className="text-lg bg-blue-600 hover:bg-blue-700 rounded w-fit px-4 py-1 text-white">
-                                    Register
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="relative flex items-center">
-                                <span
-                                    className="text-lg cursor-pointer relative"
-                                    onMouseEnter={() => setShowMenu(true)}
-                                    onMouseLeave={() => setShowMenu(false)}
-                                >
-                                    {userData.voterIdCardNumber}
-                                    {showMenu && (
-                                        <div
-                                            className="absolute left-[5rem] -top-32 bg-white border border-gray-300 shadow-lg rounded">
-                                            <ul className="py-1">
-                                                <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
-                                                    <BiSolidUser className="text-2xl" />
-                                                    <Link
-                                                        to="/user-profile"
-                                                        className="text-lg pl-3"
-                                                    >
-                                                        Profile
-                                                    </Link>
-                                                </li>
-                                                <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 hover:text-white">
-                                                    <RiSettings5Fill className="text-2xl" />
-                                                    <Link
-                                                        to="/user-settings"
-                                                        className="text-lg pl-3"
-                                                    >
-                                                        Settings
-                                                    </Link>
-                                                </li>
-                                                <li className="flex items-center py-2 pl-2 pr-12 cursor-pointer mt-1 hover:bg-blue-600 group hover:text-white">
-                                                    <IoLogOut className="text-2xl ml-1" />
-                                                    <button
-                                                        onClick={handleLogout}
-                                                        className="text-red-600 group-hover:text-white pl-3"
-                                                    >
-                                                        Logout
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    )}
-                                </span>
-                            </div>
                         )}
                     </div>
                 </div>
             </nav>
+
             <OngoingVoting />
+
             {activeForm === "login" &&
                 <LoginForm
                     onClose={() => setActiveForm(null)}
