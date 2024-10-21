@@ -52,19 +52,22 @@ export default function TopCandidates() {
                         <div key={index} className="w-full md:w-1/2 px-4 mb-10">
                             <h3 className="text-xl mb-4 font-semibold">{event.eventName}</h3>
                             <div className="space-y-6">
-                                {event.candidates.slice(0, 3).map((candidate) => {
-                                    const totalVotes = votesData[candidate._id] || 0;
-                                    return (
-                                        <div key={candidate._id}
-                                            className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
-                                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
-                                            <div className="ml-4">
-                                                <p className="text-lg text-gray-800">{candidate.party.name}</p>
-                                                <p className="text-sm text-gray-500">Votes: {totalVotes}</p>
+                                {event.candidates
+                                    .slice(0, 3)
+                                    .sort((a, b) => (votesData[b._id] || 0) - (votesData[a._id] || 0))
+                                    .map((candidate) => {
+                                        const totalVotes = votesData[candidate._id] || 0;
+                                        return (
+                                            <div key={candidate._id}
+                                                className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
+                                                <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
+                                                <div className="ml-4">
+                                                    <p className="text-lg text-gray-800">{candidate.party.name}</p>
+                                                    <p className="text-sm text-gray-500">Votes: {totalVotes}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
                             </div>
                             <button
                                 onClick={() => handleRedirectToVote(event._id)}
