@@ -90,6 +90,8 @@ export default function Navbar() {
     };
 
     const handleLogout = async () => {
+        setIsOpen(!isOpen);
+        setShowDropdown(false);
         setShowConfirmModal(true);
     };
 
@@ -154,11 +156,11 @@ export default function Navbar() {
                                         className="absolute left-0 top-10 bg-white text-black border border-gray-300 shadow-lg rounded w-48"
                                     >
                                         <ul className="py-1">
-                                            <Link to="/user-profile" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
+                                            <Link to="/user-profile" onClick={() => setShowDropdown(false)} className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
                                                 <BiSolidUser className="text-2xl" />
                                                 <p className="text-lg pl-3">Profile</p>
                                             </Link>
-                                            <Link to="/user-settings" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
+                                            <Link to="/user-settings" onClick={() => setShowDropdown(false)} className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
                                                 <RiSettings5Fill className="text-2xl" />
                                                 <p className="text-lg pl-3">Settings</p>
                                             </Link>
@@ -210,11 +212,11 @@ export default function Navbar() {
                                 {showDropdown && (
                                     <div ref={dropdownRef} className="absolute left-32 top-10 bg-white text-black border border-gray-300 shadow-lg rounded w-48">
                                         <ul className="py-1">
-                                            <Link to="/user-profile" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
+                                            <Link to="/user-profile" onClick={() => { setShowDropdown(false); setIsOpen(false); }} className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
                                                 <BiSolidUser className="text-2xl" />
                                                 <p className="text-lg pl-3">Profile</p>
                                             </Link>
-                                            <Link to="/user-settings" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
+                                            <Link to="/user-settings" onClick={() => { setShowDropdown(false); setIsOpen(false); }} className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
                                                 <RiSettings5Fill className="text-2xl" />
                                                 <p className="text-lg pl-3">Settings</p>
                                             </Link>
