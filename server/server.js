@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require('path');
 const { createAdmin } = require("./scripts/setup");
 const cron = require("node-cron");
+const cookieParser = require("cookie-parser");
 const Event = require("./models/events");
 
 // User
@@ -30,7 +31,7 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
 }));
-
+app.use(cookieParser());
 createAdmin();
 
 // User

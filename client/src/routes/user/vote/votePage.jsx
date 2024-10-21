@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie"; // Import js-cookie
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,11 +10,8 @@ import { formatDate } from "../../../utils/formatDate&Time";
 
 export default function VotePage() {
     const { eventId } = useParams();
-
     const [eventData, setEventData] = useState(null);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const fetchEventData = async () => {
@@ -53,6 +51,52 @@ export default function VotePage() {
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedCandidate(null);
+    };
+
+    // Function to handle vote submission
+    const submitVote = async () => {
+        if (!selectedCandidate) return;
+
+        try {
+            const userId = getUserIdFromCookies();
+            const voteData = {
+                eventId,
+                candidateId: selectedCandidate._id,
+                userId,
+            };
+            
+            console.log("Submitting vote data:", voteData);
+
+            const response = await axios.post("http://localhost:8080/api/vote", voteData, { withCredentials: true });
+
+            toast.success(response.data.message, {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            closeModal();
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Error submitting vote", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    };
+
+    // Function to get user ID from cookies
+    const getUserIdFromCookies = () => {
+        return Cookies.get("userId"); // Retrieve the userId cookie
     };
 
     return (
@@ -114,10 +158,7 @@ export default function VotePage() {
                                 </button>
                                 <button
                                     className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
-                                    onClick={() => {
-                                        toast.success(`You voted for ${selectedCandidate.name}!`);
-                                        closeModal();
-                                    }}
+                                    onClick={submitVote} // Call submitVote to submit the vote
                                 >
                                     Confirm
                                 </button>
