@@ -14,6 +14,7 @@ export default function Home() {
                 </p>
 
                 <h1 className="text-xl py-6 font-bold">Ongoing voting events,</h1>
+
                 <TopCandidates />
 
                 <div className="mb-6 lg:text-xl text-lg">
@@ -36,9 +37,15 @@ export default function Home() {
                     <p className="pt-6">For further questionnaires you can also reach out to us through<Link to="/contact" className="text-blue-600 hover:underline">&nbsp;Contact&nbsp;</Link>page. Or, for other questionnaires you can check out below FAQ.</p>
 
                 </div>
-                <FAQ />
-                <div className="bg-vote bg-cover bg-center mt-12 h-screen w-full">
 
+                <FAQ />
+
+                <div className="w-full h-full lg:text-8xl text-5xl">
+                    <div className="flex flex-col py-32">
+                        <p>Stop waiting.</p>
+                        <p>Start</p>
+                        <p>eVote-ing.</p>
+                    </div>
                 </div>
             </div>
             <Footer />
