@@ -52,11 +52,11 @@ export default function FAQ() {
                 {faqs.map((faq, index) => (
                     <div key={index} className="border-b border-gray-300 mb-4 cursor-pointer" onClick={() => handleToggle(index)}>
                         <div className="flex justify-between items-center py-4 cursor-pointer hover:bg-gray-100">
-                            <h2 className="text-xl font-semibold">{faq.question}</h2>
+                            <h2 className="text-xl">{faq.question}</h2>
                             <span className="text-lg font-bold">{openIndexes.includes(index) ? '-' : '+'}</span>
                         </div>
                         {openIndexes.includes(index) && (
-                            <div className="p-4">
+                            <div className="py-4 text-lg">
                                 <p>{faq.answer}</p>
                             </div>
                         )}
