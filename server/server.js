@@ -65,6 +65,7 @@ const updateEventStatuses = async () => {
                 event.status = 'completed';
             }
             await event.save();
+            console.log("Updating status: " + event.status)
         }
     } catch (error) {
         console.error("Error updating event statuses:", error);

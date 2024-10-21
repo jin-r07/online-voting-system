@@ -13,6 +13,10 @@ async function submitVote(req, res) {
         return res.status(401).json({ message: "User not authenticated" });
     }
 
+    if (!eventId || !candidateId) {
+        return res.status(400).json({ message: "Event ID and Candidate ID are required." });
+    }
+
     try {
         const key = `${eventId}_${userId}`;
 

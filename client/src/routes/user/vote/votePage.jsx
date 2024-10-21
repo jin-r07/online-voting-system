@@ -119,7 +119,7 @@ export default function VotePage() {
                                         closeModal();
                                     }}
                                 >
-                                    Confirm Vote
+                                    Confirm
                                 </button>
                             </div>
                         </div>
