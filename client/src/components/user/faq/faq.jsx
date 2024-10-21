@@ -62,7 +62,7 @@ export default function FAQ() {
     return (
         <>
             <div className="w-full h-full pt-10 pb-4">
-                <h1 className="text-2xl font-bold mb-6">Frequently Asked Questions</h1>
+                <h1 className="text-2xl font-bold mb-6">Frequently Asked Questions (FAQ)</h1>
                 {faqs.map((faq, index) => (
                     <div key={index} className="border-b border-gray-300 mb-4 cursor-pointer" onClick={() => handleToggle(index)}>
                         <div className="flex justify-between items-center py-4 cursor-pointer hover:bg-gray-100">
