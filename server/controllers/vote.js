@@ -32,7 +32,7 @@ async function submitVote(req, res) {
 
         await multichain.publish({
             stream: 'events',
-            key: eventId,
+            key: key,
             data: Buffer.from(JSON.stringify(voteData)).toString('hex')
         });
 
