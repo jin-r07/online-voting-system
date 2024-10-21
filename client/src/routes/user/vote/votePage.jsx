@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie"; // Import js-cookie
+import Cookies from "js-cookie";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,8 +10,11 @@ import { formatDate } from "../../../utils/formatDate&Time";
 
 export default function VotePage() {
     const { eventId } = useParams();
+
     const [eventData, setEventData] = useState(null);
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
     const fetchEventData = async () => {
@@ -53,7 +56,6 @@ export default function VotePage() {
         setSelectedCandidate(null);
     };
 
-    // Function to handle vote submission
     const submitVote = async () => {
         if (!selectedCandidate) return;
 
@@ -64,7 +66,7 @@ export default function VotePage() {
                 candidateId: selectedCandidate._id,
                 userId,
             };
-            
+
             console.log("Submitting vote data:", voteData);
 
             const response = await axios.post("http://localhost:8080/api/vote", voteData, { withCredentials: true });
@@ -94,9 +96,8 @@ export default function VotePage() {
         }
     };
 
-    // Function to get user ID from cookies
     const getUserIdFromCookies = () => {
-        return Cookies.get("userId"); // Retrieve the userId cookie
+        return Cookies.get("userId");
     };
 
     return (
@@ -158,7 +159,7 @@ export default function VotePage() {
                                 </button>
                                 <button
                                     className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
-                                    onClick={submitVote} // Call submitVote to submit the vote
+                                    onClick={submitVote}
                                 >
                                     Confirm
                                 </button>

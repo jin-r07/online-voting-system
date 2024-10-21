@@ -6,13 +6,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function TopCandidates() {
     const [votingData, setVotingData] = useState(null);
-
+    const [votesData, setVotesData] = useState({});
     const navigate = useNavigate();
 
     const fetchOngoingEvents = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/api-admin/get-events");
-            setVotingData(response.data);
+            const eventsResponse = await axios.get("http://localhost:8080/api-admin/get-events");
+            setVotingData(eventsResponse.data);
+
+            // Fetch total votes data
+            const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
+            setVotesData(votesResponse.data);
         } catch (err) {
             toast.error("Error fetching candidates", {
                 position: "bottom-right",
@@ -35,7 +39,6 @@ export default function TopCandidates() {
         navigate(`/vote/${eventId}`);
     };
 
-
     if (!votingData) {
         return <div className="text-center text-xl py-10">Loading...</div>;
     }
@@ -48,16 +51,19 @@ export default function TopCandidates() {
                         <div key={index} className="w-full md:w-1/2 px-4 mb-10">
                             <h3 className="text-xl mb-4 font-semibold">{event.eventName}</h3>
                             <div className="space-y-6">
-                                {event.candidates.slice(0, 3).map((candidate, idx) => (
-                                    <div key={candidate._id}
-                                        className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
-                                        <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
-                                        <div className="ml-4">
-                                            <p className="text-lg text-gray-800">{candidate.party.name}</p>
-                                            <p className="text-sm text-gray-500">Votes: {candidate.votes}</p>
+                                {event.candidates.slice(0, 3).map((candidate) => {
+                                    const totalVotes = votesData[candidate._id] || 0; // Get votes for the candidate
+                                    return (
+                                        <div key={candidate._id}
+                                            className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
+                                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
+                                            <div className="ml-4">
+                                                <p className="text-lg text-gray-800">{candidate.party.name}</p>
+                                                <p className="text-sm text-gray-500">Votes: {totalVotes}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                             <button
                                 onClick={() => handleRedirectToVote(event._id)}
