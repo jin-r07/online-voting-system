@@ -10,7 +10,7 @@ async function submitVote(req, res) {
     const { eventId, candidateId } = req.body;
 
     if (!userId) {
-        return res.status(401).json({ message: "Please Login to continue to vote." });
+        return res.status(401).json({ message: "You must be logged in to vote. Please log in to continue." });
     }
 
     if (!eventId || !candidateId) {
