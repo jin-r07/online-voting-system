@@ -267,7 +267,7 @@ export default function Users() {
       <ul className="mt-4 space-y-4 overflow-y-auto">
         {users.length > 0 ? (
           users.map((user) => (
-            <li key={user._id} className="flex items-center border rounded-md p-4 bg-gray-50 mr-12">
+            <li key={user._id} className="flex items-center border-[1px] border-gray-300 rounded-md p-4 bg-gray-50 mr-12">
               <div className="flex">
                 <div className="mr-8">
                   {user.voterIdCardPicture && (
