@@ -17,10 +17,15 @@ export default function VotePage() {
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
 
+    const [votesData, setVotesData] = useState({});
+
     const fetchEventData = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/api-admin/get-events/${eventId}`);
             setEventData(response.data);
+
+            const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
+            setVotesData(votesResponse.data);
         } catch (err) {
             toast.error("Error fetching event details", {
                 position: "bottom-right",
@@ -109,24 +114,28 @@ export default function VotePage() {
                 </div>
                 <h2 className="text-xl font-semibold my-8">All Candidates:</h2>
                 <ul className="space-y-6">
-                    {eventData.candidates.map((candidate) => (
-                        <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg hover:shadow-xl border border-gray-200">
-                            <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-sm mr-4" />
-                            <div className="flex-1">
-                                <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
-                                <div className="flex items-center">
-                                    <img src={candidate.image} alt={candidate.name} className="w-10 h-auto mr-2 rounded-md" />
-                                    <p className="text-gray-700">{candidate.name}</p>
+                    {eventData.candidates.map((candidate) => {
+                        const totalVotes = votesData[candidate._id] || 0;
+                        return (
+                            <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg hover:shadow-xl border border-gray-200">
+                                <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-sm mr-4" />
+                                <div className="flex-1">
+                                    <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
+                                    <p className="text-base text-gray-500">Votes: {totalVotes}</p>
+                                    <div className="flex items-center">
+                                        <img src={candidate.image} alt={candidate.name} className="w-10 h-auto mr-2 rounded-md" />
+                                        <p className="text-gray-700">{candidate.name}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <button
-                                className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 hover:scale-110 transition-all duration-300"
-                                onClick={() => openModal(candidate)}
-                            >
-                                Vote
-                            </button>
-                        </li>
-                    ))}
+                                <button
+                                    className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 hover:scale-110 transition-all duration-300"
+                                    onClick={() => openModal(candidate)}
+                                >
+                                    Vote
+                                </button>
+                            </li>
+                        )
+                    })}
                 </ul>
 
                 {isModalOpen && (
