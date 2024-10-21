@@ -2,36 +2,48 @@ import React, { useState } from "react";
 
 const faqs = [
     {
-        question: "How can I register to vote in Nepal?",
-        answer: "To register to vote in Nepal, you need to visit your local Election Commission office and provide necessary documents, including proof of identity and citizenship. You can also check the official Election Commission Nepal website for the latest registration guidelines."
+        question: "What is an electronic voting system ?",
+        answer: "An electronic voting system allows voters to cast their votes using electronic devices such as computers, tablets, or voting machines. This system aims to enhance the voting process by making it faster, more secure, and more accessible."
     },
     {
-        question: "What are the eligibility criteria for voting in Nepal?",
+        question: "How can I register to vote ?",
+        answer: "To register to vote in Nepal, you need to have your voter card, you can create one by visiting your local Election Commission office and provide necessary documents, including proof of identity and citizenship. You can also check the official Election Commission Nepal website for the latest registration guidelines. And simply fill out the necessary details within the form of the Register option within the navigation panel. Make sure that the information provided are accurate and correct."
+    },
+    {
+        question: "What are the eligibility criteria for voting in Nepal ?",
         answer: "To be eligible to vote in Nepal, you must be a Nepali citizen, at least 18 years old, and have a valid citizenship certificate. Ensure you are registered in the voter list before the election."
     },
     {
-        question: "Where can I find my polling station?",
-        answer: "Your polling station will be assigned based on your residence. You can find your designated polling station by checking the Election Commission Nepal's official website or contacting your local election office."
+        question: "How does the electronic voting process work ?",
+        answer: "Voters log into the system using secure credentials, select their preferred candidates or options, and submit their votes electronically. Each vote is recorded securely to ensure confidentiality and integrity."
     },
     {
-        question: "What should I bring to the polling station on election day?",
-        answer: "On election day, bring your citizenship certificate and any other required identification documents as specified by the Election Commission. It's also a good idea to bring a pen or pencil, as some stations may not provide writing instruments."
+        question: "Is my vote confidential ?",
+        answer: "Yes, all votes cast through our electronic voting system are confidential."
     },
     {
-        question: "How can I verify my voter registration status?",
-        answer: "You can verify your voter registration status by visiting the Election Commission Nepal's website or contacting your local election office. They can provide information on whether you are registered and if your details are up to date."
+        question: "What if I encounter technical issues while voting ?",
+        answer: "If you experience any technical issues, please contact our support team immediately through the contact option on our website. We are available to assist you throughout the voting process."
     },
     {
-        question: "What if I lost my citizenship certificate?",
-        answer: "If you have lost your citizenship certificate, you need to file a report at the local police station and then apply for a replacement through the District Administration Office or the Election Commission Nepal."
+        question: "Can I vote from anywhere ?",
+        answer: "Yes, our electronic voting system is designed to be accessible from any location with internet connectivity, allowing you to vote conveniently."
     },
     {
-        question: "Can I vote if I am abroad?",
-        answer: "Nepali citizens residing abroad can vote if they are registered in the voter list and fulfill the criteria set by the Election Commission. You may need to participate in special voting arrangements or consular voting."
+        question: "What if I change my mind after submitting my vote ?",
+        answer: "Once your vote is submitted, it cannot be changed to ensure the integrity of the voting process. Please review your selections carefully before submitting."
     },
     {
-        question: "What is the process for voting by proxy?",
-        answer: "Voting by proxy is allowed in certain circumstances. You need to apply for a proxy vote through the Election Commission Nepal and provide valid reasons and documentation. The proxy must be a registered voter."
+        question: "Is there a cost associated with voting ?",
+        answer: "Voting through our electronic system is completely free of charge. There are no hidden fees or costs associated with the voting process."
+    },
+    {
+        question: "Who can participate in the voting ?",
+        answer: "Eligibility to vote is determined by the specific rules set for each election. Generally, only registered voters or eligible participants can cast their votes through the electronic voting system."
+    },
+    {
+        question: "What should I do if I forget my login credentials ?",
+        answer: "If you forget your login credentials, use the “Forgot Password” option on the login page. You will receive instructions on how to reset your password via your registered email."
     }
 ];
 
