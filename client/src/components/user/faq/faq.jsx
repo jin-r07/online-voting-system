@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Footer from "../../../components/user/footer/footer";
 
 const faqs = [
     {
@@ -48,7 +47,7 @@ export default function FAQ() {
     };
     return (
         <>
-            <div className="w-full h-full lg:px-28 px-4 pt-10 pb-4">
+            <div className="w-full h-full pt-10 pb-4">
                 <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
                 {faqs.map((faq, index) => (
                     <div key={index} className="border-b border-gray-300 mb-4 cursor-pointer" onClick={() => handleToggle(index)}>
@@ -64,7 +63,6 @@ export default function FAQ() {
                     </div>
                 ))}
             </div>
-            <Footer />
         </>
     );
 }

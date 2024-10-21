@@ -4,7 +4,7 @@ import Navbar from "./components/user/navbar/navbar";
 import Home from "./routes/user/home/home";
 import Vote from "./routes/user/vote/vote";
 import VotePage from "./routes/user/vote/votePage";
-import FAQ from "./routes/user/faq/faq";
+import Results from "./routes/user/results/results";
 import Contact from "./routes/user/contact/contact";
 import UserProfile from "./routes/user/userProfile/userProfile";
 import UserSettings from "./routes/user/userSettings/userSettings";
@@ -23,7 +23,7 @@ function App() {
 
   // Check if the current path starts with '/admin'
   const isAdminRoute = location.pathname.startsWith("/admin");
-  
+
   // Check if the current path is exactly '/admin' (the login route)
   const isAdminLogin = location.pathname === "/admin";
 
@@ -40,7 +40,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/vote/:eventId" element={<VotePage />} />
-        <Route path="/faq" element={<FAQ />} />
+        <Route path="/results" element={<Results />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/user-settings" element={<UserSettings />} />

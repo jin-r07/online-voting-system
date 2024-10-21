@@ -2,6 +2,7 @@ import React from "react";
 import TopCandidates from "../../../components/user/topCandidates/topCandidates";
 import Footer from "../../../components/user/footer/footer";
 import { Link } from "react-router-dom";
+import FAQ from "../../../components/user/faq/faq";
 
 export default function Home() {
     return (
@@ -35,24 +36,7 @@ export default function Home() {
                     <p className="pt-6">For further questionnaires you can also reach out to us through<Link to="/contact" className="text-blue-600 hover:underline">&nbsp;Contact&nbsp;</Link>page. Or, for other questionnaires you can check out below FAQ.</p>
 
                 </div>
-
-                <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">Eligibility Criteria</h2>
-                    <p>To be eligible to vote, you must meet certain criteria. Make sure to review the requirements to
-                        ensure you are eligible to participate in the elections.</p>
-                </div>
-
-                <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">Educational Resources</h2>
-                    <p>We provide resources to help you understand the voting process, including guides, tutorials, and
-                        more. Stay informed and prepared.</p>
-                </div>
-
-                <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">Updates and News</h2>
-                    <p>Keep up-to-date with the latest news and updates related to elections. Stay informed about
-                        changes and important announcements.</p>
-                </div>
+                <FAQ />
             </div>
             <Footer />
         </div>
