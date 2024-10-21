@@ -58,6 +58,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                 } else {
                     navigate("/vote");
                     onClose();
+                    window.location.reload;
                 }
             } catch (error) {
                 toast.error(error.message || "Something went wrong. Please try again later.", {

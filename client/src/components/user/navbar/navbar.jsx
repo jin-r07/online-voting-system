@@ -143,7 +143,7 @@ export default function Navbar() {
                         ) : (
                             <div className="relative flex items-center">
                                 <span
-                                    className="text-lg cursor-pointer relative bg-[#372FDF] text-white rounded px-2"
+                                    className="text-lg cursor-pointer relative border-l-[1px] pl-6 border-black"
 
                                 >
                                     {userData.voterIdCardNumber}
