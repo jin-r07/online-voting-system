@@ -19,8 +19,8 @@ async function submitVote(req, res) {
 
     try {
         const key = `${eventId}_${userId}`;
-
         const existingVotes = await multichain.listStreamKeyItems({ stream: 'events', key });
+        
         if (existingVotes.length > 0) {
             return res.status(400).json({ message: "You have already voted for this event." });
         }
@@ -50,7 +50,6 @@ async function extractVoteData(req, res) {
         for (const item of items) {
             if (item.data) {
                 const jsonString = Buffer.from(item.data, 'hex').toString('utf8');
-
                 const voteData = JSON.parse(jsonString);
                 const candidateId = voteData.candidateId;
 
@@ -65,5 +64,26 @@ async function extractVoteData(req, res) {
     }
 }
 
+async function hasUserVoted(req, res) {
+    const userId = req.cookies.userId;
+    const { eventId } = req.query;
 
-module.exports = { submitVote, extractVoteData };
+    if (!userId) {
+        return res.status(401).json({ message: "You must be logged in to check vote status." });
+    }
+
+    try {
+        const key = `${eventId}_${userId}`;
+        const existingVotes = await multichain.listStreamKeyItems({ stream: 'events', key });
+
+        if (existingVotes.length > 0) {
+            return res.status(200).json({ hasVoted: true });
+        } else {
+            return res.status(200).json({ hasVoted: false });
+        }
+    } catch (err) {
+        res.status(500).json({ error: "Error checking vote status" });
+    }
+}
+
+module.exports = { submitVote, extractVoteData, hasUserVoted };

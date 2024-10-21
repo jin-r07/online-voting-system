@@ -12,12 +12,16 @@ export default function VotePage() {
     const { eventId } = useParams();
 
     const [eventData, setEventData] = useState(null);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const [selectedCandidate, setSelectedCandidate] = useState(null);
-
     const [votesData, setVotesData] = useState({});
+    const [hasVoted, setHasVoted] = useState(false);
+
+    console.log(hasVoted)
+
+    const getUserIdFromCookies = () => {
+        return Cookies.get("userId");
+    };
 
     const fetchEventData = async () => {
         try {
@@ -40,8 +44,33 @@ export default function VotePage() {
         }
     };
 
+    const checkUserVoteStatus = async () => {
+        const userId = getUserIdFromCookies();
+        if (!userId) return;
+
+        try {
+            const response = await axios.get(`http://localhost:8080/api/vote-status`, {
+                params: { eventId },
+                withCredentials: true,
+            });
+            setHasVoted(response.data.hasVoted);
+        } catch (err) {
+            toast.error("Error checking voting status", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    };
+
     useEffect(() => {
         fetchEventData();
+        checkUserVoteStatus();
     }, [eventId]);
 
     if (!eventData) {
@@ -84,6 +113,7 @@ export default function VotePage() {
                 progress: undefined,
                 theme: "light",
             });
+            setHasVoted(true);
             closeModal();
         } catch (err) {
             toast.error(err.response?.data?.message || "Error submitting vote", {
@@ -97,10 +127,6 @@ export default function VotePage() {
                 theme: "light",
             });
         }
-    };
-
-    const getUserIdFromCookies = () => {
-        return Cookies.get("userId");
     };
 
     return (
@@ -130,8 +156,9 @@ export default function VotePage() {
                                     </div>
                                 </div>
                                 <button
-                                    className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 hover:scale-110 transition-all duration-300"
-                                    onClick={() => openModal(candidate)}
+                                    className={`mt-2 px-4 py-2 ${hasVoted ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} text-white rounded hover:scale-110 transition-all duration-300`}
+                                    onClick={() => !hasVoted && openModal(candidate)}
+                                    disabled={hasVoted}
                                 >
                                     Vote
                                 </button>
