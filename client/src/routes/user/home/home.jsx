@@ -37,6 +37,9 @@ export default function Home() {
 
                 </div>
                 <FAQ />
+                <div className="bg-vote bg-cover bg-center mt-12 h-screen w-full">
+
+                </div>
             </div>
             <Footer />
         </div>
