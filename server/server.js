@@ -51,7 +51,7 @@ app.use("/api-admin", eventRoute);
 // Middleware to serve static files
 app.use("/uploads", express.static(path.join(__dirname, "scripts/uploads")));
 
-// Scheduler to schedule events
+// Scheduler to schedule events status
 const updateEventStatuses = async () => {
     const now = new Date();
     try {
