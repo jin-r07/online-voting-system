@@ -12,12 +12,14 @@ export default function VotePage() {
     const { eventId } = useParams();
 
     const [eventData, setEventData] = useState(null);
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedCandidate, setSelectedCandidate] = useState(null);
-    const [votesData, setVotesData] = useState({});
-    const [hasVoted, setHasVoted] = useState(false);
 
-    console.log(hasVoted)
+    const [selectedCandidate, setSelectedCandidate] = useState(null);
+
+    const [votesData, setVotesData] = useState({});
+
+    const [hasVoted, setHasVoted] = useState(false);
 
     const getUserIdFromCookies = () => {
         return Cookies.get("userId");
