@@ -40,8 +40,8 @@ export default function Home() {
 
                 <FAQ />
 
-                <div className="w-full h-full lg:text-8xl text-5xl">
-                    <div className="flex flex-col py-32">
+                <div className="w-full h-full lg:text-7xl text-4xl">
+                    <div className="flex flex-col lg:py-32 py-16">
                         <p>Stop waiting.</p>
                         <p>Start</p>
                         <p>eVote-ing.</p>
