@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { VscMenu } from "react-icons/vsc";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { gsap } from "gsap";
 import { Link, useLocation } from "react-router-dom";
 import LoginForm from "../login/login";
 import RegisterForm from "../register/register";
@@ -72,17 +71,6 @@ export default function Navbar() {
     useEffect(() => {
         fetchUserData();
     }, []);
-
-    useEffect(() => {
-        if (dropdownRef.current) {
-            gsap.to(dropdownRef.current, {
-                height: showDropdown ? "auto" : 0,
-                opacity: showDropdown ? 1 : 0,
-                duration: 0.5,
-                ease: "power2.out"
-            });
-        }
-    }, [showDropdown]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -220,22 +208,20 @@ export default function Navbar() {
                                     {showDropdown ? <IoIosArrowUp className="ml-2" /> : <IoIosArrowDown className="ml-2" />}
                                 </span>
                                 {showDropdown && (
-                                    <div className="absolute left-32 top-8 bg-white border border-gray-300 shadow-lg">
+                                    <div ref={dropdownRef} className="absolute left-32 top-10 bg-white text-black border border-gray-300 shadow-lg rounded w-48">
                                         <ul className="py-1">
-                                            <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
+                                            <Link to="/user-profile" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
                                                 <BiSolidUser className="text-2xl" />
-                                                <Link to="/user-profile" className="text-lg pl-3">Profile</Link>
-                                            </li>
-                                            <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 hover:text-white">
+                                                <p className="text-lg pl-3">Profile</p>
+                                            </Link>
+                                            <Link to="/user-settings" className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 hover:text-white">
                                                 <RiSettings5Fill className="text-2xl" />
-                                                <Link to="/user-settings" className="text-lg pl-3">Settings</Link>
-                                            </li>
-                                            <li className="flex items-center py-2 pl-2 pr-12 hover:bg-blue-600 group">
-                                                <IoLogOut className="text-2xl" />
-                                                <button onClick={handleLogout} className="text-red-600 group-hover:text-white pl-3">
-                                                    Logout
-                                                </button>
-                                            </li>
+                                                <p className="text-lg pl-3">Settings</p>
+                                            </Link>
+                                            <button onClick={handleLogout} className="flex items-center py-2 pl-2 w-full hover:bg-blue-600 group">
+                                                <IoLogOut className="text-2xl text-black group-hover:text-white" />
+                                                <p className="text-red-600 group-hover:text-white pl-3">Logout</p>
+                                            </button>
                                         </ul>
                                     </div>
                                 )}
