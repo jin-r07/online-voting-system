@@ -59,7 +59,7 @@ export default function TopCandidates() {
                                         const totalVotes = votesData[candidate._id] || 0;
                                         return (
                                             <div key={candidate._id}
-                                                className="flex items-center p-4 bg-white shadow-lg rounded-lg border border-gray-200">
+                                                className="flex items-center p-4 bg-white shadow-lg rounded-lg border-[1px] border-gray-300">
                                                 <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
                                                 <div className="ml-4">
                                                     <p className="text-lg text-gray-800">{candidate.party.name}</p>
