@@ -251,7 +251,7 @@ export default function Parties() {
       <ul className="mt-4 space-y-4 overflow-y-auto">
         {parties.length > 0 ? (
           parties.map((party) => (
-            <li key={party._id} className="flex items-center border rounded-md p-4 bg-gray-50 mr-12">
+            <li key={party._id} className="flex items-center border-[1px] border-gray-300 rounded-md p-4 bg-gray-50 mr-12">
               <img
                 src={party.image}
                 alt={party.name}
