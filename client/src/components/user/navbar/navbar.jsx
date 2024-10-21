@@ -61,6 +61,13 @@ export default function Navbar() {
                 setIsLoggedIn(false);
             }
         } catch (error) {
+            if (error.response) {
+                if (error.response.status === 403) {
+                    console.warn("You are not authorized to access this resource.");
+                }
+            } else {
+                console.warn("Network error occurred.");
+            }
             setIsLoggedIn(false);
             setUserData(null);
         } finally {

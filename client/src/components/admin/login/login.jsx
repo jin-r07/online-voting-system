@@ -51,7 +51,6 @@ export default function AdminLogin() {
                     }
                 } else {
                     const data = await response.json();
-                    console.log("Login successful:", data);
                     navigate("/admin-dashboard");
                 }
             } catch (error) {
