@@ -10,7 +10,7 @@ async function submitVote(req, res) {
     const { eventId, candidateId } = req.body;
 
     if (!userId) {
-        return res.status(401).json({ message: "User not authenticated" });
+        return res.status(401).json({ message: "Please Login to continue to vote." });
     }
 
     if (!eventId || !candidateId) {

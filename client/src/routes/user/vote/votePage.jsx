@@ -67,8 +67,6 @@ export default function VotePage() {
                 userId,
             };
 
-            console.log("Submitting vote data:", voteData);
-
             const response = await axios.post("http://localhost:8080/api/vote", voteData, { withCredentials: true });
 
             toast.success(response.data.message, {
