@@ -63,7 +63,7 @@ export default function TopCandidates() {
                                                 <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
                                                 <div className="ml-4">
                                                     <p className="text-lg text-gray-800">{candidate.party.name}</p>
-                                                    <p className="text-sm text-gray-500">Votes: {totalVotes}</p>
+                                                    <p className="text-base text-gray-500">Votes: {totalVotes}</p>
                                                 </div>
                                             </div>
                                         );
