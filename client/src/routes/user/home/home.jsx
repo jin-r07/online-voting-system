@@ -18,7 +18,7 @@ export default function Home() {
                 <TopCandidates />
 
                 <div className="mb-6 lg:text-xl text-lg">
-                    <h2 className="font-semibold mb-2">How to Vote</h2>
+                    <h2 className="font-semibold mb-2 text-3xl">How to Vote</h2>
                     <p>Voting is an essential part of participating in democracy. Follow these simple steps to ensure your voice is heard:</p>
                     <ol className="list-disc list-inside space-y-4 pt-6">
                         <li>
