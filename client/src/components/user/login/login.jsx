@@ -57,7 +57,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                     }
                 } else {
                     navigate("/vote");
-                    window.location.reload;
+                    window.location.reload();
                     onClose();
                 }
             } catch (error) {
@@ -82,10 +82,10 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
             <ToastContainer />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md">
-                    <IoClose size={24}/>
+                    <IoClose size={24} />
                 </button>
 
-                <h2 className="text-xl mb-4">Welcome back!<br/>Please log in to continue.</h2>
+                <h2 className="text-xl mb-4">Welcome back!<br />Please log in to continue.</h2>
 
                 <form onSubmit={formik.handleSubmit}>
                     <div className="mb-4">
@@ -120,7 +120,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
                                 onClick={() => setShowLoginPassword(!showLoginPassword)}
                             >
-                                {showLoginPassword ? <IoEye size={20}/> : <IoEyeOff size={20}/>}
+                                {showLoginPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                             </button>
                         </div>
                         {formik.touched.password && formik.errors.password && (
@@ -129,8 +129,8 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                     </div>
                     <div className="mb-4">
                         <button type="submit"
-                                className={`w-full py-2 px-4 rounded bg-blue-600 hover:bg-blue-700 text-white ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-                                disabled={formik.isSubmitting}>
+                            className={`w-full py-2 px-4 rounded bg-blue-600 hover:bg-blue-700 text-white ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                            disabled={formik.isSubmitting}>
                             {loading ? "Logging in..." : "Login"}
                         </button>
                     </div>

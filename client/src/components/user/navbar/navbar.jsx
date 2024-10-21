@@ -17,11 +17,17 @@ import { IoLogOut } from "react-icons/io5";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+
     const [activeForm, setActiveForm] = useState(null);
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const [userData, setUserData] = useState(null);
+
     const [loading, setLoading] = useState(true);
+
     const [showDropdown, setShowDropdown] = useState(false);
+
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const dropdownRef = useRef(null);
@@ -112,7 +118,7 @@ export default function Navbar() {
             Cookies.remove("userId");
             setIsLoggedIn(false);
             setUserData(null);
-            window.location.reload;
+            window.location.reload();
         } catch (error) {
         }
     };
