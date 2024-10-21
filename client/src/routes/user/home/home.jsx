@@ -1,6 +1,7 @@
 import React from "react";
 import TopCandidates from "../../../components/user/topCandidates/topCandidates";
 import Footer from "../../../components/user/footer/footer";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
@@ -14,16 +15,25 @@ export default function Home() {
                 <h1 className="text-xl py-6 font-bold">Ongoing voting events,</h1>
                 <TopCandidates />
 
-                <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">Introduction to Voting</h2>
-                    <p>Voting is a crucial part of democratic participation. Here, you can find information on how to
-                        register, cast your vote, and stay informed about ongoing elections in Nepal.</p>
-                </div>
+                <div className="mb-6 lg:text-xl text-lg">
+                    <h2 className="font-semibold mb-2">How to Vote</h2>
+                    <p>Voting is an essential part of participating in democracy. Follow these simple steps to ensure your voice is heard:</p>
+                    <ol className="list-disc list-inside space-y-4 pt-6">
+                        <li>
+                            <strong>Register to Vote:</strong> Ensure you are registered to vote. If you haven't registered yet, choose option Register in above navigation and fill out the necessary details and do make sure that the information that you provide are correct and accurate.
+                        </li>
+                        <li>
+                            <strong>Know Your Voting Candidates:</strong> Familiarize yourself with the different voting candidates available, and finally you can choose any one of the candidate of the event to cast your vote.
+                        </li>
+                        <li>
+                            <strong>Cast Your Vote:</strong> Simply cast your vote by click on the option for Vote of the respective candidate that you want to cast vote for.<br /><span className="text-red-500">Note: Only one vote is allowed per event. So make sure that you are voting the correct candidate.</span>
+                        </li>
+                        <li>
+                            <strong>Stay Informed:</strong> After voting, keep yourself updated on election results within the Results section in navigation panel.
+                        </li>
+                    </ol>
+                    <p className="pt-6">For further questionnaires you can also reach out to us through<Link to="/contact" className="text-blue-600 hover:underline">&nbsp;Contact&nbsp;</Link>page. Or, for other questionnaires you can check out below FAQ.</p>
 
-                <div className="mb-6">
-                    <h2 className="text-xl font-semibold mb-2">How to Vote</h2>
-                    <p>To vote, you need to register and be aware of the voting methods available. Check out our guide
-                        for step-by-step instructions on voter registration and casting your vote.</p>
                 </div>
 
                 <div className="mb-6">
@@ -42,14 +52,6 @@ export default function Home() {
                     <h2 className="text-xl font-semibold mb-2">Updates and News</h2>
                     <p>Keep up-to-date with the latest news and updates related to elections. Stay informed about
                         changes and important announcements.</p>
-                </div>
-
-                <div className="mb-6">
-                    <a href="/faq" className="text-blue-600 hover:underline">Frequently Asked Questions</a>
-                </div>
-
-                <div className="mb-6">
-                    <a href="/contact" className="text-blue-600 hover:underline">Contact Information</a>
                 </div>
             </div>
             <Footer />
