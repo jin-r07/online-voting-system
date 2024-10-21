@@ -348,7 +348,7 @@ export default function Events() {
           <div className="grid grid-cols-1 gap-6">
             {events.length > 0 ? (
               events.map((event) => (
-                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
+                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border-[1px] border-gray-300 mr-12">
                   <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
                     {event.eventName}
                     <div className="flex items-center space-x-2 text-base">
@@ -403,7 +403,7 @@ export default function Events() {
           <div className="grid grid-cols-1 gap-6">
             {inactiveEvents.length > 0 ? (
               inactiveEvents.map((event) => (
-                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200 mr-12">
+                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border-[1px] border-gray-300 mr-12">
                   <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
                     {event.eventName}
                     <div className="flex items-center space-x-2 text-base">
