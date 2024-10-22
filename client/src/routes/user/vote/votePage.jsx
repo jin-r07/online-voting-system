@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import Footer from "../../../components/user/footer/footer";
 import { formatDate } from "../../../utils/formatDate&Time";
@@ -22,10 +21,6 @@ export default function VotePage() {
 
     const [hasVoted, setHasVoted] = useState(false);
 
-    const getUserIdFromCookies = () => {
-        return Cookies.get("userId");
-    };
-
     const fetchEventData = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/api-admin/get-events/${eventId}`);
@@ -39,9 +34,6 @@ export default function VotePage() {
     };
 
     const checkUserVoteStatus = async () => {
-        const userId = getUserIdFromCookies();
-        if (!userId) return;
-
         try {
             const response = await axios.get(`http://localhost:8080/api/vote-status`, {
                 params: { eventId },
@@ -49,7 +41,7 @@ export default function VotePage() {
             });
             setHasVoted(response.data.hasVoted);
         } catch (err) {
-            toast.error("Error checking voting status");
+            setHasVoted(false);
         }
     };
 
@@ -79,11 +71,9 @@ export default function VotePage() {
         if (!selectedCandidate) return;
 
         try {
-            const userId = getUserIdFromCookies();
             const voteData = {
                 eventId,
-                candidateId: selectedCandidate._id,
-                userId,
+                candidateId: selectedCandidate._id
             };
 
             const response = await axios.post("http://localhost:8080/api/vote", voteData, { withCredentials: true });
