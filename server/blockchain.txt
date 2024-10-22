@@ -10,9 +10,3 @@ multichain-cli evs subscribe events
 
 // List all candidates in the multichain
 multichain-cli evs liststreamitems events
-
-// Multichain.conf
-rpchost=127.0.0.1
-rpcport=4352
-rpcuser=multichainrpc
-rpcpassword=9umeLGKCaEhXrtgAwQTDaPBGntgioQ3t74gBMhrHiEu
