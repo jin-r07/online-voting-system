@@ -285,7 +285,7 @@ export default function Candidates() {
               />
               <div className="flex flex-col">
                 <span className="text-lg text-gray-900">{candidate.name}</span>
-                <span className="text-lg text-gray-600">Party: {candidate.party.name}</span>
+                <span className="text-sm text-gray-600">Party: {candidate.party.name}</span>
               </div>
               <div className="ml-auto flex space-x-2">
                 <button
