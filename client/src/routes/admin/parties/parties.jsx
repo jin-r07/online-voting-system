@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../../context/toast";
 
 export default function Parties() {
+  const toast = useToast();
+
   const [parties, setParties] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,32 +45,14 @@ export default function Parties() {
               "Content-Type": "multipart/form-data",
             },
           });
-          toast.success("Party updated successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Party updated successfully!");
         } else {
           await axios.post("http://localhost:8080/api-admin/add-party", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
-          toast.success("Party added successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Party added successfully!");
         }
         fetchParties();
         setIsModalOpen(false);
@@ -77,16 +60,7 @@ export default function Parties() {
         setEditPartyId(null);
         setCurrentImage(null);
       } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Error processing request");
       }
     },
   });
@@ -96,16 +70,7 @@ export default function Parties() {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-parties");
       setParties(response.data);
     } catch (err) {
-      toast.error("Error fetching parties", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching parties");
     }
   };
 
@@ -121,28 +86,10 @@ export default function Parties() {
 
     try {
       await axios.delete(`http://localhost:8080/api-admin/delete-party/${id}`);
-      toast.success("Party deleted successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Party deleted successfully!");
       fetchParties();
     } catch (err) {
-      toast.error("Error deleting party", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error deleting party");
     }
   };
 
@@ -281,7 +228,6 @@ export default function Parties() {
           <li className="text-gray-500">No parties available.</li>
         )}
       </ul>
-      <ToastContainer limit={1} />
     </div>
   );
 }

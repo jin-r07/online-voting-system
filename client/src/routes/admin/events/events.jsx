@@ -3,11 +3,12 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
+import { useToast } from "../../../context/toast";
 
 export default function Events() {
+  const toast = useToast();
+
   const [candidates, setCandidates] = useState([]);
 
   const [events, setEvents] = useState([]);
@@ -47,29 +48,11 @@ export default function Events() {
         };
         if (isEditMode) {
           await axios.put(`http://localhost:8080/api-admin/edit-event/${editingEventId}`, eventData);
-          toast.success("Event updated successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Event updated successfully!");
         } else {
           const response = await axios.post("http://localhost:8080/api-admin/create-event", eventData);
           setEvents([...events, response.data]);
-          toast.success("Event created successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Event created successfully!");
         }
         fetchEvents();
         fetchInactiveEvents();
@@ -77,16 +60,7 @@ export default function Events() {
         setIsEditMode(false);
         formik.resetForm();
       } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Error processing request");
       }
     },
   });
@@ -96,16 +70,7 @@ export default function Events() {
       const response = await axios.get("http://localhost:8080/api-admin/get-candidates");
       setCandidates(response.data);
     } catch (err) {
-      toast.error("Error processing request", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error processing request");
     }
   };
 
@@ -114,16 +79,7 @@ export default function Events() {
       const response = await axios.get("http://localhost:8080/api-admin/get-events");
       setEvents(response.data);
     } catch (err) {
-      toast.error("Error processing request", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error processing request");
     }
   };
 
@@ -132,16 +88,7 @@ export default function Events() {
       const response = await axios.get("http://localhost:8080/api-admin/get-events-inactive");
       setInactiveEvents(response.data);
     } catch (err) {
-      toast.error("Error processing request", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error processing request");
     }
   };
 
@@ -167,27 +114,9 @@ export default function Events() {
       try {
         await axios.delete(`http://localhost:8080/api-admin/delete-event/${eventId}`);
         setEvents(events.filter((event) => event._id !== eventId));
-        toast.success("Event deleted successfully!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.success("Event deleted successfully!");
       } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Error processing request");
       }
       fetchEvents();
       fetchInactiveEvents();
@@ -454,7 +383,6 @@ export default function Events() {
           </div>
         </div>
       </div>
-      <ToastContainer limit={1} />
     </div>
   );
 }

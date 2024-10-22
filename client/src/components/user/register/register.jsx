@@ -3,11 +3,12 @@ import { IoClose, IoEye, IoEyeOff } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { extractTextFromImage } from "../../../utils/ocr";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { useToast } from "../../../context/toast";
 
 export default function RegisterForm({ onClose, showLoginForm }) {
+    const toast = useToast();
+
     const [selectedFile, setSelectedFile] = useState(null);
 
     const [extractedVoterId, setExtractedVoterId] = useState('');
@@ -69,16 +70,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
 
                 if (!response.ok) {
                     if (response.status === 409) {
-                        toast.error(result.message || "User with this email or Voter ID already exists.", {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.error(result.message || "User with this email or Voter ID already exists.");
                     } else {
                         throw new Error(result.error || "Network response was not ok.");
                     }
@@ -87,16 +79,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                 }
             } catch (error) {
                 if (error.message !== "Network response was not ok.") {
-                    toast.error(error.message || "Something went wrong. Please try again later.", {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.error(error.message || "Something went wrong. Please try again later.");
                 }
             } finally {
                 setLoading(false);
@@ -120,32 +103,14 @@ export default function RegisterForm({ onClose, showLoginForm }) {
         const file = event.target.files[0];
         if (file) {
             if (!["image/png", "image/jpeg"].includes(file.type)) {
-                toast.error("Invalid file type. Only PNG and JPEG are allowed.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error("Invalid file type. Only PNG and JPEG are allowed.");
                 setSelectedFile(null);
                 await formik.setFieldValue("picture", null);
                 return;
             }
 
             if (file.size > 5 * 1024 * 1024) {
-                toast.error("File size exceeds 5MB. Please upload a smaller file.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error("File size exceeds 5MB. Please upload a smaller file.");
                 setSelectedFile(null);
                 await formik.setFieldValue("picture", null);
                 return;
@@ -172,7 +137,6 @@ export default function RegisterForm({ onClose, showLoginForm }) {
 
     return (
         <div className="fixed inset-0 flex items-start justify-center bg-black bg-opacity-60 overflow-auto">
-            <ToastContainer limit={1} />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white lg:mt-[6rem] mt-24 mb-8">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md">
                     <IoClose size={24} />

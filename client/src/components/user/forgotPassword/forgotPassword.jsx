@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast, ToastContainer } from "react-toastify";
+import { useToast } from "../../../context/toast";
 
 export default function ForgotPasswordForm({ onClose, showLoginForm }) {
+    const toast = useToast();
+
     const [loading, setLoading] = useState(false);
 
     const [otpSent, setOtpSent] = useState(false);
@@ -33,16 +35,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
         if (otpSent) {
             otpTimer = setTimeout(() => {
                 setOtpExpires(true);
-                toast.error("OTP has expired. Please request a new one.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error("OTP has expired. Please request a new one.");
             }, 300000);
         }
 
@@ -92,31 +85,13 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                     const result = await response.json();
                     throw new Error(result.message || "Failed to send OTP.");
                 } else {
-                    toast.success("OTP sent to your email.", {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.success("OTP sent to your email.");
                     setOtpSent(true);
                     setCooldown(300);
                     setOtpExpires(false);
                 }
             } catch (error) {
-                toast.error(error.message || "Something went wrong. Please try again later.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error(error.message || "Something went wrong. Please try again later.");
             } finally {
                 setLoading(false);
             }
@@ -144,29 +119,11 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                     const result = await response.json();
                     throw new Error(result.message || "Invalid OTP.");
                 } else {
-                    toast.success("OTP verified successfully.", {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.success("OTP verified successfully.");
                     setOtpVerified(true);
                 }
             } catch (error) {
-                toast.error(error.message || "Something went wrong. Please try again later.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error(error.message || "Something went wrong. Please try again later.");
             } finally {
                 setLoading(false);
             }
@@ -195,29 +152,11 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                     const result = await response.json();
                     throw new Error(result.message || "Failed to change password.");
                 } else {
-                    toast.success("Password changed successfully.", {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.success("Password changed successfully.");
                     onClose();
                 }
             } catch (error) {
-                toast.error(error.message || "Something went wrong. Please try again later.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error(error.message || "Something went wrong. Please try again later.");
             } finally {
                 setLoading(false);
             }
@@ -238,7 +177,6 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <ToastContainer limit={1} />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md" aria-label="Close">
                     <IoClose size={24} />

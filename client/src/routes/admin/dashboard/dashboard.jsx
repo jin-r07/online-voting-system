@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaUsers, FaUserTie, FaHistory, FaAward } from "react-icons/fa";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { useToast } from "../../../context/toast";
 
 export default function Dashboard() {
+  const { toast } = useToast();
+  
   const [totalCandidates, setTotalCandidates] = useState("");
 
   const [totalCompletedEvents, setTotalCompletedEvents] = useState("");
@@ -19,16 +19,7 @@ export default function Dashboard() {
       const response = await axios.get("http://localhost:8080/api-admin/get-candidates-total");
       setTotalCandidates(response.data.totalCandidates);
     } catch (err) {
-      toast.error("Error fetching candidates", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching candidates");
     }
   };
 
@@ -37,16 +28,7 @@ export default function Dashboard() {
       const response = await axios.get("http://localhost:8080/api-admin/get-completed-events-total");
       setTotalCompletedEvents(response.data.totalCompletedEvents);
     } catch (err) {
-      toast.error("Error fetching candidates", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching candidates");
     }
   };
 
@@ -55,16 +37,7 @@ export default function Dashboard() {
       const response = await axios.get("http://localhost:8080/api-admin/get-parties-total");
       setTotalParties(response.data.totalParties);
     } catch (err) {
-      toast.error("Error fetching candidates", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching candidates");
     }
   };
 
@@ -73,16 +46,7 @@ export default function Dashboard() {
       const response = await axios.get("http://localhost:8080/api-admin/get-users-total");
       setTotalUsers(response.data.totalUsers);
     } catch (err) {
-      toast.error("Error fetching candidates", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching candidates");
     }
   };
 
@@ -142,7 +106,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <ToastContainer limit={1} />
     </div>
   );
 }

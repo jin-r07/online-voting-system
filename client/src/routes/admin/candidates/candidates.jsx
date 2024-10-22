@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../../context/toast";
 
 export default function Candidates() {
+  const toast = useToast();
+
   const [candidates, setCandidates] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,32 +47,14 @@ export default function Candidates() {
               "Content-Type": "multipart/form-data",
             },
           });
-          toast.success("Candidate updated successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Candidate updated successfully!");
         } else {
           await axios.post("http://localhost:8080/api-admin/add-candidate", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
-          toast.success("Candidate addedd successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("Candidate addedd successfully!");
         }
         fetchCandidates();
         setIsModalOpen(false);
@@ -79,16 +62,7 @@ export default function Candidates() {
         setEditCandidateId(null);
         setCurrentImage(null);
       } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Error processing request");
       }
     },
   });
@@ -98,16 +72,7 @@ export default function Candidates() {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-candidates");
       setCandidates(response.data);
     } catch (err) {
-      toast.error("Error fetching candidates", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching candidates");
     }
   };
 
@@ -116,16 +81,7 @@ export default function Candidates() {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-parties");
       setParties(response.data);
     } catch (err) {
-      toast.error("Error fetching candidates", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching candidates");
     }
   };
 
@@ -142,28 +98,10 @@ export default function Candidates() {
 
     try {
       await axios.delete(`http://localhost:8080/api-admin/delete-candidate/${id}`);
-      toast.success("Candidate deleted successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("Candidate deleted successfully!");
       fetchCandidates();
     } catch (err) {
-      toast.error("Error deleting candidate", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error deleting candidate");
     }
   };
 
@@ -307,7 +245,6 @@ export default function Candidates() {
           <li className="text-gray-500">No candidates available.</li>
         )}
       </ul>
-      <ToastContainer limit={1} />
     </div>
   );
 }

@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../components/user/footer/footer";
 import { formatDate } from "../../../utils/formatDate&Time";
+import { useToast } from "../../../context/toast";
 
 export default function VotePage() {
+    const toast = useToast();
+
     const { eventId } = useParams();
 
     const [eventData, setEventData] = useState(null);
@@ -33,16 +34,7 @@ export default function VotePage() {
             const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
             setVotesData(votesResponse.data);
         } catch (err) {
-            toast.error("Error fetching event details", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.error("Error fetching event details");
         }
     };
 
@@ -57,16 +49,7 @@ export default function VotePage() {
             });
             setHasVoted(response.data.hasVoted);
         } catch (err) {
-            toast.error("Error checking voting status", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.error("Error checking voting status");
         }
     };
 
@@ -105,30 +88,12 @@ export default function VotePage() {
 
             const response = await axios.post("http://localhost:8080/api/vote", voteData, { withCredentials: true });
 
-            toast.success(response.data.message, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.success(response.data.message);
             checkUserVoteStatus();
             setHasVoted(true);
             closeModal();
         } catch (err) {
-            toast.error(err.response?.data?.message || "Error submitting vote", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.error(err.response?.data?.message || "Error submitting vote");
         }
     };
 
@@ -206,7 +171,6 @@ export default function VotePage() {
                         </div>
                     </div>
                 )}
-                <ToastContainer limit={1} />
             </div>
             <Footer />
         </>

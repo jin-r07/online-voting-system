@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/user/navbar/navbar";
+
 import Home from "./routes/user/home/home";
 import Vote from "./routes/user/vote/vote";
 import VotePage from "./routes/user/vote/votePage";
@@ -30,35 +31,32 @@ function App() {
   const isAdminLogin = location.pathname === "/admin";
 
   return (
-    <>
+    <ToastProvider>
       {/* Show User Navbar on non-admin routes */}
       {!isAdminRoute && <Navbar />}
 
       {/* Show Admin Navbar on admin routes, except admin login */}
       {isAdminRoute && !isAdminLogin && <AdminNavbar />}
+      <Routes>
+        {/* User Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/vote" element={<Vote />} />
+        <Route path="/vote/:eventId" element={<VotePage />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/user-settings" element={<UserSettings />} />
 
-      <ToastProvider>
-        <Routes>
-          {/* User Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/vote" element={<Vote />} />
-          <Route path="/vote/:eventId" element={<VotePage />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/user-settings" element={<UserSettings />} />
-
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin-dashboard" element={<Dashboard />} />
-          <Route path="/admin-events" element={<Events />} />
-          <Route path="/admin-candidates" element={<Candidates />} />
-          <Route path="/admin-parties" element={<Parties />} />
-          <Route path="/admin-users" element={<Users />} />
-          <Route path="/admin-history" element={<History />} />
-        </Routes>
-      </ToastProvider>
-    </>
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<Dashboard />} />
+        <Route path="/admin-events" element={<Events />} />
+        <Route path="/admin-candidates" element={<Candidates />} />
+        <Route path="/admin-parties" element={<Parties />} />
+        <Route path="/admin-users" element={<Users />} />
+        <Route path="/admin-history" element={<History />} />
+      </Routes>
+    </ToastProvider>
   );
 }
 

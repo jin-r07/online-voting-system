@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../components/user/footer/footer";
 import { formatDate } from "../../../utils/formatDate&Time";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../../context/toast";
 
 export default function Vote() {
+    const toast = useToast();
+    
     const [eventData, setEventData] = useState(null);
 
     const navigate = useNavigate();
@@ -18,16 +19,7 @@ export default function Vote() {
             const response = await axios.get("http://localhost:8080/api-admin/get-events");
             setEventData(response.data);
         } catch (err) {
-            toast.error("Error fetching event details", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.error("Error fetching event details");
         }
     };
 
@@ -89,7 +81,6 @@ export default function Vote() {
                 )}
             </div>
             <Footer />
-            <ToastContainer limit={1} />
         </div>
     );
 }

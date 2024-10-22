@@ -30,28 +30,10 @@ export default function Contact() {
         onSubmit: async (values, { resetForm }) => {
             try {
                 await axios.post("http://localhost:8080/api/send-contact-message", values);
-                toast.success("Your message has been sent. Thank you!", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.success("Your message has been sent. Thank you!");
                 resetForm();
             } catch (error) {
-                toast.error("Error sending email: " + (error.response?.data || "An unknown error occurred"), {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error("Error sending email: " + (error.response?.data || "An unknown error occurred"));
             }
         },
     });

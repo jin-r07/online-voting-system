@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
+import { useToast } from "../../../context/toast";
 
 export default function Users() {
+  const toast = useToast();
+
   const [users, setUsers] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,27 +48,9 @@ export default function Users() {
               "Content-Type": "multipart/form-data",
             }
           });
-          toast.success("User updated successfully!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.success("User updated successfully!");
         } else {
-          toast.error("Error processing request", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+          toast.error("Error processing request");
         }
         fetchUsers();
         setIsModalOpen(false);
@@ -75,16 +58,7 @@ export default function Users() {
         setEditUserId(null);
         setPicturePreview(null);
       } catch (err) {
-        toast.error("Error processing request", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error("Error processing request");
       }
     },
   });
@@ -94,16 +68,7 @@ export default function Users() {
       const response = await axios.get("http://localhost:8080/api-admin/get-all-users");
       setUsers(response.data);
     } catch (err) {
-      toast.error("Error fetching users", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error fetching users");
     }
   };
 
@@ -119,28 +84,10 @@ export default function Users() {
 
     try {
       await axios.delete(`http://localhost:8080/api-admin/delete-user/${id}`);
-      toast.success("User deleted successfully!", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.success("User deleted successfully!");
       fetchUsers();
     } catch (err) {
-      toast.error("Error deleting user", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toast.error("Error deleting user");
     }
   };
 
@@ -301,7 +248,6 @@ export default function Users() {
           <li className="text-gray-500">No users available.</li>
         )}
       </ul>
-      <ToastContainer limit={1} />
     </div>
   );
 }

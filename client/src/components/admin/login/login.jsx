@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../../context/toast";
 
 export default function AdminLogin() {
+    const toast = useToast();
+
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -36,34 +38,16 @@ export default function AdminLogin() {
                 if (!response.ok) {
                     const result = await response.json();
                     if (response.status === 401) {
-                        toast.error(result.message || "Invalid Admin ID number or password.", {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.error(result.message || "Invalid Admin ID number or password.");
                     } else {
-                        throw new Error(result.error || "Network response was not ok.");
+                        toast.error(result.message || "Network response was not ok.");
                     }
                 } else {
                     const data = await response.json();
                     navigate("/admin-dashboard");
                 }
             } catch (error) {
-                toast.error(error.message || "Something went wrong. Please try again later.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error(error.message || "Something went wrong. Please try again later.");
             } finally {
                 setLoading(false);
             }
@@ -72,7 +56,6 @@ export default function AdminLogin() {
 
     return (
         <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
-            <ToastContainer limit={1} />
             <form onSubmit={formik.handleSubmit} className="bg-white shadow-lg rounded-lg p-8 w-96">
                 <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
                 <div className="mb-4">

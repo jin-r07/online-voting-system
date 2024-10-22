@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../../context/toast";
 
 export default function TopCandidates() {
+    const toast = useToast();
+
     const [votingData, setVotingData] = useState(null);
 
     const [votesData, setVotesData] = useState({});
@@ -19,16 +20,7 @@ export default function TopCandidates() {
             const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
             setVotesData(votesResponse.data);
         } catch (err) {
-            toast.error("Error fetching candidates", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.error("Error fetching candidates");
         }
     };
 
@@ -84,7 +76,6 @@ export default function TopCandidates() {
                     <p className="text-lg">Please check back later for updates on upcoming vote events.</p>
                 </div>
             )}
-            <ToastContainer limit={1} />
         </div>
     );
 }

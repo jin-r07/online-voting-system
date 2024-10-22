@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { IoClose, IoEye, IoEyeOff } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../../context/toast";
 
 export default function LoginForm({ onClose, showRegisterForm, showForgotPasswordForm }) {
+    const toast = useToast();
+
     const [showLoginPassword, setShowLoginPassword] = useState(false);
 
     const [loading, setLoading] = useState(false);
@@ -42,16 +44,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                 if (!response.ok) {
                     const result = await response.json();
                     if (response.status === 401) {
-                        toast.error(result.message || "Invalid email or password.", {
-                            position: "bottom-right",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.error(result.message || "Invalid email or password.");
                     } else {
                         throw new Error(result.error || "Network response was not ok.");
                     }
@@ -61,16 +54,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
                     onClose();
                 }
             } catch (error) {
-                toast.error(error.message || "Something went wrong. Please try again later.", {
-                    position: "bottom-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error(error.message || "Something went wrong. Please try again later.");
             } finally {
                 setLoading(false);
             }
@@ -79,7 +63,6 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <ToastContainer limit={1} />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md">
                     <IoClose size={24} />

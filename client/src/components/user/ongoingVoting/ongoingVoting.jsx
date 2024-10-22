@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../../context/toast";
 
 export default function OngoingVoting() {
+    const toast = useToast();
+
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [ongoingEvents, setOngoingEvents] = useState([]);
@@ -14,16 +15,7 @@ export default function OngoingVoting() {
             const response = await axios.get("http://localhost:8080/api-admin/get-events");
             setOngoingEvents(response.data);
         } catch (err) {
-            toast.error("Error fetching candidates", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            toast.error("Error fetching candidates");
         }
     };
 
@@ -85,7 +77,6 @@ export default function OngoingVoting() {
                     </div>
                 </>
             )}
-            <ToastContainer limit={1} />
         </div>
     );
 }
