@@ -23,6 +23,8 @@ export default function Events() {
 
   const [openedEvents, setOpenedEvents] = useState({});
 
+  const [eventType, setEventType] = useState("ongoing");
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -144,6 +146,15 @@ export default function Events() {
         >
           Create New Event
         </button>
+
+        <select
+          value={eventType}
+          onChange={(e) => setEventType(e.target.value)}
+          className="ml-4 mb-4 p-2 border-[1px] border-gray-300 rounded-md cursor-pointer"
+        >
+          <option value="ongoing">Ongoing</option>
+          <option value="upcoming">Upcoming</option>
+        </select>
       </div>
 
       {isModalOpen && (
@@ -273,10 +284,12 @@ export default function Events() {
 
       <div className="flex flex-col w-full h-full">
         <div className="w-full max-h-1/2 overflow-y-auto">
-          <h3 className="text-2xl mt-10 text-gray-800 mb-8">Ongoing Events</h3>
+          <h3 className="text-2xl mt-10 text-gray-800 mb-8">
+            {eventType === "ongoing" ? "Ongoing Events" : "Upcoming Events"}
+          </h3>
           <div className="grid grid-cols-1 gap-6">
-            {events.length > 0 ? (
-              events.map((event) => (
+            {(eventType === "ongoing" ? events : inactiveEvents).length > 0 ? (
+              (eventType === "ongoing" ? events : inactiveEvents).map((event) => (
                 <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border-[1px] border-gray-300 mr-12">
                   <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
                     {event.eventName}
@@ -294,7 +307,11 @@ export default function Events() {
                         Delete
                       </button>
                       <button onClick={() => toggleCandidates(event._id)}>
-                        {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
+                        {openedEvents[event._id] ? (
+                          <RiArrowUpSFill className="text-4xl" />
+                        ) : (
+                          <RiArrowDownSFill className="text-4xl" />
+                        )}
                       </button>
                     </div>
                   </h4>
@@ -302,65 +319,21 @@ export default function Events() {
                   {openedEvents[event._id] && (
                     <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
                       <div className="sticky top-0 bg-white text-gray-600 mt-2">
-                        <p><strong>Start:&nbsp;</strong>{new Date(event.start).toLocaleString()}</p>
-                        <p><strong>End:&nbsp;</strong>{new Date(event.end).toLocaleString()}</p>
-                        <p><strong>Status:&nbsp;</strong>{capitalizeFirstLetter(event.status)}</p>
-                        <p><strong>Candidates:</strong></p>
-                      </div>
-                      {event.candidates.map((candidate) => (
-                        <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
-                          <img
-                            src={candidate.image}
-                            alt={candidate.name}
-                            className="w-14 h-auto rounded-sm mr-2"
-                          />
-                          <span>{candidate.name}</span>
-                          <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
-                        </div>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))
-            ) : (
-              <div className="py-3 text-gray-500">No events found.</div>
-            )}
-          </div>
-        </div>
-        <div className="w-full max-h-1/2 overflow-y-auto">
-          <h3 className="text-2xl mt-10 text-gray-800 mb-8">Upcoming Events</h3>
-          <div className="grid grid-cols-1 gap-6">
-            {inactiveEvents.length > 0 ? (
-              inactiveEvents.map((event) => (
-                <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border-[1px] border-gray-300 mr-12">
-                  <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
-                    {event.eventName}
-                    <div className="flex items-center space-x-2 text-base">
-                      <button
-                        onClick={() => handleEditEvent(event)}
-                        className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDeleteEvent(event._id)}
-                        className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
-                      >
-                        Delete
-                      </button>
-                      <button onClick={() => toggleCandidates(event._id)}>
-                        {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}
-                      </button>
-                    </div>
-                  </h4>
-
-                  {openedEvents[event._id] && (
-                    <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
-                      <div className="sticky top-0 bg-white text-gray-600 mt-2">
-                        <p><strong>Start:&nbsp;</strong>{new Date(event.start).toLocaleString()}</p>
-                        <p><strong>End:&nbsp;</strong>{new Date(event.end).toLocaleString()}</p>
-                        <p><strong>Status:&nbsp;</strong>{capitalizeFirstLetter(event.status)}</p>
-                        <p><strong>Candidates:</strong></p>
+                        <p>
+                          <strong>Start:&nbsp;</strong>
+                          {new Date(event.start).toLocaleString()}
+                        </p>
+                        <p>
+                          <strong>End:&nbsp;</strong>
+                          {new Date(event.end).toLocaleString()}
+                        </p>
+                        <p>
+                          <strong>Status:&nbsp;</strong>
+                          {capitalizeFirstLetter(event.status)}
+                        </p>
+                        <p>
+                          <strong>Candidates:</strong>
+                        </p>
                       </div>
                       {event.candidates.map((candidate) => (
                         <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
