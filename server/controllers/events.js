@@ -20,7 +20,7 @@ async function createEvent(req, res) {
     await event.save();
 
     await multichain.publish({ 
-      stream: 'events', 
+      stream: "events", 
       key: event._id.toString(),
       data: ''
     });
@@ -49,7 +49,7 @@ async function getCandidates(req, res) {
 
 async function getActiveEvents(req, res) {
   try {
-    const events = await Event.find({ status: 'active' }).populate({
+    const events = await Event.find({ status: "active" }).populate({
       path: "candidates",
       populate: {
         path: "party",
@@ -83,7 +83,7 @@ async function getActiveEventsById(req, res) {
   try {
     const { eventId } = req.params;
 
-    const event = await Event.findOne({ _id: eventId, status: 'active' }).populate({
+    const event = await Event.findOne({ _id: eventId, status: "active" }).populate({
       path: "candidates",
       populate: {
         path: "party",
@@ -116,7 +116,7 @@ async function getActiveEventsById(req, res) {
 
 async function getInactiveEvents(req, res) {
   try {
-    const events = await Event.find({ status: 'inactive' }).populate({
+    const events = await Event.find({ status: "inactive" }).populate({
       path: "candidates",
       populate: {
         path: "party",
@@ -147,7 +147,7 @@ async function getInactiveEvents(req, res) {
 
 async function getCompletedEvents(req, res) {
   try {
-    const events = await Event.find({ status: 'completed' }).populate({
+    const events = await Event.find({ status: "completed" }).populate({
       path: "candidates",
       populate: {
         path: "party",
@@ -191,10 +191,10 @@ async function editEvent(req, res) {
     if (updatedEvent) {
       res.status(200).json(updatedEvent);
     } else {
-      res.status(404).json({ message: 'Event not found' });
+      res.status(404).json({ message: "Event not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error updating event', error });
+    res.status(500).json({ message: "Error updating event", error });
   }
 }
 
@@ -204,18 +204,18 @@ async function deleteEvent(req, res) {
     const eventId = req.params.id;
     const result = await Event.findByIdAndDelete(eventId);
     if (result) {
-      res.status(200).json({ message: 'Event deleted successfully' });
+      res.status(200).json({ message: "Event deleted successfully" });
     } else {
-      res.status(404).json({ message: 'Event not found' });
+      res.status(404).json({ message: "Event not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting event', error });
+    res.status(500).json({ message: "Error deleting event", error });
   }
 }
 
 async function getTotalCompletedEvents(req, res) {
   try {
-    const totalCompletedEvents = await Event.find({ status: 'completed' }).countDocuments();
+    const totalCompletedEvents = await Event.find({ status: "completed" }).countDocuments();
     res.status(200).json({ totalCompletedEvents });
   } catch (err) {
     res.status(500).json({ error: "Error fetching total completed events" });
