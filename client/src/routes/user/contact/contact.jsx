@@ -59,7 +59,17 @@ export default function Contact() {
         <div className="w-full h-full flex flex-col justify-between bg-gray-50">
             <ToastContainer limit={1} />
             <div className="flex-grow container mx-auto p-6">
-                <h1 className="text-4xl font-bold text-center my-6 text-blue-600">Contact Us</h1>
+                <h1 className="lg:text-4xl text-3xl font-bold my-6">Contact Us</h1>
+
+                <div className="mb-6 text-left text-gray-700 lg:text-lg text-base">
+                    <p className="mb-2">
+                        We would love to hear from you! Whether you have a question, feedback, or just want to say hello,
+                        please feel free to reach out to us. Your thoughts are important to us, and we strive to respond to all inquiries promptly.
+                    </p>
+                    <p>
+                        Please fill out the form below with your details and message, and we will get back to you as soon as possible.
+                    </p>
+                </div>
 
                 <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg border border-gray-200">
                     <div className="mb-4">
@@ -119,7 +129,7 @@ export default function Contact() {
                     <div className="flex items-center justify-center">
                         <button
                             type="submit"
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-200"
+                            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-200"
                         >
                             Send Message
                         </button>
