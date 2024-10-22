@@ -15,6 +15,9 @@ export default function TopCandidates() {
         try {
             const eventsResponse = await axios.get("http://localhost:8080/api-admin/get-events");
             setVotingData(eventsResponse.data);
+
+            const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
+            setVotesData(votesResponse.data);
         } catch (err) {
             toast.error("Error fetching candidates", {
                 position: "bottom-right",
@@ -29,17 +32,8 @@ export default function TopCandidates() {
         }
     };
 
-    const fetchVoteData = async () => {
-        try {
-            const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
-            setVotesData(votesResponse.data);
-        } catch (err) {
-        }
-    };
-
     useEffect(() => {
         fetchOngoingEvents();
-        fetchVoteData();
     }, []);
 
     const handleRedirectToVote = (eventId) => {
