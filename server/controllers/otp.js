@@ -5,7 +5,7 @@ const User = require("../models/users");
 const path = require("path");
 
 const transporter = nodemailer.createTransport({
-    service: '"gmail',
+    service: "gmail",
     host: "smtp.gmail.com",
     port: 587,
     secure: false, // true for 465, false for other ports

@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
     port: 587,
-    secure: false,
+    secure: false, // true for 465, false for other ports
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
@@ -14,12 +14,11 @@ const transporter = nodemailer.createTransport({
 
 async function sendContactMessage(req, res) {
     const { name, email, message } = req.body;
-    const from = email;
 
     const mailOptions = {
-        from: from,
+        from: email,
         to: process.env.EMAIL_USER,
-        subject: `New Contact Form Submission from ${name}`,
+        subject: `EVS - Contact Us Message Submission from ${name}`,
         html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; text-align: center; padding: 20px;">
                 <h2 style="color: #333; font-size: 2rem;">Electronic Voting System (EVS)</h2>
