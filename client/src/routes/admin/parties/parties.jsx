@@ -54,7 +54,7 @@ export default function Parties() {
           });
           toast.success("Party added successfully!");
         }
-        fetchParties();
+        await fetchParties();
         setIsModalOpen(false);
         formik.resetForm();
         setEditPartyId(null);
@@ -87,7 +87,7 @@ export default function Parties() {
     try {
       await axios.delete(`http://localhost:8080/api-admin/delete-party/${id}`);
       toast.success("Party deleted successfully!");
-      fetchParties();
+      await fetchParties();
     } catch (err) {
       toast.error("Error deleting party");
     }

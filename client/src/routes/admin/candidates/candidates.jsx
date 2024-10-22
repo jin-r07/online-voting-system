@@ -56,7 +56,7 @@ export default function Candidates() {
           });
           toast.success("Candidate addedd successfully!");
         }
-        fetchCandidates();
+        await fetchCandidates();
         setIsModalOpen(false);
         formik.resetForm();
         setEditCandidateId(null);
@@ -99,7 +99,7 @@ export default function Candidates() {
     try {
       await axios.delete(`http://localhost:8080/api-admin/delete-candidate/${id}`);
       toast.success("Candidate deleted successfully!");
-      fetchCandidates();
+      await fetchCandidates();
     } catch (err) {
       toast.error("Error deleting candidate");
     }

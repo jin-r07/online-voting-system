@@ -52,7 +52,7 @@ export default function Users() {
         } else {
           toast.error("Error processing request");
         }
-        fetchUsers();
+        await fetchUsers();
         setIsModalOpen(false);
         formik.resetForm();
         setEditUserId(null);
@@ -85,7 +85,7 @@ export default function Users() {
     try {
       await axios.delete(`http://localhost:8080/api-admin/delete-user/${id}`);
       toast.success("User deleted successfully!");
-      fetchUsers();
+      await fetchUsers();
     } catch (err) {
       toast.error("Error deleting user");
     }

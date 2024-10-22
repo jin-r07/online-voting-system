@@ -54,7 +54,7 @@ export default function History() {
           toast.success("Event created successfully!");
         }
 
-        fetchCompletedEvents();
+        await fetchCompletedEvents();
         setIsModalOpen(false);
         setIsEditMode(false);
         formik.resetForm();
@@ -104,10 +104,10 @@ export default function History() {
         await axios.delete(`http://localhost:8080/api-admin/delete-event/${eventId}`);
         setEvents(events.filter((event) => event._id !== eventId));
         toast.success("Event deleted successfully!");
+        await fetchCompletedEvents();
       } catch (err) {
         toast.error("Error processing request");
       }
-      fetchCompletedEvents();
     }
   };
 
