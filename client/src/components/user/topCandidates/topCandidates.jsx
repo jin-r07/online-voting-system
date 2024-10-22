@@ -53,8 +53,8 @@ export default function TopCandidates() {
                             <h3 className="text-xl mb-4 font-semibold">{event.eventName}</h3>
                             <div className="space-y-6">
                                 {event.candidates
-                                    .slice(0, 3)
                                     .sort((a, b) => (votesData[b._id] || 0) - (votesData[a._id] || 0))
+                                    .slice(0, 3)
                                     .map((candidate) => {
                                         const totalVotes = votesData[candidate._id] || 0;
                                         return (
