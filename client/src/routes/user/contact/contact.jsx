@@ -53,7 +53,7 @@ export default function Contact() {
                     </p>
                 </div>
 
-                <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg border border-gray-200">
+                <form onSubmit={formik.handleSubmit} className="max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-lg border border-gray-200">
                     <div className="mb-4">
                         <label className="block text-gray-700 text-lg font-medium mb-2" htmlFor="name">
                             Name
