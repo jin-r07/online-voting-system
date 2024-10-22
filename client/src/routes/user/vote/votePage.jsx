@@ -115,7 +115,7 @@ export default function VotePage() {
                 progress: undefined,
                 theme: "light",
             });
-            fetchEventData();
+            checkUserVoteStatus();
             setHasVoted(true);
             closeModal();
         } catch (err) {
