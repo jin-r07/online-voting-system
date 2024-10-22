@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -276,8 +277,8 @@ export default function Users() {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-lg text-gray-900">{user.email}</span>
-                  <span className="text-sm text-gray-600">Voter ID: {user.voterIdCardNumber}</span>
-                  <span className="text-sm text-gray-600">Role: {user.role}</span>
+                  <span className="text-sm text-gray-600">Voter ID:&nbsp;{user.voterIdCardNumber}</span>
+                  <span className="text-sm text-gray-600">Role:&nbsp;{capitalizeFirstLetter(user.role)}</span>
                 </div>
               </div>
               <div className="ml-auto flex space-x-2">
