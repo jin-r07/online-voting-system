@@ -291,7 +291,7 @@ export default function Events() {
             {(eventType === "ongoing" ? events : inactiveEvents).length > 0 ? (
               (eventType === "ongoing" ? events : inactiveEvents).map((event) => (
                 <div key={event._id} className="bg-white shadow-md rounded-lg p-6 border-[1px] border-gray-300 mr-12">
-                  <h4 className="text-xl text-gray-800 mb-2 flex justify-between items-center">
+                  <h4 className="text-xl text-gray-800 flex justify-between items-center">
                     {event.eventName}
                     <div className="flex items-center space-x-2 text-base">
                       <button
@@ -318,7 +318,7 @@ export default function Events() {
 
                   {openedEvents[event._id] && (
                     <ul className="list-none max-h-72 pl-5 space-y-1 overflow-y-auto">
-                      <div className="sticky top-0 bg-white text-gray-600 mt-2">
+                      <div className="sticky top-0 bg-white text-gray-600">
                         <p>
                           <strong>Start:&nbsp;</strong>
                           {new Date(event.start).toLocaleString()}
@@ -342,8 +342,10 @@ export default function Events() {
                             alt={candidate.name}
                             className="w-14 h-auto rounded-sm mr-2"
                           />
-                          <span>{candidate.name}</span>
-                          <span className="ml-2 text-gray-500">({candidate.party?.name})</span>
+                          <div className="flex flex-col">
+                            <span>{candidate.name}</span>
+                            <span className="text-gray-500">Party:&nbsp;{candidate.party?.name}</span>
+                          </div>
                         </div>
                       ))}
                     </ul>
