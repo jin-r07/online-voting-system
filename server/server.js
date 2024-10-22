@@ -27,7 +27,6 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json());
-// Middleware to enable CORS
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -60,15 +59,20 @@ const updateEventStatuses = async () => {
     try {
         const events = await Event.find({});
         for (const event of events) {
+            const previousStatus = event.status;
+
             if (now < event.start) {
-                event.status = 'inactive';
+                event.status = "inactive";
             } else if (now >= event.start && now <= event.end) {
-                event.status = 'active';
+                event.status = "active";
             } else if (now > event.end) {
-                event.status = 'completed';
+                event.status = "completed";
             }
-            await event.save();
-            console.log("Updating status: " + event.status)
+
+            if (previousStatus !== event.status) {
+                await event.save();
+                console.log(`Updating status from "${previousStatus}" to "${event.status}"`);
+            }
         }
     } catch (error) {
         console.error("Error updating event statuses:", error);
