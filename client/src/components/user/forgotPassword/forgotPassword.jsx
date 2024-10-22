@@ -292,6 +292,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                         {!otpSent ? (
                             <>
                                 <h2 className="text-xl mb-4">Forgot Password</h2>
+                                <p>Please enter your registered email address,</p>
                                 <form onSubmit={formikEmail.handleSubmit}>
                                     <div className="mb-4">
                                         <label className="block text-base">Email:</label>
