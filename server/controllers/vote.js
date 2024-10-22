@@ -22,7 +22,7 @@ async function submitVote(req, res) {
 
     try {
         const key = `${eventId}_${userId}`;
-        const existingVotes = await multichain.listStreamKeyItems({ stream: 'events', key });
+        const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
 
         if (existingVotes.length > 0) {
             return res.status(400).json({ message: "You have already voted for this event." });
@@ -39,9 +39,9 @@ async function submitVote(req, res) {
         mineBlock(block, difficulty);
 
         await multichain.publish({
-            stream: 'events',
+            stream: "events",
             key: key,
-            data: Buffer.from(JSON.stringify(block)).toString('hex')
+            data: Buffer.from(JSON.stringify(block)).toString("hex")
         });
 
         res.status(200).json({ message: "Vote successfully submitted." });
