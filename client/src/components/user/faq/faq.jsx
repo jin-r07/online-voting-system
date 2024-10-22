@@ -70,7 +70,7 @@ export default function FAQ() {
                             <span className="text-lg font-bold">{openIndexes.includes(index) ? '-' : '+'}</span>
                         </div>
                         {openIndexes.includes(index) && (
-                            <div className="py-4 text-lg">
+                            <div className="p-4 text-lg">
                                 <p>{faq.answer}</p>
                             </div>
                         )}
