@@ -13,6 +13,7 @@ const loginRoute = require("./routes/login");
 const logoutRoute = require("./routes/logout");
 const authenticatedRoute = require("./routes/authenticated");
 const otpRoute = require("./routes/otp");
+const contactRoute = require("./routes/contact");
 const voteRoute = require("./routes/vote");
 
 // Admin
@@ -40,6 +41,7 @@ app.use("/api", loginRoute);
 app.use("/api", logoutRoute);
 app.use("/api", authenticatedRoute);
 app.use("/api", otpRoute);
+app.use("/api", contactRoute);
 app.use("/api", voteRoute);
 
 // Admin

@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Footer from "../../../components/user/footer/footer";
+import axios from "axios";
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -23,18 +24,22 @@ export default function Contact() {
             message: "",
         },
         validationSchema: validationSchema,
-        onSubmit: (values, { resetForm }) => {
-            setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values, { resetForm }) => {
+            try {
+                const response = await axios.post("http://localhost:8080/api/send-contact-message", values);
+                alert(response.data);
                 resetForm();
-            }, 400);
+            } catch (error) {
+                alert("Error sending email: " + error.response.data);
+            }
         },
     });
 
     return (
         <div className="w-full h-full flex flex-col justify-between bg-gray-50">
-            <div className="flex-grow mb-14 container mx-auto p-6">
-                <h1 className="text-4xl font-bold text-center my-6">Contact Us</h1>
+            <div className="flex-grow container mx-auto p-6">
+                <h1 className="text-4xl font-bold text-center my-6 text-blue-600">Contact Us</h1>
+
                 <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg border border-gray-200">
                     <div className="mb-4">
                         <label className="block text-gray-700 text-lg font-medium mb-2" htmlFor="name">
@@ -50,7 +55,7 @@ export default function Contact() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
                         />
                         {formik.touched.name && formik.errors.name ? (
-                            <div className="text-red-500 text-md mt-1">{formik.errors.name}</div>
+                            <div className="text-red-500 text-sm mt-1">{formik.errors.name}</div>
                         ) : null}
                     </div>
 
@@ -68,7 +73,7 @@ export default function Contact() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
                         />
                         {formik.touched.email && formik.errors.email ? (
-                            <div className="text-red-500 text-md mt-1">{formik.errors.email}</div>
+                            <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
                         ) : null}
                     </div>
 
@@ -86,14 +91,14 @@ export default function Contact() {
                             rows="5"
                         />
                         {formik.touched.message && formik.errors.message ? (
-                            <div className="text-red-500 text-md mt-1">{formik.errors.message}</div>
+                            <div className="text-red-500 text-sm mt-1">{formik.errors.message}</div>
                         ) : null}
                     </div>
 
                     <div className="flex items-center justify-center">
                         <button
                             type="submit"
-                            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-200"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline transition duration-200"
                         >
                             Send Message
                         </button>
