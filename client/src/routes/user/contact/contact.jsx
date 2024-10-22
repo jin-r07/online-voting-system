@@ -86,7 +86,7 @@ export default function Contact() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
                         />
                         {formik.touched.name && formik.errors.name ? (
-                            <div className="text-red-500 text-sm mt-1">{formik.errors.name}</div>
+                            <div className="text-red-500 text-md mt-1">{formik.errors.name}</div>
                         ) : null}
                     </div>
 
@@ -104,7 +104,7 @@ export default function Contact() {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
                         />
                         {formik.touched.email && formik.errors.email ? (
-                            <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+                            <div className="text-red-500 text-md mt-1">{formik.errors.email}</div>
                         ) : null}
                     </div>
 
@@ -122,7 +122,7 @@ export default function Contact() {
                             rows="5"
                         />
                         {formik.touched.message && formik.errors.message ? (
-                            <div className="text-red-500 text-sm mt-1">{formik.errors.message}</div>
+                            <div className="text-red-500 text-md mt-1">{formik.errors.message}</div>
                         ) : null}
                     </div>
 
