@@ -53,7 +53,7 @@ export default function Contact() {
                             <div className="text-red-500 text-md mt-1">{formik.errors.name}</div>
                         ) : null}
                     </div>
-                    
+
                     <div className="mb-4">
                         <label className="block text-gray-700 text-lg font-medium mb-2" htmlFor="email">
                             Email
