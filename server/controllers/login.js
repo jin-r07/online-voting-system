@@ -24,13 +24,6 @@ async function loginUser(req, res) {
             maxAge: 3600000
         });
 
-        res.cookie("userId", userExists._id.toString(), {
-            httpOnly: process.env.NODE_ENV === "production",
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "Strict",
-            maxAge: 3600000
-        });
-
         res.status(200).json({ message: "Login successful" });
     } catch (e) {
         res.status(500).json({ message: "An error occurred during login" });

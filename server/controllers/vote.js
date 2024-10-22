@@ -9,10 +9,10 @@ const multichain = require("multichain-node")({
 const { verifyToken } = require("../utils/auth");
 
 async function submitVote(req, res) {
-    const userId = req.cookies.userId;
+    const token = req.cookies.token;
     const { eventId, candidateId } = req.body;
 
-    if (!userId) {
+    if (!token) {
         return res.status(401).json({ message: "You must be logged in to vote." });
     }
 
@@ -21,7 +21,11 @@ async function submitVote(req, res) {
     }
 
     try {
+        const decoded = verifyToken(token);
+
+        const userId = decoded.id;
         const key = `${eventId}_${userId}`;
+        
         const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
 
         if (existingVotes.length > 0) {
@@ -55,7 +59,7 @@ async function extractVoteData(req, res) {
         const items = await multichain.listStreamItems({ stream: "events" });
         const votesCount = {};
 
-        for (const item of items) {      
+        for (const item of items) {
             if (item.data && item.data !== "") {
                 try {
                     const jsonString = Buffer.from(item.data, "hex").toString("utf8");
@@ -89,7 +93,7 @@ async function hasUserVoted(req, res) {
     const { eventId } = req.query;
 
     if (!token) {
-        return res.status(401).json({ message: "You must be logged in to check vote status." });
+        return res.status(401).json({ message: "You must be logged in vote." });
     }
 
     try {

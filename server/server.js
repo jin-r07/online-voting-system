@@ -1,10 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const path = require('path');
 const { createAdmin } = require("./scripts/setup");
 const cron = require("node-cron");
-const cookieParser = require("cookie-parser");
 const Event = require("./models/events");
 
 // User
