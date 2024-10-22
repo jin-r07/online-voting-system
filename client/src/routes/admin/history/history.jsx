@@ -363,7 +363,7 @@ export default function History() {
           <div className="text-gray-500">No events found.</div>
         )}
       </div>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </div >
   );
 }

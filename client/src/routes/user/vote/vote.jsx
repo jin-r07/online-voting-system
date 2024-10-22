@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../components/user/footer/footer";
 import { formatDate } from "../../../utils/formatDate&Time";
 import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
@@ -88,6 +89,7 @@ export default function Vote() {
                 )}
             </div>
             <Footer />
+            <ToastContainer limit={1} />
         </div>
     );
 }

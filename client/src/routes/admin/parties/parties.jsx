@@ -281,7 +281,7 @@ export default function Parties() {
           <li className="text-gray-500">No parties available.</li>
         )}
       </ul>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </div>
   );
 }

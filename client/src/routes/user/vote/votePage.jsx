@@ -12,7 +12,7 @@ export default function VotePage() {
     const { eventId } = useParams();
 
     const [eventData, setEventData] = useState(null);
-    
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -206,7 +206,7 @@ export default function VotePage() {
                         </div>
                     </div>
                 )}
-                <ToastContainer />
+                <ToastContainer limit={1} />
             </div>
             <Footer />
         </>

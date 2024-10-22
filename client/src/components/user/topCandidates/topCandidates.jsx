@@ -84,7 +84,7 @@ export default function TopCandidates() {
                     <p className="text-lg">Please check back later for updates on upcoming vote events.</p>
                 </div>
             )}
-            <ToastContainer />
+            <ToastContainer limit={1} />
         </div>
     );
 }

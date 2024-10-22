@@ -6,10 +6,15 @@ import { toast, ToastContainer } from "react-toastify";
 
 export default function ForgotPasswordForm({ onClose, showLoginForm }) {
     const [loading, setLoading] = useState(false);
+
     const [otpSent, setOtpSent] = useState(false);
+
     const [otpVerified, setOtpVerified] = useState(false);
+
     const [email, setEmail] = useState('');
+
     const [cooldown, setCooldown] = useState(0);
+
     const [otpExpires, setOtpExpires] = useState(false);
 
     useEffect(() => {
@@ -233,7 +238,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <ToastContainer />
+            <ToastContainer limit={1} />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md" aria-label="Close">
                     <IoClose size={24} />

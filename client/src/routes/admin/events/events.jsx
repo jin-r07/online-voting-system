@@ -454,7 +454,7 @@ export default function Events() {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </div>
   );
 }

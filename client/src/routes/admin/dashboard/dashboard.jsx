@@ -142,7 +142,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </div>
   );
 }

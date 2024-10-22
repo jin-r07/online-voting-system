@@ -79,7 +79,7 @@ export default function LoginForm({ onClose, showRegisterForm, showForgotPasswor
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
-            <ToastContainer />
+            <ToastContainer limit={1} />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md">
                     <IoClose size={24} />

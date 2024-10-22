@@ -66,7 +66,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                 });
 
                 const result = await response.json();
-                
+
                 if (!response.ok) {
                     if (response.status === 409) {
                         toast.error(result.message || "User with this email or Voter ID already exists.", {
@@ -172,10 +172,10 @@ export default function RegisterForm({ onClose, showLoginForm }) {
 
     return (
         <div className="fixed inset-0 flex items-start justify-center bg-black bg-opacity-60 overflow-auto">
-            <ToastContainer />
+            <ToastContainer limit={1} />
             <div className="relative p-6 rounded-lg w-full max-w-sm bg-white lg:mt-[6rem] mt-24 mb-8">
                 <button onClick={onClose} className="absolute top-2 right-2 hover:bg-red-500 hover:text-white rounded-md">
-                    <IoClose size={24}/>
+                    <IoClose size={24} />
                 </button>
 
                 {loading && (
@@ -231,7 +231,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                                 {selectedFile ? (
                                     <div className="relative">
                                         <img src={selectedFile} alt="Preview"
-                                             className="h-auto w-32 object-cover rounded border border-gray-300 mx-auto"/>
+                                            className="h-auto w-32 object-cover rounded border border-gray-300 mx-auto" />
                                         <div
                                             className="absolute bottom-2 right-2 bg-white px-2 py-1 text-xs rounded shadow-md">
                                             Preview
@@ -240,9 +240,9 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                                 ) : (
                                     <div className="flex flex-col items-center">
                                         <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
-                                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                                  d="M19 9l-7 7-3-3-4 4V5h12v4l4 4z"></path>
+                                                d="M19 9l-7 7-3-3-4 4V5h12v4l4 4z"></path>
                                         </svg>
                                         <p className="mt-2 text-sm">Click to upload your voter id card picture</p>
                                     </div>
@@ -287,7 +287,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                                 className="absolute right-3 top-3"
                                 onClick={() => setShowRegisterPassword(!showRegisterPassword)}
                             >
-                                {showRegisterPassword ? <IoEye size={20}/> : <IoEyeOff size={20}/>}
+                                {showRegisterPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                             </button>
                         </div>
                         {formik.touched.password && formik.errors.password && (
@@ -312,7 +312,7 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                                 className="absolute right-3 top-3"
                                 onClick={() => setShowRegisterConfirmPassword(!showRegisterConfirmPassword)}
                             >
-                                {showRegisterConfirmPassword ? <IoEye size={20}/> : <IoEyeOff size={20}/>}
+                                {showRegisterConfirmPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                             </button>
                         </div>
                         {formik.touched.confirmPassword && formik.errors.confirmPassword && (
@@ -321,8 +321,8 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                     </div>
                     <div className="mt-6 flex justify-between">
                         <button type="submit"
-                                className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none transition duration-150 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                disabled={loading}>
+                            className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none transition duration-150 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            disabled={loading}>
                             {loading ? 'Loading...' : 'Register'}
                         </button>
                     </div>

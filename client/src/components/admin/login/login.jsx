@@ -72,7 +72,7 @@ export default function AdminLogin() {
 
     return (
         <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-500 to-indigo-600">
-            <ToastContainer />
+            <ToastContainer limit={1} />
             <form onSubmit={formik.handleSubmit} className="bg-white shadow-lg rounded-lg p-8 w-96">
                 <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
                 <div className="mb-4">

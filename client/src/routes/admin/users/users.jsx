@@ -301,7 +301,7 @@ export default function Users() {
           <li className="text-gray-500">No users available.</li>
         )}
       </ul>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </div>
   );
 }

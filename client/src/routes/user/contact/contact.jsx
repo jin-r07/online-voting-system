@@ -57,7 +57,7 @@ export default function Contact() {
 
     return (
         <div className="w-full h-full flex flex-col justify-between bg-gray-50">
-            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable theme="light"  />
+            <ToastContainer limit={1} />
             <div className="flex-grow container mx-auto p-6">
                 <h1 className="text-4xl font-bold text-center my-6 text-blue-600">Contact Us</h1>
 

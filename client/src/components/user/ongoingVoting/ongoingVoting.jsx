@@ -85,7 +85,7 @@ export default function OngoingVoting() {
                     </div>
                 </>
             )}
-            <ToastContainer />
+            <ToastContainer limit={1} />
         </div>
     );
 }

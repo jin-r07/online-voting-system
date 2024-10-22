@@ -307,7 +307,7 @@ export default function Candidates() {
           <li className="text-gray-500">No candidates available.</li>
         )}
       </ul>
-      <ToastContainer />
+      <ToastContainer limit={1} />
     </div>
   );
 }
