@@ -89,8 +89,8 @@ export default function VotePage() {
             const response = await axios.post("http://localhost:8080/api/vote", voteData, { withCredentials: true });
 
             toast.success(response.data.message);
-            checkUserVoteStatus();
             setHasVoted(true);
+            await fetchEventData();
             closeModal();
         } catch (err) {
             toast.error(err.response?.data?.message || "Error submitting vote");
