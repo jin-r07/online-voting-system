@@ -3,8 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Footer from "../../../components/user/footer/footer";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useToast } from "../../../context/toast";
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -19,6 +18,8 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Contact() {
+    const toast = useToast();
+
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -57,7 +58,6 @@ export default function Contact() {
 
     return (
         <div className="w-full h-full flex flex-col justify-between bg-gray-50">
-            <ToastContainer limit={1} />
             <div className="flex-grow container mx-auto p-6">
                 <h1 className="lg:text-4xl text-3xl font-bold my-6">Contact Us</h1>
 
