@@ -86,7 +86,6 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                     setShowSuccessPopup(true);
                 }
             } catch (error) {
-                console.error("Error submitting form:", error);
                 if (error.message !== "Network response was not ok.") {
                     toast.error(error.message || "Something went wrong. Please try again later.", {
                         position: "bottom-right",
@@ -152,7 +151,6 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                 return;
             }
 
-            // Proceed if it's a valid image file and size is acceptable
             setSelectedFile(URL.createObjectURL(file));
             await formik.setFieldValue("picture", file);
             setLoading(true);
@@ -162,7 +160,6 @@ export default function RegisterForm({ onClose, showLoginForm }) {
                 const extractedValue = extracted || "Not found";
                 setExtractedVoterId(extractedValue);
             } catch (error) {
-                console.error("Error extracting text from image:", error);
                 setExtractedVoterId("Not found");
             } finally {
                 setLoading(false);

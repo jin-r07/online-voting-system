@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Footer from "../../../components/user/footer/footer";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -26,17 +28,36 @@ export default function Contact() {
         validationSchema: validationSchema,
         onSubmit: async (values, { resetForm }) => {
             try {
-                const response = await axios.post("http://localhost:8080/api/send-contact-message", values);
-                alert(response.data);
+                await axios.post("http://localhost:8080/api/send-contact-message", values);
+                toast.success("Your message has been sent. Thank you!", {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 resetForm();
             } catch (error) {
-                alert("Error sending email: " + error.response.data);
+                toast.error("Error sending email: " + (error.response?.data || "An unknown error occurred"), {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
         },
     });
 
     return (
         <div className="w-full h-full flex flex-col justify-between bg-gray-50">
+            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} closeOnClick pauseOnHover draggable theme="light"  />
             <div className="flex-grow container mx-auto p-6">
                 <h1 className="text-4xl font-bold text-center my-6 text-blue-600">Contact Us</h1>
 
