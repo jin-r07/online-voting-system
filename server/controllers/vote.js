@@ -22,10 +22,12 @@ async function submitVote(req, res) {
 
     try {
         const decoded = verifyToken(token);
+
         const userId = decoded.id;
         const key = `${eventId}_${userId}`;
 
         const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
+
         if (existingVotes.length > 0) {
             return res.status(400).json({ message: "You have already voted for this event." });
         }
@@ -34,17 +36,24 @@ async function submitVote(req, res) {
         let previousHash = "0";
         let newIndex = 1;
 
-        if (latestBlocks.length > 0) {
-            const latestBlockData = Buffer.from(latestBlocks[0].data, "hex").toString("utf8");
-            const latestBlock = JSON.parse(latestBlockData);
-            previousHash = latestBlock.hash;
-            newIndex = latestBlock.index + 1;
-        }
-
         const voteData = {
             candidateId,
             userId,
         };
+
+        if (latestBlocks.length > 0) {
+            const latestBlockData = Buffer.from(latestBlocks[0].data, "hex").toString("utf8");
+            if (latestBlockData) {
+                const latestBlock = JSON.parse(latestBlockData);
+                previousHash = latestBlock.hash || "0";
+                newIndex = latestBlock.index + 1;
+            } else {
+                console.log("Latest block data is empty. Initializing with default values.");
+                previousHash = "0";
+                newIndex = 1;
+            }
+        }
+
         const block = new Block(newIndex, previousHash, Date.now(), voteData);
         const difficulty = 4;
 

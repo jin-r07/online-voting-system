@@ -1,5 +1,3 @@
-const Block = require("../models/block");
-
 function mineBlock(block, difficulty) {
     while (block.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")) {
         block.nonce++;
