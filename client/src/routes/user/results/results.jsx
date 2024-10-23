@@ -47,25 +47,25 @@ export default function Results() {
                                 className="bg-white lg:p-6 p-3 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
                             >
                                 <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center">
+                                    <h3 className="ml-4 lg:text-2xl text-lg font-semibold text-gray-900">{event.eventName}</h3>
                                     <div className="flex items-center">
                                         {event.status === "completed" ? (
-                                            <LuVote className="text-green-500 text-3xl" />
+                                            <LuVote className="text-green-500 text-3xl mr-4" />
                                         ) : (
-                                            <FaRegTimesCircle className="text-red-500 text-2xl" />
+                                            <FaRegTimesCircle className="text-red-500 text-2xl  mr-4" />
                                         )}
-                                        <h3 className="ml-4 lg:text-2xl text-lg font-semibold text-gray-900">{event.eventName}</h3>
+                                        <button onClick={() => handleRedirectToVote(event._id)}
+                                            className="w-fit lg:mt-0 mt-4 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
+                                            View Details
+                                        </button>
                                     </div>
-                                    <button onClick={() => handleRedirectToVote(event._id)}
-                                        className="w-fit lg:mt-0 mt-4 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
-                                        View Details
-                                    </button>
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : (
                     <div className="text-center py-10 border-black border-[1px] rounded-md">
-                        <p className="text-2xl">No completed voting events are available.</p>
+                        <p className="text-2xl">No completed voting events.</p>
                         <p className="text-lg">Please check back later for updates on completed vote events.</p>
                     </div>
                 )}
