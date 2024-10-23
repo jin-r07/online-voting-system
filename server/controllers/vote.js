@@ -58,7 +58,6 @@ async function submitVote(req, res) {
 
         res.status(200).json({ message: "Vote successfully submitted." });
     } catch (err) {
-        console.error("Error submitting vote:", err);
         res.status(500).json({ error: "Error submitting vote" });
     }
 }

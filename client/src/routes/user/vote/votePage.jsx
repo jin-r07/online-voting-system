@@ -83,7 +83,7 @@ export default function VotePage() {
             await fetchEventData();
             closeModal();
         } catch (err) {
-            toast.error(err.response?.data?.message || "Error submitting vote");
+            toast.error(err.response?.data?.message || "You must be logged in to vote.");
         }
     };
 
