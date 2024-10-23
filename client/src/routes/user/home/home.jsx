@@ -8,8 +8,8 @@ export default function Home() {
     return (
         <div className="w-full h-full">
             <div className="lg:px-28 px-4 pt-10">
-                <h1 className="text-2xl font-bold mb-4">Welcome to the Electronic Voting System (EVS),</h1>
-                <p className="text-xl">
+                <h1 className="lg:text-2xl text-xl font-bold mb-4">Welcome to the Electronic Voting System (EVS),</h1>
+                <p className="lg:text-xl text-lg">
                     Stay informed about the latest voting events and play an active role in shaping the future. Our platform is designed to provide a seamless and secure voting experience, empowering you to express your voice with confidence. Join us in making democracy accessible for everyone!
                 </p>
 
@@ -40,7 +40,7 @@ export default function Home() {
 
                 <FAQ />
 
-                <div className="w-full h-full lg:text-7xl text-4xl">
+                <div className="w-full h-full lg:text-7xl text-5xl">
                     <div className="flex flex-col lg:py-32 py-16">
                         <p>Stop waiting.</p>
                         <p>Start</p>
