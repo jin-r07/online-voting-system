@@ -19,8 +19,8 @@ async function createEvent(req, res) {
 
     await event.save();
 
-    await multichain.publish({ 
-      stream: "events", 
+    await multichain.publish({
+      stream: "events",
       key: event._id.toString(),
       data: ''
     });
@@ -176,6 +176,40 @@ async function getCompletedEvents(req, res) {
   }
 }
 
+async function getCompletedEventsById(req, res) {
+  try {
+    const { eventId } = req.params;
+
+    const event = await Event.findOne({ _id: eventId, status: "completed" }).populate({
+      path: "candidates",
+      populate: {
+        path: "party",
+        select: "name image"
+      }
+    });
+
+    if (!event) {
+      return res.status(404).json({ error: "Event not found or is not active" });
+    }
+
+    const eventWithCandidateDetails = {
+      ...event.toObject(),
+      candidates: event.candidates.map(candidate => ({
+        ...candidate.toObject(),
+        image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+        partyName: candidate.party ? candidate.party.name : null,
+        partyImage: `http://localhost:8080/uploads/parties/${candidate.party.image.split('\\').pop()}`
+      })),
+      start: event.start,
+      end: event.end
+    };
+
+    res.status(200).json(eventWithCandidateDetails);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching the event by ID" });
+  }
+}
+
 
 async function editEvent(req, res) {
   try {
@@ -223,4 +257,4 @@ async function getTotalCompletedEvents(req, res) {
 }
 
 
-module.exports = { createEvent, getCandidates, getActiveEvents, getActiveEventsById, getInactiveEvents, getCompletedEvents, editEvent, deleteEvent, getTotalCompletedEvents };
+module.exports = { createEvent, getCandidates, getActiveEvents, getActiveEventsById, getInactiveEvents, getCompletedEvents, getCompletedEventsById, editEvent, deleteEvent, getTotalCompletedEvents };

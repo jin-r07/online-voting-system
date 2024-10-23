@@ -34,7 +34,7 @@ export default function Results() {
     }
 
     const handleRedirectToVote = (eventId) => {
-        navigate(`/vote/${eventId}`);
+        navigate(`/results/${eventId}`);
     };
 
     return (
