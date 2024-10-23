@@ -41,7 +41,7 @@ export default function Contact() {
     return (
         <div className="w-full h-full flex flex-col justify-between bg-gray-50">
             <div className="flex-grow container mx-auto p-6">
-                <h1 className="lg:text-4xl text-3xl font-bold my-6">Contact Us</h1>
+                <h1 className="lg:text-4xl text-2xl font-bold my-6">Contact Us</h1>
 
                 <div className="mb-6 text-left text-gray-700 lg:text-lg text-base">
                     <p className="mb-2">
