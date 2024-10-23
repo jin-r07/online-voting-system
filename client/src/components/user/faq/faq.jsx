@@ -62,8 +62,8 @@ export default function FAQ() {
     return (
         <>
             <div className="w-full h-full pt-10 pb-4">
-                <h1 className="text-2xl font-bold mb-6">Frequently Asked Questions (FAQs)</h1>
-                <p className="text-xl border-b border-gray-300 pb-4">Have question? Below you'll find answers to the most common questions you may have.</p>
+                <h1 className="lg:text-2xl text-xl font-bold mb-6">Frequently Asked Questions (FAQs)</h1>
+                <p className="lg:text-xl text-lg border-b border-gray-300 pb-4">Have question? Below you'll find answers to the most common questions you may have.</p>
                 {faqs.map((faq, index) => (
                     <div key={index} className="border-b border-gray-300 mb-4 cursor-pointer" onClick={() => handleToggle(index)}>
                         <div className="flex justify-between items-center py-4 cursor-pointer hover:bg-gray-100">
@@ -77,7 +77,7 @@ export default function FAQ() {
                         )}
                     </div>
                 ))}
-                <p className="mt-6 lg:text-lg text-base">
+                <p className="mt-6 text-lg">
                     If you have any further questions that are not answered here, please feel free to 
                     <Link to="/contact" className="text-blue-500 hover:underline"> Contact us</Link>.
                 </p>
