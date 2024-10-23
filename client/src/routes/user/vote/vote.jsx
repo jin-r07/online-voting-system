@@ -38,7 +38,7 @@ export default function Vote() {
     return (
         <div className="w-full h-screen flex flex-col bg-gradient-to-b from-gray-100 via-white to-gray-50">
             <div className="flex-grow py-10 px-4 lg:px-28">
-                <h2 className="text-3xl font-extrabold mb-8">Vote for an Event</h2>
+                <h2 className="lg:text-3xl text-2xl font-extrabold mb-8">Vote for an Event</h2>
 
                 {eventData.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -48,20 +48,20 @@ export default function Vote() {
                                 className="bg-white p-6 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
                             >
                                 <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-2xl font-semibold text-gray-900">{event.eventName}</h3>
+                                    <h3 className="lg:text-2xl text-xl font-semibold text-gray-900">{event.eventName}</h3>
                                     {event.status === "active" ? (
                                         <FaRegCheckCircle className="text-green-500 text-2xl" />
                                     ) : (
                                         <FaRegTimesCircle className="text-red-500 text-2xl" />
                                     )}
                                 </div>
-                                <p className="text-gray-600 text-lg mb-2">
-                                    <strong>Status:</strong>&nbsp;{capitalizeFirstLetter(event.status)}
+                                <p className="text-gray-600 lg:text-lg text-base mb-2">
+                                    <strong>Status:</strong>lg:&nbsp;{capitalizeFirstLetter(event.status)}
                                 </p>
-                                <p className="text-gray-600 text-lg mb-2">
+                                <p className="text-gray-600 lg:text-lg text-base mb-2">
                                     <strong>Start Date:</strong>&nbsp;{formatDate(event.start)}
                                 </p>
-                                <p className="text-gray-600 text-lg mb-2">
+                                <p className="text-gray-600 lg:text-lg text-base mb-2">
                                     <strong>End Date:</strong>&nbsp;{formatDate(event.end)}
                                 </p>
                                 <div className="flex justify-end">
