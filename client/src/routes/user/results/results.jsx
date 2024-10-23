@@ -40,11 +40,11 @@ export default function Results() {
                 <h2 className="lg:text-3xl text-xl font-extrabold mb-8">Completed Vote Events Results</h2>
 
                 {eventData.length > 0 ? (
-                    <div className="w-full">
+                    <div className="w-full h-full">
                         {eventData.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white lg:p-6 p-3 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                                className="bg-white lg:p-6 p-3 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 mb-8"
                             >
                                 <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center">
                                     <h3 className="ml-4 lg:text-2xl text-lg font-semibold text-gray-900">{event.eventName}</h3>
