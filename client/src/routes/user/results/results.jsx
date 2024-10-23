@@ -7,11 +7,14 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { RxDownload } from "react-icons/rx";
 import { formatDate } from "../../../utils/formatDate&Time";
 import Footer from "../../../components/user/footer/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function Results() {
     const toast = useToast();
 
     const [eventData, setEventData] = useState(null);
+
+    const navigate = useNavigate();
 
     const fetchEventData = async () => {
         try {
@@ -29,6 +32,10 @@ export default function Results() {
     if (!eventData) {
         return <div className="text-center text-xl py-10">Loading...</div>;
     }
+
+    const handleRedirectToVote = (eventId) => {
+        navigate(`/vote/${eventId}`);
+    };
 
     return (
         <div className="w-full h-screen flex flex-col bg-gradient-to-b from-gray-100 via-white to-gray-50">
@@ -53,7 +60,7 @@ export default function Results() {
                                         <button className="bg-blue-600 ml-6 p-2.5 rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
                                             <RxDownload className="text-xl text-white" />
                                         </button>
-                                        <button
+                                        <button onClick={() => handleRedirectToVote(event._id)}
                                             className="ml-3 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
                                             View Details
                                         </button>
