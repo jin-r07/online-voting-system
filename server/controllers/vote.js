@@ -22,22 +22,30 @@ async function submitVote(req, res) {
 
     try {
         const decoded = verifyToken(token);
-
         const userId = decoded.id;
         const key = `${eventId}_${userId}`;
-        
-        const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
 
+        const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
         if (existingVotes.length > 0) {
             return res.status(400).json({ message: "You have already voted for this event." });
+        }
+
+        const latestBlocks = await multichain.listStreamItems({ stream: "events", count: 1, start: -1 });
+        let previousHash = "0";
+        let newIndex = 1;
+
+        if (latestBlocks.length > 0) {
+            const latestBlockData = Buffer.from(latestBlocks[0].data, "hex").toString("utf8");
+            const latestBlock = JSON.parse(latestBlockData);
+            previousHash = latestBlock.hash;
+            newIndex = latestBlock.index + 1;
         }
 
         const voteData = {
             candidateId,
             userId,
         };
-
-        const block = new Block(1, "0", Date.now(), voteData);
+        const block = new Block(newIndex, previousHash, Date.now(), voteData);
         const difficulty = 4;
 
         mineBlock(block, difficulty);
@@ -50,6 +58,7 @@ async function submitVote(req, res) {
 
         res.status(200).json({ message: "Vote successfully submitted." });
     } catch (err) {
+        console.error("Error submitting vote:", err);
         res.status(500).json({ error: "Error submitting vote" });
     }
 }
@@ -77,7 +86,7 @@ async function extractVoteData(req, res) {
                     continue;
                 }
             } else {
-                console.log("Skipping item with empty data:", item);
+                console.log("Skipping block with empty data:", item);
             }
         }
 
