@@ -58,15 +58,10 @@ export default function Results() {
                                         )}
                                         <h3 className="ml-4 lg:text-2xl text-lg font-semibold text-gray-900">{event.eventName}</h3>
                                     </div>
-                                    <div className="flex items-center lg:mt-0 mt-4">
-                                        <button className="bg-blue-600 lg:ml-6 p-2.5 rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
-                                            <RxDownload className="text-xl text-white" />
-                                        </button>
-                                        <button onClick={() => handleRedirectToVote(event._id)}
-                                            className="ml-3 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
-                                            View Details
-                                        </button>
-                                    </div>
+                                    <button onClick={() => handleRedirectToVote(event._id)}
+                                        className="w-fit lg:mt-0 mt-4 py-2 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
+                                        View Details
+                                    </button>
                                 </div>
                             </div>
                         ))}
