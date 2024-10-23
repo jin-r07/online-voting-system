@@ -62,7 +62,7 @@ export default function ResultsPage() {
                         return (
                             <li
                                 key={candidate._id}
-                                className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl border border-gray-200 transition-shadow duration-300"
+                                className="p-6 bg-white shadow-lg rounded-lg hover:shadow-xl border-[1px] border-gray-300 transition-shadow duration-300"
                             >
                                 <div className="flex items-center mb-4">
                                     <img
