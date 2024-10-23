@@ -47,9 +47,9 @@ export default function Results() {
                         {eventData.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white p-6 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                                className="bg-white lg:p-6 p-3 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
                             >
-                                <div className="flex justify-between items-center">
+                                <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center">
                                     <div className="flex items-center">
                                         {event.status === "completed" ? (
                                             <LuVote className="text-green-500 text-3xl" />
@@ -58,8 +58,8 @@ export default function Results() {
                                         )}
                                         <h3 className="ml-4 lg:text-2xl text-lg font-semibold text-gray-900">{event.eventName}</h3>
                                     </div>
-                                    <div className="flex items-center">
-                                        <button className="bg-blue-600 ml-6 p-2.5 rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
+                                    <div className="flex items-center lg:mt-0 mt-4">
+                                        <button className="bg-blue-600 lg:ml-6 p-2.5 rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105">
                                             <RxDownload className="text-xl text-white" />
                                         </button>
                                         <button onClick={() => handleRedirectToVote(event._id)}
