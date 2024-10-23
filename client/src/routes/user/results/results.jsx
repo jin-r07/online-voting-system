@@ -65,8 +65,8 @@ export default function Results() {
                     </div>
                 ) : (
                     <div className="text-center py-10 border-black border-[1px] rounded-md">
-                        <p className="text-2xl">No active voting events available at the moment.</p>
-                        <p className="text-lg">Please check back later for updates on upcoming vote events.</p>
+                        <p className="text-2xl">No completed voting events are available.</p>
+                        <p className="text-lg">Please check back later for updates on completed vote events.</p>
                     </div>
                 )}
             </div>
