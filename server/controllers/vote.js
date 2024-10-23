@@ -92,7 +92,6 @@ async function extractVoteData(req, res) {
                     continue;
                 }
             } else {
-                console.log("Skipping block with empty data:", item);
             }
         }
 
