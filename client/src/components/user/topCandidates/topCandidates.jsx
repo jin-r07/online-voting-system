@@ -52,7 +52,7 @@ export default function TopCandidates() {
                                         return (
                                             <div key={candidate._id}
                                                 className="flex items-center p-4 bg-white shadow-lg rounded-lg border-[1px] border-gray-300">
-                                                <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-md object-cover object-center" />
+                                                <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-sm object-cover object-center" />
                                                 <div className="ml-4">
                                                     <p className="text-lg text-gray-800">{candidate.party.name}</p>
                                                     <p className="text-base">Votes: {totalVotes}</p>
