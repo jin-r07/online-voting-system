@@ -6,6 +6,7 @@ const path = require('path');
 const { createAdmin } = require("./scripts/setup");
 const cron = require("node-cron");
 const Event = require("./models/events");
+const { extractVoteDataForEvent, generateVotePDF } = require("./utils/pdf");
 
 // User
 const registerRoute = require("./routes/register");
@@ -58,6 +59,7 @@ const updateEventStatuses = async () => {
     const now = new Date();
     try {
         const events = await Event.find({});
+
         for (const event of events) {
             const previousStatus = event.status;
 
@@ -72,6 +74,12 @@ const updateEventStatuses = async () => {
             if (previousStatus !== event.status) {
                 await event.save();
                 console.log(`Updating status from "${previousStatus}" to "${event.status}"`);
+
+                if (event.status === "completed") {
+                    const votesCount = await extractVoteDataForEvent(event._id);
+                    const pdfPath = await generateVotePDF(event._id, votesCount);
+                    console.log(`Vote PDF generated at: ${pdfPath}`);
+                }
             }
         }
     } catch (error) {

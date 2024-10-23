@@ -5,6 +5,6 @@ function mineBlock(block, difficulty) {
     }
     console.log(`Block mined: ${block.hash} with nonce: ${block.nonce}`);
     return block;
-}
+};
 
 module.exports = { mineBlock };
