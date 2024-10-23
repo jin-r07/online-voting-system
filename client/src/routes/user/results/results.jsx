@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { RiArrowUpSFill, RiArrowDownSFill } from "react-icons/ri";
 import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { useToast } from "../../../context/toast";
-import Footer from "../../../components/user/footer/footer";
-import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
+import { LuUserCheck2 } from "react-icons/lu";
+import { FaRegTimesCircle } from "react-icons/fa";
 import { formatDate } from "../../../utils/formatDate&Time";
+import Footer from "../../../components/user/footer/footer";
 
 export default function Results() {
     const toast = useToast();
@@ -32,7 +32,7 @@ export default function Results() {
     return (
         <div className="w-full h-screen flex flex-col bg-gradient-to-b from-gray-100 via-white to-gray-50">
             <div className="flex-grow py-10 px-4 lg:px-28">
-                <h2 className="text-3xl font-extrabold mb-8">Completed Vote events Results</h2>
+                <h2 className="text-3xl font-extrabold mb-8">Completed Vote Events Results</h2>
 
                 {eventData.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -43,8 +43,8 @@ export default function Results() {
                             >
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-2xl font-semibold text-gray-900">{event.eventName}</h3>
-                                    {event.status === "active" ? (
-                                        <FaRegCheckCircle className="text-green-500 text-2xl" />
+                                    {event.status === "completed" ? (
+                                        <LuUserCheck2 className="text-blue-500 text-3xl" />
                                     ) : (
                                         <FaRegTimesCircle className="text-red-500 text-2xl" />
                                     )}
