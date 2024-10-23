@@ -22,7 +22,6 @@ async function submitVote(req, res) {
 
     try {
         const decoded = verifyToken(token);
-
         const userId = decoded.id;
         const key = `${eventId}_${userId}`;
 
@@ -33,13 +32,9 @@ async function submitVote(req, res) {
         }
 
         const latestBlocks = await multichain.listStreamItems({ stream: "events", count: 1, start: -1 });
+
         let previousHash = "0";
         let newIndex = 1;
-
-        const voteData = {
-            candidateId,
-            userId,
-        };
 
         if (latestBlocks.length > 0) {
             const latestBlockData = Buffer.from(latestBlocks[0].data, "hex").toString("utf8");
@@ -48,11 +43,14 @@ async function submitVote(req, res) {
                 previousHash = latestBlock.hash || "0";
                 newIndex = latestBlock.index + 1;
             } else {
-                console.log("Latest block data is empty. Initializing with default values.");
-                previousHash = "0";
-                newIndex = 1;
+                console.log("Latest block data is empty. Using default values.");
             }
         }
+
+        const voteData = {
+            candidateId,
+            userId,
+        };
 
         const block = new Block(newIndex, previousHash, Date.now(), voteData);
         const difficulty = 4;
