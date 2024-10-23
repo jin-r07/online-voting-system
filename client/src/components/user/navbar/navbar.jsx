@@ -112,7 +112,6 @@ export default function Navbar() {
                 }
             });
             Cookies.remove("token");
-            Cookies.remove("userId");
             setIsLoggedIn(false);
             setUserData(null);
             window.location.reload();
