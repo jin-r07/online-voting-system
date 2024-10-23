@@ -18,9 +18,9 @@ export default function Home() {
                 <TopCandidates />
 
                 <div className="mb-6 lg:text-xl text-lg">
-                    <h2 className="font-semibold mb-2 text-2xl">How to Vote</h2>
-                    <p>Voting is an essential part of participating in democracy. Follow these simple steps to ensure your voice is heard:</p>
-                    <ol className="list-disc list-inside space-y-4 pt-6">
+                    <h2 className="font-semibold mb-2 lg:text-2xl text-xl">How to Vote</h2>
+                    <p className="lg:text-xl text-lg">Voting is an essential part of participating in democracy. Follow these simple steps to ensure your voice is heard:</p>
+                    <ol className="list-disc list-inside space-y-4 pt-6 lg:text-lg text-base">
                         <li>
                             <strong>Register to Vote:</strong> Ensure you are registered to vote. If you haven't registered yet, choose option Register in above navigation and fill out the necessary details and do make sure that the information that you provide are correct and accurate.
                         </li>
@@ -34,7 +34,7 @@ export default function Home() {
                             <strong>Stay Informed:</strong> After voting, keep yourself updated on election results within the Results section in navigation panel.
                         </li>
                     </ol>
-                    <p className="pt-6">For further questionnaires you can also reach out to us through<Link to="/contact" className="text-blue-600 hover:underline">&nbsp;Contact&nbsp;</Link>page. Or, for other questionnaires you can check out below FAQ.</p>
+                    <p className="pt-6 lg:text-xl text-lg">For further questionnaires you can also reach out to us through<Link to="/contact" className="text-blue-600 hover:underline">&nbsp;Contact&nbsp;</Link>page. Or, for other questionnaires you can check out below FAQ.</p>
 
                 </div>
 
