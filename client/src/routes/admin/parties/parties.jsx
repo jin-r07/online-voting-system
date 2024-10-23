@@ -202,7 +202,7 @@ export default function Parties() {
               <img
                 src={party.image}
                 alt={party.name}
-                className="w-16 h-auto mr-4 rounded-md object-cover object-center"
+                className="w-16 h-auto mr-4 rounded-sm object-cover object-center"
               />
               <div className="flex flex-col">
                 <span className="text-lg text-gray-900">{party.name}</span>
