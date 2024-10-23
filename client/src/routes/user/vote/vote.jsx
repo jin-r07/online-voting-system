@@ -56,7 +56,7 @@ export default function Vote() {
                                     )}
                                 </div>
                                 <p className="text-gray-600 lg:text-lg text-base mb-2">
-                                    <strong>Status:</strong>lg:&nbsp;{capitalizeFirstLetter(event.status)}
+                                    <strong>Status:</strong>&nbsp;{capitalizeFirstLetter(event.status)}
                                 </p>
                                 <p className="text-gray-600 lg:text-lg text-base mb-2">
                                     <strong>Start Date:</strong>&nbsp;{formatDate(event.start)}
