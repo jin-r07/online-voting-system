@@ -196,7 +196,7 @@ export default function Navbar() {
                 <div ref={dropdownRef} className={`lg:hidden absolute top-full right-0 border-t-[1px] border-[#9BF00B] w-full bg-white overflow-hidden drop-shadow-2xl ${isOpen ? "block" : "hidden"} z-50`}>
                     <div className="flex flex-col space-y-2 pt-2 pb-4 pl-4">
                         {navLinks.map((link, index) => (
-                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }} className={`text-lg border-b-[1px] ${location.pathname === link.href ? "border-black" : "border-white"} hover:border-black w-fit`}>
+                            <Link key={index} to={link.href} onClick={() => { setIsOpen(false); }} className={`text-lg border-b-[1px] ${(link.href !== '/' && location.pathname.startsWith(link.href)) || (link.href === '/' && location.pathname === '/') ? "border-black" : "border-white"} hover:border-black w-fit`}>
                                 {link.name}
                             </Link>
                         ))}
