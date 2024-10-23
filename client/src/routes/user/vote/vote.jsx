@@ -49,7 +49,7 @@ export default function Vote() {
                             >
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-2xl font-semibold text-gray-900">{event.eventName}</h3>
-                                    {event.status === 'active' ? (
+                                    {event.status === "active" ? (
                                         <FaRegCheckCircle className="text-green-500 text-2xl" />
                                     ) : (
                                         <FaRegTimesCircle className="text-red-500 text-2xl" />
