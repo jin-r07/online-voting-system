@@ -68,7 +68,7 @@ export default function ResultsPage() {
                                     <img
                                         src={candidate.partyImage}
                                         alt={candidate.party.name}
-                                        className="w-20 h-auto object-cover rounded-md mr-4"
+                                        className="w-24 h-auto object-cover rounded-sm mr-4"
                                     />
                                     <h3 className="text-xl font-bold text-gray-800">{candidate.party.name}</h3>
                                 </div>
