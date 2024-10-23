@@ -6,7 +6,7 @@ import Home from "./routes/user/home/home";
 import Vote from "./routes/user/vote/vote";
 import VotePage from "./routes/user/vote/votePage";
 import Results from "./routes/user/results/results";
-import ResultsPage from "./routes/user/results/resultPage";
+import ResultsPage from "./routes/user/results/resultsPage";
 import Contact from "./routes/user/contact/contact";
 import UserProfile from "./routes/user/userProfile/userProfile";
 import UserSettings from "./routes/user/userSettings/userSettings";
