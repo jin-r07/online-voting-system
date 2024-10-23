@@ -96,7 +96,7 @@ export default function VotePage() {
                     <p><strong>Start Date:&nbsp;</strong><span>{startDate}</span></p>
                     <p><strong>End Date:&nbsp;</strong><span>{endDate}</span></p>
                 </div>
-                <h2 className="text-xl font-semibold my-8">All Candidates:</h2>
+                <h2 className="text-xl font-semibold my-8">Candidates:</h2>
                 <ul className="space-y-6">
                     {eventData.candidates.map((candidate) => {
                         const totalVotes = votesData[candidate._id] || 0;
