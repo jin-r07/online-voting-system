@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { capitalizeFirstLetter } from "../../../utils/capitalizeFirstLetter";
 import { useToast } from "../../../context/toast";
 import { LuVote } from "react-icons/lu";
 import { FaRegTimesCircle } from "react-icons/fa";
-import { RxDownload } from "react-icons/rx";
-import { formatDate } from "../../../utils/formatDate&Time";
 import Footer from "../../../components/user/footer/footer";
 import { useNavigate } from "react-router-dom";
 
