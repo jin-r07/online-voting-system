@@ -21,6 +21,8 @@ export default function History() {
 
   const [openedEvents, setOpenedEvents] = useState({});
 
+  const [votesData, setVotesData] = useState({});
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -77,6 +79,9 @@ export default function History() {
     try {
       const response = await axios.get("http://localhost:8080/api-admin/get-events-completed");
       setCompletedEvents(response.data);
+
+      const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
+      setVotesData(votesResponse.data);
     } catch (err) {
       toast.error("Error processing request");
     }
@@ -282,19 +287,23 @@ export default function History() {
                     <p><strong>Status:&nbsp;</strong>{capitalizeFirstLetter(event.status)}</p>
                     <p><strong>Candidates:</strong></p>
                   </div>
-                  {event.candidates.map((candidate) => (
-                    <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
-                      <img
-                        src={candidate.image}
-                        alt={candidate.name}
-                        className="w-14 h-auto rounded-sm mr-2"
-                      />
-                      <div className="flex flex-col">
-                        <span>{candidate.name}</span>
-                        <span className="text-gray-500">Party:&nbsp;{candidate.party?.name}</span>
+                  {event.candidates.map((candidate) => {
+                    const totalVotes = votesData[candidate._id] || 0;
+                    return (
+                      <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
+                        <img
+                          src={candidate.image}
+                          alt={candidate.name}
+                          className="w-14 h-auto rounded-sm mr-2"
+                        />
+                        <div className="flex flex-col">
+                          <span>{candidate.name}</span>
+                          <span className="text-gray-500">Party:&nbsp;{candidate.party?.name}</span>
+                          <span>Votes: {totalVotes}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </ul>
               )}
             </div>
