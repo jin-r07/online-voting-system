@@ -48,6 +48,7 @@ async function submitVote(req, res) {
         }
 
         const voteData = {
+            eventId,
             candidateId,
             userId,
         };
@@ -70,6 +71,8 @@ async function submitVote(req, res) {
 }
 
 async function extractVoteData(req, res) {
+    const { eventId } = req.query;
+
     try {
         const items = await multichain.listStreamItems({ stream: "events" });
         const votesCount = {};
@@ -78,20 +81,21 @@ async function extractVoteData(req, res) {
             if (item.data && item.data !== "") {
                 try {
                     const jsonString = Buffer.from(item.data, "hex").toString("utf8");
-
                     const voteData = JSON.parse(jsonString);
 
+                    const voteEventId = voteData.data?.eventId;
                     const candidateId = voteData.data?.candidateId;
 
-                    if (candidateId) {
-                        votesCount[candidateId] = (votesCount[candidateId] || 0) + 1;
-                    } else {
-                        console.log("No candidateId found in vote data");
+                    if (voteEventId === eventId && candidateId) {
+                        if (!votesCount[candidateId]) {
+                            votesCount[candidateId] = 0;
+                        }
+                        votesCount[candidateId]++;
                     }
                 } catch (err) {
+                    console.error("Error parsing vote data:", err);
                     continue;
                 }
-            } else {
             }
         }
 

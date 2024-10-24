@@ -26,7 +26,10 @@ export default function VotePage() {
             const response = await axios.get(`http://localhost:8080/api-admin/get-events/${eventId}`);
             setEventData(response.data);
 
-            const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
+            const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data", {
+                params: { eventId },
+                withCredentials: true,
+            });
             setVotesData(votesResponse.data);
         } catch (err) {
             toast.error("Error fetching event details");
