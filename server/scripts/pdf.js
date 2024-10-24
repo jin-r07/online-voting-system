@@ -16,12 +16,12 @@ const generateVotePDF = async (eventId, votesCount) => {
         const name = event.eventName;
         const doc = new jsPDF();
 
-         doc.setFontSize(23);
+        doc.setFontSize(23);
 
-         const titleWidth = 190;
- 
-         const titleLines = doc.splitTextToSize(`${name}`, titleWidth);
-         doc.text(titleLines, 10, 20); 
+        const titleWidth = 190;
+
+        const titleLines = doc.splitTextToSize(`${name}`, titleWidth);
+        doc.text(titleLines, 10, 20);
 
         doc.setFontSize(13);
         doc.text(`Start Date: ${new Date(event.start).toLocaleString()}`, 10, 40);
@@ -95,7 +95,7 @@ const extractVoteDataForEvent = async (eventId) => {
                     const voteEventId = voteData.data?.eventId;
                     const candidateId = voteData.data?.candidateId;
 
-                    if (voteEventId === eventId && candidateId) {
+                    if (voteEventId && voteEventId.toString() === eventId.toString() && candidateId) {
                         if (!votesCount[candidateId]) {
                             votesCount[candidateId] = 0;
                         }
@@ -105,12 +105,13 @@ const extractVoteDataForEvent = async (eventId) => {
                     console.error("Error parsing vote data:", err);
                     continue;
                 }
+            } else {
+                console.warn("Skipping item with empty data:", item);
             }
         }
 
         return votesCount;
     } catch (err) {
-        console.error("Error retrieving vote data:", err);
         throw new Error("Error retrieving vote data");
     }
 };

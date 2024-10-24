@@ -77,9 +77,7 @@ const updateEventStatuses = async () => {
 
                 if (event.status === "completed") {
                     const votesCount = await extractVoteDataForEvent(event._id);
-                    console.log("Vote:", JSON.stringify(votesCount, null, 2));
                     const pdfPath = await generateVotePDF(event._id, votesCount);
-                    console.log(`Vote PDF generated at: ${pdfPath}`);
                 }
             }
         }
