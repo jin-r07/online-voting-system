@@ -6,7 +6,7 @@ const path = require('path');
 const { createAdmin } = require("./scripts/setup");
 const cron = require("node-cron");
 const Event = require("./models/events");
-const { extractVoteDataForEvent, generateVotePDF } = require("./utils/pdf");
+const { extractVoteDataForEvent, generateVotePDF } = require("./scripts/pdf");
 
 // User
 const registerRoute = require("./routes/register");
@@ -77,6 +77,7 @@ const updateEventStatuses = async () => {
 
                 if (event.status === "completed") {
                     const votesCount = await extractVoteDataForEvent(event._id);
+                    console.log("Vote:", JSON.stringify(votesCount, null, 2));
                     const pdfPath = await generateVotePDF(event._id, votesCount);
                     console.log(`Vote PDF generated at: ${pdfPath}`);
                 }

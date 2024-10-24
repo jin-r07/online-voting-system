@@ -210,7 +210,6 @@ async function getCompletedEventsById(req, res) {
   }
 }
 
-
 async function editEvent(req, res) {
   try {
     const eventId = req.params.id;
@@ -255,6 +254,5 @@ async function getTotalCompletedEvents(req, res) {
     res.status(500).json({ error: "Error fetching total completed events" });
   }
 }
-
 
 module.exports = { createEvent, getCandidates, getActiveEvents, getActiveEventsById, getInactiveEvents, getCompletedEvents, getCompletedEventsById, editEvent, deleteEvent, getTotalCompletedEvents };
