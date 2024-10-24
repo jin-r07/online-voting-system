@@ -78,12 +78,33 @@ export default function History() {
   const fetchCompletedEvents = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api-admin/get-events-completed");
-      setCompletedEvents(response.data);
+      const completedEvents = response.data;
+      setCompletedEvents(completedEvents);
 
-      const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data");
-      setVotesData(votesResponse.data);
+      const allVotesData = {};
+
+      for (let event of completedEvents) {
+        const eventId = event._id;
+        const eventVotes = await fetchVoteData(eventId);
+        allVotesData[eventId] = eventVotes;
+      }
+
+      setVotesData(allVotesData);
     } catch (err) {
       toast.error("Error processing request");
+    }
+  };
+
+  const fetchVoteData = async (eventId) => {
+    try {
+      const votesResponse = await axios.get("http://localhost:8080/api/get-vote-data", {
+        params: { eventId },
+        withCredentials: true,
+      });
+      return votesResponse.data;
+    } catch (err) {
+      toast.error(`Error fetching vote data for event ${eventId}`);
+      return {};
     }
   };
 
@@ -288,7 +309,7 @@ export default function History() {
                     <p><strong>Candidates:</strong></p>
                   </div>
                   {event.candidates.map((candidate) => {
-                    const totalVotes = votesData[candidate._id] || 0;
+                    const totalVotes = votesData[event._id]?.[candidate._id] || 0;
                     return (
                       <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
                         <img
