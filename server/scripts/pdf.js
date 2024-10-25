@@ -56,7 +56,7 @@ const generateVotePDF = async (eventId, votesCount) => {
                 const candidateImagePath = path.join(__dirname, 'uploads', 'candidates', path.basename(candidate.image));
                 if (fs.existsSync(candidateImagePath)) {
                     const candidateImageData = fs.readFileSync(candidateImagePath).toString("base64");
-                    doc.addImage(candidateImageData, 'JPEG', 10, verticalPosition, 20, 20);
+                    doc.addImage(candidateImageData, 'JPEG', 10, verticalPosition, 20, 15);
                 }
             }
 
@@ -106,7 +106,7 @@ const extractVoteDataForEvent = async (eventId) => {
                     continue;
                 }
             } else {
-                console.warn("Skipping item with empty data:", item);
+                console.warn("Skipping item with empty data.");
             }
         }
 

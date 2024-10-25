@@ -22,7 +22,7 @@ async function createEvent(req, res) {
     await multichain.publish({
       stream: "events",
       key: event._id.toString(),
-      data: ''
+      data: ""
     });
 
     res.status(201).json(event);
