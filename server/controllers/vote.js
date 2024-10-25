@@ -31,12 +31,18 @@ async function submitVote(req, res) {
             return res.status(400).json({ message: "You have already voted for this event." });
         }
 
-        const latestBlocks = await multichain.listStreamItems({ stream: "events", count: 1, start: -1 });
-
         let previousHash = "0";
         let newIndex = 1;
+        let useDefaultValues = false;
 
-        if (latestBlocks.length > 0) {
+        const eventKeyItems = await multichain.listStreamKeyItems({ stream: "events", key: eventId });
+        if (eventKeyItems.length > 0) {
+            useDefaultValues = true;
+        }
+
+        const latestBlocks = await multichain.listStreamItems({ stream: "events", count: 1, start: -1 });
+
+        if (latestBlocks.length > 0 && !useDefaultValues) {
             const latestBlockData = Buffer.from(latestBlocks[0].data, "hex").toString("utf8");
             if (latestBlockData) {
                 const latestBlock = JSON.parse(latestBlockData);

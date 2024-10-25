@@ -53,7 +53,7 @@ export default function TopCandidates() {
         navigate(`/vote/${eventId}`);
     };
 
-    if (votingData.length === 0) {
+    if (!votingData) {
         return <div className="text-center text-xl py-10">Loading...</div>;
     }
 
