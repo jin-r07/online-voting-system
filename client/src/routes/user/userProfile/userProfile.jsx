@@ -63,9 +63,9 @@ export default function UserProfile() {
                         <span>{user.updatedAt !== "Unknown" ? new Date(user.updatedAt).toLocaleDateString() : "Unknown"}</span>
                     </div>
                 </div>
-                <div className="absolute bottom-0">
-                    <p className="text-gray-600 text-md py-8">
-                        This profile contains essential information about your voting credentials. If you notice any unexpected differences, please contact support.<br/>
+                <div className="relative bottom-0">
+                    <p className="text-gray-600 lg:text-md text-sm py-8">
+                        This profile contains essential information about your voting credentials. If you notice any unexpected differences, please contact support.<br />
                         <span className="text-red-500">Note: Regarding changing your Voter ID Card Picture: please reach out to us through contact us page.</span>
                     </p>
                 </div>
