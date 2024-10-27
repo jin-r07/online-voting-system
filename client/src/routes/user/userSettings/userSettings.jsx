@@ -6,7 +6,7 @@ export default function UserSettings() {
     const toast = useToast();
 
     const [email, setEmail] = useState("");
-    
+
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function UserSettings() {
                 <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8">User Settings</h2>
 
                 <div className="space-y-6">
-                    <div className="border p-4 rounded-lg shadow-md">
+                    <div className="border p-4 rounded-md shadow-md">
                         <h3 className="text-xl font-semibold mb-4">Edit Email</h3>
                         <input
                             type="email"
@@ -69,20 +69,20 @@ export default function UserSettings() {
                         />
                         <button
                             onClick={handleEmailUpdate}
-                            className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-blue-600"
+                            className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600"
                         >
                             Update Email
                         </button>
                     </div>
 
-                    <div className="border p-4 rounded-lg shadow-md">
+                    <div className="border p-4 rounded-md shadow-md">
                         <h3 className="text-xl font-semibold mb-4">Delete Account</h3>
                         <p className="text-red-600 mb-2">
-                            Warning: Deleting your account is irreversible. All your data will be permanently lost.
+                            Warning: Deleting your account is irreversible. Your account will be permanently lost.
                         </p>
                         <button
                             onClick={handleDeleteAccount}
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
                         >
                             Delete Account
                         </button>
