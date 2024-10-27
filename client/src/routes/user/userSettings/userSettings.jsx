@@ -58,7 +58,7 @@ export default function UserSettings() {
                 <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8">User Settings</h2>
 
                 <div className="space-y-6">
-                    <div className="border p-4 rounded-md shadow-md">
+                    <div className="border-[1px] border-gray-300 p-4 rounded-md">
                         <h3 className="text-xl font-semibold mb-4">Edit Email</h3>
                         <input
                             type="email"
@@ -75,7 +75,7 @@ export default function UserSettings() {
                         </button>
                     </div>
 
-                    <div className="border p-4 rounded-md shadow-md">
+                    <div className="border-[1px] border-gray-300  p-4 rounded-md">
                         <h3 className="text-xl font-semibold mb-4">Delete Account</h3>
                         <p className="text-red-600 mb-2">
                             Warning: Deleting your account is irreversible. Your account will be permanently lost.
