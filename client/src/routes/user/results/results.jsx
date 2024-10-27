@@ -44,7 +44,7 @@ export default function Results() {
                         {eventData.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white lg:p-6 p-3 border-black border-[1px] rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 mb-8"
+                                className="bg-white lg:p-6 p-3 border-black border-[1px] rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8"
                             >
                                 <div className="flex lg:flex-row flex-col lg:justify-between lg:items-center">
                                     <h3 className="ml-4 lg:text-2xl text-lg font-semibold text-gray-900">{event.eventName}</h3>
