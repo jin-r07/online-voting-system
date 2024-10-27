@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useToast } from "../../../context/toast";
+import Footer from "../../../components/user/footer/footer";
 
 export default function UserSettings() {
     const toast = useToast();
@@ -53,7 +54,7 @@ export default function UserSettings() {
     };
 
     return (
-        <div className="w-full h-full flex justify-center items-center lg:mt-12 mt-8">
+        <div className="w-full h-screen lg:mt-12 mt-8">
             <div className="w-full h-full lg:px-28 px-4">
                 <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8">User Settings</h2>
 
@@ -89,6 +90,7 @@ export default function UserSettings() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
