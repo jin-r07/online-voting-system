@@ -30,31 +30,31 @@ export default function UserProfile() {
     }, []);
 
     return (
-        <div className="w-full h-full flex justify-center items-center mt-24">
-            <div className="w-full h-full lg:px-28 px-4x">
-                <h2 className="lg:text-3xl text-lg font-extrabold mb-12">User Profile</h2>
+        <div className="w-full h-full flex justify-center items-center lg:mt-12 mt-8">
+            <div className="w-full h-full lg:px-28 px-4">
+                <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8">User Profile</h2>
                 <div className="space-y-6">
                     <div className="mt-4">
-                        <p className="block mb-1">Voter ID Card Picture:</p>
+                        <p className="block mb-1 lg:text-xl text-base">Voter ID Card Picture:</p>
                         {user.voterIdCardPicture ? (
                             <img
                                 src={user.voterIdCardPicture}
                                 alt="Voter ID Card"
-                                className="mt-2 w-48 h-auto rounded-lg border-2 border-blue-500 shadow-md transition-transform duration-200 hover:scale-105"
+                                className="mt-2 w-72 h-auto rounded-lg border-2 border-blue-500 shadow-md"
                             />
                         ) : (
                             <p className="text-gray-500 mt-2">No picture available</p>
                         )}
                     </div>
-                    <div className="flex justify-between items-center border-b pb-2">
+                    <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Email:</span>
                         <span>{user.email}</span>
                     </div>
-                    <div className="flex justify-between items-center border-b pb-2">
+                    <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Voter ID Card Number:</span>
                         <span>{user.voterIdCardNumber}</span>
                     </div>
-                    <div className="flex justify-between items-center border-b pb-2">
+                    <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Account Created:</span>
                         <span>{user.createdAt !== "Unknown" ? new Date(user.createdAt).toLocaleDateString() : "Unknown"}</span>
                     </div>
