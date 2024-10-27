@@ -123,7 +123,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                     setOtpVerified(true);
                 }
             } catch (error) {
-                toast.error(error.message || "Something went wrong. Please try again later.");
+                toast.error("OTP has expired, please try again.");
             } finally {
                 setLoading(false);
             }
@@ -225,7 +225,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                                     disabled={loading}
                                     aria-label="Submit New Password"
                                 >
-                                    {loading ? 'Changing Password...' : 'Change Password'}
+                                    {loading ? "Changing Password..." : "Change Password"}
                                 </button>
                             </div>
                         </form>
@@ -260,7 +260,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                                             disabled={loading}
                                             aria-label="Submit Email"
                                         >
-                                            {loading ? 'Sending OTP...' : 'Send OTP'}
+                                            {loading ? "Sending OTP..." : "Send OTP"}
                                         </button>
                                     </div>
                                 </form>
@@ -292,7 +292,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                                             disabled={loading}
                                             aria-label="Submit OTP"
                                         >
-                                            {loading ? 'Verifying OTP...' : 'Verify OTP'}
+                                            {loading ? "Loading..." : "Verify OTP"}
                                         </button>
                                     </div>
                                     <div className="mb-4 text-center">
