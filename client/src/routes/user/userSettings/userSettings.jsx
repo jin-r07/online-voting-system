@@ -6,14 +6,15 @@ export default function UserSettings() {
     const toast = useToast();
 
     const [email, setEmail] = useState("");
-    const [user, setUser] = useState(null); // Initialize user state
+    
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const fetchUserEmail = async () => {
             try {
                 const response = await axios.get("http://localhost:8080/api/get-loggedIn-user", { withCredentials: true });
                 setEmail(response.data.user.email);
-                setUser(response.data.user); // Set user state
+                setUser(response.data.user);
             } catch (err) {
                 toast.error("Please log in with your account.");
             }
@@ -36,7 +37,6 @@ export default function UserSettings() {
             await axios.put(`http://localhost:8080/api-admin/edit-user-email/${user._id}`, { email }, { withCredentials: true });
             toast.success("Email updated successfully!");
         } catch (err) {
-            console.error(err);
             toast.error("Error updating email.");
         }
     };
