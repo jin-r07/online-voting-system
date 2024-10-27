@@ -9,7 +9,7 @@ export default function UserSettings() {
     const [confirmation, setConfirmation] = useState("");
 
     const [message, setMessage] = useState("");
-    
+
     const [error, setError] = useState("");
 
     const handleUpdateEmail = async () => {

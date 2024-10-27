@@ -44,7 +44,7 @@ export default function UserProfile() {
                             <p className="text-gray-500 mt-2">No picture available</p>
                         )}
                     </div>
-                    <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
+                    <div className="flex justify-between items-center border-b pb-2 lg:text-xl text-lg">
                         <span>Email:</span>
                         <span>{user.email}</span>
                     </div>
