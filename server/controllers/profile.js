@@ -24,7 +24,7 @@ async function getLoggedInUser(req, res) {
             user.voterIdCardPicture = `http://localhost:8080/uploads/users/${path.basename(user.voterIdCardPicture)}`;
         }
 
-        return res.status(200).json({ user });
+        return res.status(200).json({ user: { _id: userId, ...user } });
     } catch (err) {
         if (err.name === "TokenExpiredError") {
             return res.status(401).json({ message: "Token expired, please log in again." });

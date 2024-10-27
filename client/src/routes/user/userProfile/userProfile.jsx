@@ -17,7 +17,8 @@ export default function UserProfile() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.post("http://localhost:8080/api/get-loggedIn-user", {}, { withCredentials: true });
+                const response = await axios.get("http://localhost:8080/api/get-loggedIn-user", { withCredentials: true });
+
                 setUser(response.data.user);
             } catch (err) {
                 toast.error("Please log in to see your profile.");
@@ -61,7 +62,7 @@ export default function UserProfile() {
                         <span>{user.updatedAt !== "Unknown" ? new Date(user.updatedAt).toLocaleDateString() : "Unknown"}</span>
                     </div>
                 </div>
-                <div className="relative bottom-0 -z-10">
+                <div className="relative bottom-0">
                     <p className="text-gray-600 lg:text-md text-sm py-8">
                         This profile contains essential information about your voting credentials. If you notice any unexpected differences, please contact support.<br />
                         <span className="text-red-500">Note: Regarding changing your Voter ID Card Picture: please reach out to us through contact us page.</span>
