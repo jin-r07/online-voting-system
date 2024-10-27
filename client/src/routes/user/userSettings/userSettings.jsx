@@ -65,7 +65,7 @@ export default function UserSettings() {
                             type="email"
                             value={email}
                             onChange={handleEmailChange}
-                            className="border p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full lg:text-lg text-base"
                             placeholder="Enter your email"
                         />
                         <button
@@ -78,7 +78,7 @@ export default function UserSettings() {
 
                     <div className="border-[1px] border-gray-300  p-4 rounded-md">
                         <h3 className="text-xl font-semibold mb-4">Delete Account</h3>
-                        <p className="text-red-600 mb-2">
+                        <p className="text-red-600 mb-2 lg:text-lg text-base">
                             Warning: Deleting your account is irreversible. Your account will be permanently lost.
                         </p>
                         <button
