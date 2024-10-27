@@ -48,7 +48,7 @@ export default function UserProfile() {
                     </div>
                     <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Email:</span>
-                        <span>{user.email}</span>
+                        <span className="lg:text-xl text-lg">{user.email}</span>
                     </div>
                     <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Voter ID Card Number:</span>
@@ -57,6 +57,10 @@ export default function UserProfile() {
                     <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Account Created:</span>
                         <span>{user.createdAt !== "Unknown" ? new Date(user.createdAt).toLocaleDateString() : "Unknown"}</span>
+                    </div>
+                    <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
+                        <span>Account Updated:</span>
+                        <span>{user.updatedAt !== "Unknown" ? new Date(user.updatedAt).toLocaleDateString() : "Unknown"}</span>
                     </div>
                 </div>
             </div>
