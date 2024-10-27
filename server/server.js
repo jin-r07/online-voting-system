@@ -16,6 +16,7 @@ const authenticatedRoute = require("./routes/authenticated");
 const otpRoute = require("./routes/otp");
 const contactRoute = require("./routes/contact");
 const voteRoute = require("./routes/vote");
+const profileRoute = require("./routes/profile");
 
 // Admin
 const adminLoginRoute = require("./routes/adminLogin");
@@ -23,7 +24,6 @@ const partyRoute = require("./routes/parties");
 const candidateRoute = require("./routes/candidates");
 const userRoute = require("./routes/users");
 const eventRoute = require("./routes/events");
-const getStreamsRoute = require("./routes/getStreams");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -44,6 +44,7 @@ app.use("/api", authenticatedRoute);
 app.use("/api", otpRoute);
 app.use("/api", contactRoute);
 app.use("/api", voteRoute);
+app.use("/api", profileRoute);
 
 // Admin
 app.use("/api-admin", adminLoginRoute);
@@ -51,7 +52,6 @@ app.use("/api-admin", partyRoute);
 app.use("/api-admin", candidateRoute);
 app.use("/api-admin", userRoute);
 app.use("/api-admin", eventRoute);
-app.use("/api-admin", getStreamsRoute);
 
 // Middleware to serve static files
 app.use("/uploads", express.static(path.join(__dirname, "scripts/uploads")));
