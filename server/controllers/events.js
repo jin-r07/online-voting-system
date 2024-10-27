@@ -1,11 +1,6 @@
 const Event = require("../models/events");
 const Candidate = require("../models/candidates");
-const multichain = require("multichain-node")({
-  host: process.env.MULTICHAIN_HOST,
-  port: process.env.MULTICHAIN_PORT,
-  user: process.env.MULTICHAIN_USER,
-  pass: process.env.MULTICHAIN_PASS
-});
+const multichain = require("../configs/multichain");
 
 async function createEvent(req, res) {
   const { name, candidateIds, start, end } = req.body;
