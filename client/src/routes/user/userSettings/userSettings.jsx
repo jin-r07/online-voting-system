@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useToast } from "../../../context/toast";
 import Footer from "../../../components/user/footer/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function UserSettings() {
     const toast = useToast();
@@ -9,6 +10,8 @@ export default function UserSettings() {
     const [email, setEmail] = useState("");
 
     const [user, setUser] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserEmail = async () => {
@@ -48,6 +51,8 @@ export default function UserSettings() {
         try {
             await axios.delete(`http://localhost:8080/api-admin/delete-user/${user._id}`, { withCredentials: true });
             toast.success("Account deleted successfully!");
+            navigate("/");
+            window.location.reload();
         } catch (err) {
             toast.error("Error deleting account.");
         }
