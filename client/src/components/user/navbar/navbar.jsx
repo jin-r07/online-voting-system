@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { VscMenu } from "react-icons/vsc";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginForm from "../login/login";
 import RegisterForm from "../register/register";
 import ForgotPasswordForm from "../forgotPassword/forgotPassword";
@@ -28,6 +28,8 @@ export default function Navbar() {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+    const navigate = useNavigate();
 
     const dropdownRef = useRef(null);
     const navRef = useRef(null);
@@ -114,6 +116,7 @@ export default function Navbar() {
             Cookies.remove("token");
             setIsLoggedIn(false);
             setUserData(null);
+            navigate("/");
             window.location.reload();
         } catch (error) {
         }
