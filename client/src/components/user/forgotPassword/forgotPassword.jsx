@@ -140,8 +140,8 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
             setLoading(true);
 
             try {
-                const response = await fetch("http://localhost:8080/api/change-password", {
-                    method: "POST",
+                const response = await fetch("http://localhost:8080/api-admin/forgot-password", {
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                     },

@@ -44,7 +44,7 @@ async function sendOtp(req, res) {
             subject: "Electronic Voting System (EVS), Action Required: One-Time Verification Code",
             text: `Your OTP code is ${otp}.`,
             html: `
-                <div style="display: flex; text-align: center; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+                <div style="text-align: center;">
                     <div style="font-family: Arial, sans-serif; line-height: 1.6; width: 90%; max-width: 40rem; text-align: center; padding: 2rem; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                         <img src="cid:logo" alt="EVS" style="width: 90px; height: auto; margin: 1.5rem 0;">
                         <h2 style="color: #333;">Action Required: One-Time Verification Code</h2>
