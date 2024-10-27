@@ -70,5 +70,24 @@ async function getTotalUsers(req, res) {
     }
 }
 
+async function editUserEmail(req, res) {
+    const { id } = req.params;
+    const { email } = req.body;
 
-module.exports = { getAllUsers, editUser, deleteUser, getTotalUsers };
+    try {
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        user.email = email;
+
+        await user.save()
+        res.status(200).json({ message: "Email updated successfully.", user });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error updating email." });
+    }
+}
+
+module.exports = { getAllUsers, editUser, deleteUser, getTotalUsers, editUserEmail };
