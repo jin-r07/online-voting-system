@@ -129,7 +129,7 @@ async function hasUserVoted(req, res) {
         const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
 
         if (existingVotes.length > 0) {
-            return res.status(200).json({ hasVoted: true });
+            return res.status(200).json({ hasVoted: true, eventId });
         } else {
             return res.status(200).json({ hasVoted: false });
         }
