@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useToast } from "../../../context/toast";
 
 export default function UserProfile() {
+    const toast = useToast();
+
     const [user, setUser] = useState({
         email: "Unknown",
         voterIdCardNumber: "Unknown",
         role: "Unknown",
         createdAt: "Unknown",
+        updatedAt: "Unknown",
         voterIdCardPicture: null
     });
 
@@ -16,13 +20,7 @@ export default function UserProfile() {
                 const response = await axios.post("http://localhost:8080/api/get-loggedIn-user", {}, { withCredentials: true });
                 setUser(response.data.user);
             } catch (err) {
-                setUser({
-                    email: "Unknown",
-                    voterIdCardNumber: "Unknown",
-                    role: "Unknown",
-                    createdAt: "Unknown",
-                    voterIdCardPicture: null
-                });
+                toast.error("Please log in to see your profile.");
             }
         };
 
@@ -48,7 +46,7 @@ export default function UserProfile() {
                     </div>
                     <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Email:</span>
-                        <span className="lg:text-xl text-lg">{user.email}</span>
+                        <span>{user.email}</span>
                     </div>
                     <div className="flex justify-between items-center border-b pb-2 lg:text-lg text-base">
                         <span>Voter ID Card Number:</span>
