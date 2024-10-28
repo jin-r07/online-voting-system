@@ -191,7 +191,7 @@ export default function Dashboard() {
                     <div className="flex items-center">
                       <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto mr-4" />
                       <div className="flex flex-col">
-                        <p className="text-xl font-semibold">{details.partyName}</p>
+                        <p className="text-xl">{details.partyName}</p>
                         <p>Score: {score.toFixed(2)}</p>
                       </div>
                     </div>
