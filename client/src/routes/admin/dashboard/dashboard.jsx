@@ -189,7 +189,7 @@ export default function Dashboard() {
                 .map(({ candidateId, score, details }) => (
                   <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-2">
                     <div className="flex items-center">
-                      <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto mr-4" />
+                      <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
                       <div className="flex flex-col">
                         <p className="text-xl">{details.partyName}</p>
                         <p>Score: {score.toFixed(2)}</p>
