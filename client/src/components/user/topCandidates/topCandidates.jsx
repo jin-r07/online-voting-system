@@ -6,7 +6,7 @@ import { useToast } from "../../../context/toast";
 export default function TopCandidates() {
     const toast = useToast();
 
-    const [votingData, setVotingData] = useState([]);
+    const [votingData, setVotingData] = useState(null);
 
     const [votesData, setVotesData] = useState({});
 
