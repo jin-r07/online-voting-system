@@ -172,28 +172,36 @@ export default function Dashboard() {
 
       <div className="mt-10">
         <h2 className="text-2xl font-bold">PageRank Scores</h2>
-        <ul>
-          {Object.entries(pageRankScores.scores).map(([candidateId, { score, details }]) => (
-            <li key={candidateId} className="flex items-center mt-2">
-              <img
-                src={details?.image}
-                alt={details?.name}
-                className="w-12 h-12 rounded-full mr-2"
-              />
-              <div>
-                <p className="font-medium">{details?.name}</p>
-                <p className="text-gray-600">{details?.partyName}</p>
-                <img
-                  src={details.partyImage}
-                  alt={details.partyName}
-                  className="w-8 h-8 rounded-full"
-                />
-                <p className="text-gray-600">Event: {details?.eventName}</p>
-                <p className="text-gray-600">Score: {score.toFixed(4)}</p>
+        {Object.entries(pageRankScores.scores).map(([candidateId, { score, details }]) => (
+          <div key={candidateId} className="flex flex-col mt-2 border-[1px] border-gray-300 p-2 rounded-md shadow-lg">
+            <h3 className="text-xl mb-4">Event: {details?.eventName}</h3>
+            <div className="w-fit h-fit border-[1px] border-gray-300 p-4 rounded-md">
+              <div className="flex">
+                <div className="mr-2">
+                  <img
+                    src={details.partyImage}
+                    alt={details.partyName}
+                    className="w-24 h-auto rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-xl">{details?.partyName}</p>
+                  <div className="flex items-center mt-2">
+                    <img
+                      src={details?.image}
+                      alt={details?.name}
+                      className="w-12 h-auto rounded-md"
+                    />
+                    <div className="flex flex-col ml-2">
+                      <p className="font-medium">{details?.name}</p>
+                      <p>Score: {score.toFixed(2)}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-          ))}
-        </ul>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
