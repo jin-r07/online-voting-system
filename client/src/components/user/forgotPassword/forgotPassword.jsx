@@ -245,7 +245,7 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                                     disabled={loading}
                                     aria-label="Submit New Password"
                                 >
-                                    {loading ? "Changing Password..." : "Change Password"}
+                                    {loading ? "Loading..." : "Change Password"}
                                 </button>
                             </div>
                         </form>
