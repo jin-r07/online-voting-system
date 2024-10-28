@@ -210,7 +210,6 @@ export default function Dashboard() {
           <p className="text-gray-600 text-center mt-4 text-lg">No active events or data available at the moment.</p>
         )}
       </div>
-
     </div>
   );
 }
