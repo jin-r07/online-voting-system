@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoEyeOff, IoEye } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useToast } from "../../../context/toast";
@@ -18,6 +18,10 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
     const [cooldown, setCooldown] = useState(0);
 
     const [otpExpires, setOtpExpires] = useState(false);
+
+    const [showNewPassword, setShowNewPassword] = useState(false);
+
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     useEffect(() => {
         let timer;
@@ -188,32 +192,48 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
                         <form onSubmit={formikPassword.handleSubmit}>
                             <div className="mb-4">
                                 <label className="block text-base">New Password:</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    className="mt-1 p-2 border rounded w-full"
-                                    value={formikPassword.values.password}
-                                    onChange={formikPassword.handleChange}
-                                    onBlur={formikPassword.handleBlur}
-                                    disabled={formikPassword.isSubmitting}
-                                    aria-label="New Password"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showNewPassword ? "text" : "password"}
+                                        name="password"
+                                        className="mt-1 p-2 border rounded w-full"
+                                        value={formikPassword.values.password}
+                                        onChange={formikPassword.handleChange}
+                                        onBlur={formikPassword.handleBlur}
+                                        disabled={formikPassword.isSubmitting}
+                                        aria-label="New Password"
+                                    />
+                                    <span
+                                        onClick={() => setShowNewPassword(!showNewPassword)}
+                                        className="absolute right-3 top-3.5 cursor-pointer"
+                                    >
+                                        {showNewPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
+                                    </span>
+                                </div>
                                 {formikPassword.touched.password && formikPassword.errors.password && (
                                     <p className="text-red-500 text-base ml-1">{formikPassword.errors.password}</p>
                                 )}
                             </div>
                             <div className="mb-4">
                                 <label className="block text-base">Confirm Password:</label>
-                                <input
-                                    type="password"
-                                    name="confirmPassword"
-                                    className="mt-1 p-2 border rounded w-full"
-                                    value={formikPassword.values.confirmPassword}
-                                    onChange={formikPassword.handleChange}
-                                    onBlur={formikPassword.handleBlur}
-                                    disabled={formikPassword.isSubmitting}
-                                    aria-label="Confirm Password"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        name="confirmPassword"
+                                        className="mt-1 p-2 border rounded w-full"
+                                        value={formikPassword.values.confirmPassword}
+                                        onChange={formikPassword.handleChange}
+                                        onBlur={formikPassword.handleBlur}
+                                        disabled={formikPassword.isSubmitting}
+                                        aria-label="Confirm Password"
+                                    />
+                                    <span
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-3 top-3.5 cursor-pointer"
+                                    >
+                                        {showConfirmPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
+                                    </span>
+                                </div>
                                 {formikPassword.touched.confirmPassword && formikPassword.errors.confirmPassword && (
                                     <p className="text-red-500 text-base ml-1">{formikPassword.errors.confirmPassword}</p>
                                 )}
