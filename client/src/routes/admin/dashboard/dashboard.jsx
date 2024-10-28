@@ -8,13 +8,9 @@ export default function Dashboard() {
   const { toast } = useToast();
 
   const [totalCandidates, setTotalCandidates] = useState("");
-
   const [totalCompletedEvents, setTotalCompletedEvents] = useState("");
-
   const [totalParties, setTotalParties] = useState("");
-
   const [totalUsers, setTotalUsers] = useState("");
-
   const [pageRankScores, setPageRankScores] = useState({ scores: {}, details: {} });
 
   const fetchTotalCandidates = async () => {
@@ -106,7 +102,6 @@ export default function Dashboard() {
     setPageRankScores({ scores: combinedScores });
   };
 
-
   useEffect(() => {
     const loadData = async () => {
       await fetchTotalCandidates();
@@ -171,37 +166,40 @@ export default function Dashboard() {
       </div>
 
       <div className="mt-10">
-        <h2 className="text-2xl font-bold">PageRank Scores</h2>
-        {Object.entries(pageRankScores.scores).map(([candidateId, { score, details }]) => (
-          <div key={candidateId} className="flex flex-col mt-2 border-[1px] border-gray-300 p-2 rounded-md shadow-lg">
-            <h3 className="text-xl mb-4">Event: {details?.eventName}</h3>
-            <div className="w-fit h-fit border-[1px] border-gray-300 p-4 rounded-md">
-              <div className="flex">
-                <div className="mr-2">
-                  <img
-                    src={details.partyImage}
-                    alt={details.partyName}
-                    className="w-24 h-auto rounded-md"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <p className="text-xl">{details?.partyName}</p>
-                  <div className="flex items-center mt-2">
+        <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
+        {Object.entries(pageRankScores.scores)
+          .sort(([, a], [, b]) => b.score - a.score)
+          .slice(0, 3)
+          .map(([candidateId, { score, details }]) => (
+            <div key={candidateId} className="flex flex-col mt-6 border-[1px] border-gray-300 p-2 rounded-md shadow-lg">
+              <h3 className="text-xl font-semibold text-center mb-4">{details?.eventName}</h3>
+              <div className="w-fit h-fit border-[1px] border-gray-300 p-4 rounded-md">
+                <div className="flex">
+                  <div className="mr-2">
                     <img
-                      src={details?.image}
-                      alt={details?.name}
-                      className="w-12 h-auto rounded-md"
+                      src={details.partyImage}
+                      alt={details.partyName}
+                      className="w-24 h-auto rounded-md"
                     />
-                    <div className="flex flex-col ml-2">
-                      <p className="font-medium">{details?.name}</p>
-                      <p>Score: {score.toFixed(2)}</p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-xl">{details?.partyName}</p>
+                    <div className="flex items-center mt-2">
+                      <img
+                        src={details?.image}
+                        alt={details?.name}
+                        className="w-12 h-auto rounded-md"
+                      />
+                      <div className="flex flex-col ml-2">
+                        <p className="font-medium">{details?.name}</p>
+                        <p>Score: {score.toFixed(2)}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
