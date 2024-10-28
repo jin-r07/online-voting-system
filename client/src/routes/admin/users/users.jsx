@@ -219,7 +219,7 @@ export default function Users() {
               <div className="flex">
                 <div className="mr-8">
                   {user.voterIdCardPicture && (
-                    <img src={user.voterIdCardPicture} alt="Voter ID" className="mt-2 h-auto w-24 object-cover object-center rounded-md" />
+                    <img src={user.voterIdCardPicture} alt="Voter ID" className="mt-2 h-auto w-24 rounded-sm border-[1px] border-gray-300" />
                   )}
                 </div>
                 <div className="flex flex-col">
