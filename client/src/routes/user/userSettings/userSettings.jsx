@@ -3,6 +3,7 @@ import axios from "axios";
 import { useToast } from "../../../context/toast";
 import Footer from "../../../components/user/footer/footer";
 import { useNavigate } from "react-router-dom";
+import { IoEyeOff, IoEye } from "react-icons/io5";
 
 export default function UserSettings() {
     const toast = useToast();
@@ -18,6 +19,12 @@ export default function UserSettings() {
     const [newPassword, setNewPassword] = useState("");
 
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+
+    const [showNewPassword, setShowNewPassword] = useState(false);
+
+    const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
     useEffect(() => {
         const fetchUserEmail = async () => {
@@ -56,12 +63,10 @@ export default function UserSettings() {
             toast.error("Please fill in all fields.");
             return;
         }
-
         if (newPassword !== confirmNewPassword) {
             toast.error("New passwords do not match.");
             return;
         }
-
         try {
             const response = await axios.put(
                 "http://localhost:8080/api-admin/forgot-password2",
@@ -114,27 +119,51 @@ export default function UserSettings() {
 
                     <div className="border-[1px] border-gray-300 p-4 rounded-md">
                         <h3 className="text-xl font-semibold mb-4">Change Password</h3>
-                        <input
-                            type="password"
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
-                            className="border p-2 rounded-lg w-full lg:text-lg text-base"
-                            placeholder="Current Password"
-                        />
-                        <input
-                            type="password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            className="border p-2 rounded-lg w-full lg:text-lg text-base mt-4"
-                            placeholder="New Password"
-                        />
-                        <input
-                            type="password"
-                            value={confirmNewPassword}
-                            onChange={(e) => setConfirmNewPassword(e.target.value)}
-                            className="border p-2 rounded-lg w-full lg:text-lg text-base mt-4"
-                            placeholder="Confirm New Password"
-                        />
+                        <div className="relative mb-4">
+                            <input
+                                type={showCurrentPassword ? "text" : "password"}
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
+                                className="border p-2 rounded-lg w-full lg:text-lg text-base"
+                                placeholder="Current Password"
+                            />
+                            <span
+                                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                className="absolute right-3 top-2.5 cursor-pointer"
+                            >
+                                {showCurrentPassword ? <IoEye size={20} />  : <IoEyeOff size={20}/>}
+                            </span>
+                        </div>
+                        <div className="relative mb-4">
+                            <input
+                                type={showNewPassword ? "text" : "password"}
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                className="border p-2 rounded-lg w-full lg:text-lg text-base"
+                                placeholder="New Password"
+                            />
+                            <span
+                                onClick={() => setShowNewPassword(!showNewPassword)}
+                                className="absolute right-3 top-2.5 cursor-pointer"
+                            >
+                                {showNewPassword ? <IoEye size={20} />  : <IoEyeOff size={20}/>}
+                            </span>
+                        </div>
+                        <div className="relative">
+                            <input
+                                type={showConfirmNewPassword ? "text" : "password"}
+                                value={confirmNewPassword}
+                                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                className="border p-2 rounded-lg w-full lg:text-lg text-base"
+                                placeholder="Confirm New Password"
+                            />
+                            <span
+                                onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
+                                className="absolute right-3 top-2.5 cursor-pointer"
+                            >
+                                {showConfirmNewPassword ? <IoEye size={20} />  : <IoEyeOff size={20}/>}
+                            </span>
+                        </div>
                         <button
                             onClick={handleChangePassword}
                             className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600"
@@ -158,6 +187,6 @@ export default function UserSettings() {
                 </div>
             </div>
             <Footer />
-        </div>
+        </div >
     );
 }
