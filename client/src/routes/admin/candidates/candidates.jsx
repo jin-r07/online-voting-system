@@ -219,7 +219,7 @@ export default function Candidates() {
               <img
                 src={candidate.image}
                 alt={candidate.name}
-                className="w-16 h-auto mr-4 rounded-md object-cover object-center"
+                className="w-16 h-auto mr-4"
               />
               <div className="flex flex-col">
                 <span className="text-lg text-gray-900">{candidate.name}</span>
