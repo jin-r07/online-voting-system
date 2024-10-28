@@ -181,8 +181,8 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
         {Object.keys(groupedByEvent).length > 0 ? (
           Object.entries(groupedByEvent).map(([eventName, candidates]) => (
-            <div key={eventName} className="w-full h-72 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 p-4 rounded-md shadow-lg">
-              <h3 className="text-xl font-semibold mb-2">{eventName}</h3>
+            <div key={eventName} className="w-full max-h-64 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 px-4 rounded-md shadow-lg">
+              <h3 className="sticky top-0 bg-white text-xl font-semibold p-4">{eventName}</h3>
               {candidates
                 .sort((a, b) => b.score - a.score)
                 .slice(0, 3)
