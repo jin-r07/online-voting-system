@@ -181,22 +181,25 @@ export default function Dashboard() {
         <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
         {Object.keys(groupedByEvent).length > 0 ? (
           Object.entries(groupedByEvent).map(([eventName, candidates]) => (
-            <div key={eventName} className="flex flex-col mt-6 border-[1px] border-gray-300 p-4 rounded-md shadow-lg">
-              <h3 className="text-xl font-semibold text-center mb-4">{eventName}</h3>
+            <div key={eventName} className="w-full h-72 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 p-4 rounded-md shadow-lg">
+              <h3 className="text-xl font-semibold mb-2">{eventName}</h3>
               {candidates
                 .sort((a, b) => b.score - a.score)
                 .slice(0, 3)
                 .map(({ candidateId, score, details }) => (
-                  <div key={candidateId} className="flex items-center mt-2">
-                    <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-md mr-4" />
-                    <div className="flex flex-col">
-                      <p className="text-xl">{details.partyName}</p>
-                      <div className="flex items-center mt-2">
-                        <img src={details.image} alt={details.name} className="w-10 h-auto rounded-md mr-2" />
-                        <div className="flex flex-col">
-                          <p className="font-medium">{details.name}</p>
-                          <p>Score: {score.toFixed(2)}</p>
-                        </div>
+                  <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-2">
+                    <div className="flex items-center">
+                      <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-md mr-4" />
+                      <div className="flex flex-col">
+                        <p className="text-xl font-semibold">{details.partyName}</p>
+                        <p>Score: {score.toFixed(2)}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <img src={details.image} alt={details.name} className="w-10 h-auto rounded-md mr-2" />
+                      <div className="flex flex-col">
+                        <p className="text-gray-600">Candidate:</p>
+                        <p className="font-medium">{details.name}</p>
                       </div>
                     </div>
                   </div>
@@ -207,6 +210,7 @@ export default function Dashboard() {
           <p className="text-gray-600 text-center mt-4 text-lg">No active events or data available at the moment.</p>
         )}
       </div>
+
     </div>
   );
 }
