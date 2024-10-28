@@ -131,7 +131,7 @@ export default function UserSettings() {
                                 onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                                 className="absolute right-3 top-2.5 cursor-pointer"
                             >
-                                {showCurrentPassword ? <IoEye size={20} />  : <IoEyeOff size={20}/>}
+                                {showCurrentPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                             </span>
                         </div>
                         <div className="relative mb-4">
@@ -146,7 +146,7 @@ export default function UserSettings() {
                                 onClick={() => setShowNewPassword(!showNewPassword)}
                                 className="absolute right-3 top-2.5 cursor-pointer"
                             >
-                                {showNewPassword ? <IoEye size={20} />  : <IoEyeOff size={20}/>}
+                                {showNewPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                             </span>
                         </div>
                         <div className="relative">
@@ -161,7 +161,7 @@ export default function UserSettings() {
                                 onClick={() => setShowConfirmNewPassword(!showConfirmNewPassword)}
                                 className="absolute right-3 top-2.5 cursor-pointer"
                             >
-                                {showConfirmNewPassword ? <IoEye size={20} />  : <IoEyeOff size={20}/>}
+                                {showConfirmNewPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                             </span>
                         </div>
                         <button
