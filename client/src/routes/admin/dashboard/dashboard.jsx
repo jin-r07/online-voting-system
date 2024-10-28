@@ -3,6 +3,7 @@ import { FaUsers, FaUserTie, FaHistory, FaAward } from "react-icons/fa";
 import axios from "axios";
 import { useToast } from "../../../context/toast";
 import { calculatePageRank } from "../../../utils/pageRank";
+import Footer from "../../../components/admin/footer/footer";
 
 export default function Dashboard() {
   const { toast } = useToast();
@@ -129,87 +130,90 @@ export default function Dashboard() {
   }, {});
 
   return (
-    <div className="ml-64 p-8 bg-gray-100 min-h-screen">
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
-        <p className="text-gray-600 text-lg mt-2">Welcome to the electronic voting system. Manage events, parties, candidates, and users from here.</p>
-      </div>
+    <div>
+      <div className="ml-64 p-8 bg-gray-100 min-h-screen">
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+          <p className="text-gray-600 text-lg mt-2">Welcome to the electronic voting system. Manage events, parties, candidates, and users from here.</p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <div className="flex items-center">
-            <FaAward className="text-3xl text-purple-500 mr-4" />
-            <div>
-              <h2 className="text-xl font-semibold">Parties</h2>
-              <p className="text-gray-600">Total: {totalParties}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="flex items-center">
+              <FaAward className="text-3xl text-purple-500 mr-4" />
+              <div>
+                <h2 className="text-xl font-semibold">Parties</h2>
+                <p className="text-gray-600">Total: {totalParties}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="flex items-center">
+              <FaUserTie className="text-3xl text-blue-500 mr-4" />
+              <div>
+                <h2 className="text-xl font-semibold">Candidates</h2>
+                <p className="text-gray-600">Total: {totalCandidates}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="flex items-center">
+              <FaUsers className="text-3xl text-green-500 mr-4" />
+              <div>
+                <h2 className="text-xl font-semibold">Users</h2>
+                <p className="text-gray-600">Total: {totalUsers}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="flex items-center">
+              <FaHistory className="text-3xl text-red-500 mr-4" />
+              <div>
+                <h2 className="text-xl font-semibold">History</h2>
+                <p className="text-gray-600">Total: {totalCompletedEvents}</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <div className="flex items-center">
-            <FaUserTie className="text-3xl text-blue-500 mr-4" />
-            <div>
-              <h2 className="text-xl font-semibold">Candidates</h2>
-              <p className="text-gray-600">Total: {totalCandidates}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <div className="flex items-center">
-            <FaUsers className="text-3xl text-green-500 mr-4" />
-            <div>
-              <h2 className="text-xl font-semibold">Users</h2>
-              <p className="text-gray-600">Total: {totalUsers}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <div className="flex items-center">
-            <FaHistory className="text-3xl text-red-500 mr-4" />
-            <div>
-              <h2 className="text-xl font-semibold">History</h2>
-              <p className="text-gray-600">Total: {totalCompletedEvents}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
-        {Object.keys(groupedByEvent).length > 0 ? (
-          Object.entries(groupedByEvent).map(([eventName, candidates]) => (
-            <div key={eventName} className="w-full max-h-64 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 px-4 rounded-md shadow-lg">
-              <h3 className="sticky top-0 bg-white text-xl font-semibold p-4">{eventName}</h3>
-              {candidates
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 3)
-                .map(({ candidateId, score, details }) => (
-                  <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-2">
-                    <div className="flex items-center">
-                      <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
-                      <div className="flex flex-col">
-                        <p className="text-xl">{details.partyName}</p>
-                        <p>Score: {score.toFixed(2)}</p>
+        <div className="w-full h-fit mt-10">
+          <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
+          {Object.keys(groupedByEvent).length > 0 ? (
+            Object.entries(groupedByEvent).map(([eventName, candidates]) => (
+              <div key={eventName} className="w-full max-h-64 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 px-4 rounded-md shadow-lg">
+                <h3 className="sticky top-0 bg-white text-xl font-semibold p-4">{eventName}</h3>
+                {candidates
+                  .sort((a, b) => b.score - a.score)
+                  .slice(0, 3)
+                  .map(({ candidateId, score, details }) => (
+                    <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-2">
+                      <div className="flex items-center">
+                        <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
+                        <div className="flex flex-col">
+                          <p className="text-xl">{details.partyName}</p>
+                          <p>Score: {score.toFixed(2)}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <img src={details.image} alt={details.name} className="w-10 h-auto mr-2" />
+                        <div className="flex flex-col">
+                          <p className="text-gray-600">Candidate:</p>
+                          <p className="font-medium">{details.name}</p>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center">
-                      <img src={details.image} alt={details.name} className="w-10 h-auto mr-2" />
-                      <div className="flex flex-col">
-                        <p className="text-gray-600">Candidate:</p>
-                        <p className="font-medium">{details.name}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600 text-center mt-4 text-lg">No active events or data available at the moment.</p>
-        )}
+                  ))}
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600 text-center mt-4 text-lg">No active events or data available at the moment.</p>
+          )}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }
