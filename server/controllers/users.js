@@ -116,4 +116,39 @@ async function changePassword(req, res) {
     }
 }
 
-module.exports = { getAllUsers, editUser, deleteUser, getTotalUsers, editUserEmail, changePassword };
+async function changePassword2(req, res) {
+    const { email, currentPassword, newPassword } = req.body;
+
+    if (!email || !currentPassword || !newPassword) {
+        return res.status(400).json({ error: "Email, current password, and new password are required." });
+    }
+
+    try {
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ error: "Current password is incorrect." });
+        }
+
+        if (currentPassword === newPassword) {
+            return res.status(400).json({ error: "New password must be different from current password." });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({ message: "Password changed successfully." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error changing password." });
+    }
+}
+
+module.exports = { getAllUsers, editUser, deleteUser, getTotalUsers, editUserEmail, changePassword, changePassword2 };
