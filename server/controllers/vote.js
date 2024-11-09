@@ -18,7 +18,7 @@ async function submitVote(req, res) {
 
     try {
         const decoded = verifyToken(token);
-        console.log(decoded);
+        
         const userVoterId = decoded.voterIdCardNumber;
         const key = `${eventId}_${userVoterId}`;
 

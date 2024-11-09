@@ -11,4 +11,4 @@ const voteLogSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "users" }
 });
 
-module.exports = mongoose.model("VoteLog", voteLogSchema);
+module.exports = mongoose.model("voteLog", voteLogSchema);
