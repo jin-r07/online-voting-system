@@ -54,7 +54,7 @@ async function deleteUser(req, res) {
         if (!deletedUser) {
             return res.status(404).json({ error: "User not found" });
         }
-
+        res.clearCookie("token");
         res.status(200).json({ message: "User deleted successfully" });
     } catch (err) {
         console.error(err);

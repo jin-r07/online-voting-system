@@ -189,7 +189,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="w-full h-fit mt-10">
+      <div className="w-full h-[25vh] mt-10">
         <h2 className="text-2xl font-bold mb-5">Vote Logs:</h2>
         {voteLogs.length > 0 ? (
           voteLogs.map((log) => (
