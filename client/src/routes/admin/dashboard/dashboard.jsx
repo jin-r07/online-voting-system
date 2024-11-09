@@ -74,11 +74,13 @@ export default function Dashboard() {
         const response = await axios.get(`http://localhost:8080/api/get-vote-data?eventId=${event._id}`);
         const allVotes = response.data;
 
+        votesCount[event._id] = votesCount[event._id] || {};
+
         for (const [candidateId, count] of Object.entries(allVotes)) {
-          if (!votesCount[candidateId]) {
-            votesCount[candidateId] = 0;
+          if (!votesCount[event._id][candidateId]) {
+            votesCount[event._id][candidateId] = 0;
           }
-          votesCount[candidateId] += count;
+          votesCount[event._id][candidateId] += count;
 
           const candidate = event.candidates.find(c => c._id === candidateId);
           if (candidate) {
@@ -96,12 +98,19 @@ export default function Dashboard() {
       }
     }
 
-    const scores = calculatePageRank(votesCount);
-    const combinedScores = Object.entries(scores).reduce((acc, [candidateId, score]) => {
-      acc[candidateId] = {
-        score,
-        details: candidateDetails[candidateId],
-      };
+    const scores = {};
+    for (const eventId in votesCount) {
+      scores[eventId] = calculatePageRank(votesCount[eventId]);
+    }
+
+    const combinedScores = Object.entries(scores).reduce((acc, [eventId, eventScores]) => {
+      Object.entries(eventScores).forEach(([candidateId, score]) => {
+        acc[candidateId] = {
+          score,
+          details: candidateDetails[candidateId],
+          eventName: candidateDetails[candidateId].eventName,
+        };
+      });
       return acc;
     }, {});
 
