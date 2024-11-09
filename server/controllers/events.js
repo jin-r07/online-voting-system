@@ -60,7 +60,7 @@ async function getActiveEvents(req, res) {
             ...candidate.toObject(),
             image: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
             partyName: candidate.party ? candidate.party.name : null,
-            partyImage: candidate.party ?  `http://localhost:8080/uploads/parties/${candidate.party.image.split('\\').pop()}` : null,
+            partyImage: candidate.party ? `http://localhost:8080/uploads/parties/${candidate.party.image.split('\\').pop()}` : null,
           };
         }),
         start: event.start,

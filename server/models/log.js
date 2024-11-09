@@ -8,7 +8,6 @@ const voteLogSchema = new mongoose.Schema({
     blockIndex: Number,
     message: String,
     timestamp: Date,
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "users" }
 });
 
 module.exports = mongoose.model("voteLog", voteLogSchema);

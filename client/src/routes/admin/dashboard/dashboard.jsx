@@ -190,17 +190,17 @@ export default function Dashboard() {
       </div>
 
       <div className="w-full h-fit mt-10">
-        <h2 className="text-2xl font-bold">Vote Logs:</h2>
+        <h2 className="text-2xl font-bold mb-5">Vote Logs:</h2>
         {voteLogs.length > 0 ? (
-          <div key={log._id} className="log-item p-4 border border-gray-300 rounded-md mb-4">
-            <p><strong>ID:</strong> {log._id}</p>
-            <p><strong>Email:</strong> {log.user?.email}</p>
-            <p><strong>Role:</strong> {log.user?.role}</p>
-            <p><strong>Voter ID Card Number:</strong> {log.user?.voterIdCardNumber}</p>
-            <p><strong>IAT:</strong> {log.user?.iat}</p>
-            <p><strong>EXP:</strong> {log.user?.exp}</p>
-            <p><strong>Block Mined:</strong> {log.blockHash} with nonce: {log.blockIndex}</p>
-          </div>
+          voteLogs.map((log) => (
+            <div key={log._id} className="p-4 border border-gray-300 rounded-md">
+              <p><strong>Id:</strong> {log._id}</p>
+              <p><strong>Event Id:</strong> {log.eventId}</p>
+              <p><strong>Candidate Id:</strong> {log.candidateId}</p>
+              <p><strong>Voter Id Card Number:</strong> {log.voterId}</p>
+              <p><strong>Block Mined:</strong> {log.blockHash} with index: {log.blockIndex}</p>
+            </div>
+          ))
         ) : (
           <p className="text-gray-600 text-center mt-4 text-lg">No vote logs available at the moment.</p>
         )}
