@@ -5,7 +5,6 @@ const voteLogSchema = new mongoose.Schema({
     eventId: String,
     candidateId: String,
     blockHash: String,
-    blockIndex: Number,
     message: String,
     timestamp: Date,
 });

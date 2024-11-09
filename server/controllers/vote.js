@@ -72,7 +72,6 @@ async function submitVote(req, res) {
             eventId,
             candidateId,
             blockHash: block.hash,
-            blockIndex: block.index,
             message: "Vote successfully submitted."
         });
 

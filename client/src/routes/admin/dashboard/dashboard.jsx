@@ -189,16 +189,16 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="w-full h-[25vh] mt-10">
-        <h2 className="text-2xl font-bold mb-5">Vote Logs:</h2>
+      <div className="w-full h-[22vh] mt-10 overflow-y-auto">
+        <h2 className="sticky top-0 text-2xl font-bold mb-5 bg-white">Vote Logs:</h2>
         {voteLogs.length > 0 ? (
           voteLogs.map((log) => (
-            <div key={log._id} className="p-4 border border-gray-300 rounded-md">
+            <div key={log._id} className="p-4 border border-gray-300 rounded-md mb-3">
               <p><strong>Id:</strong> {log._id}</p>
               <p><strong>Event Id:</strong> {log.eventId}</p>
               <p><strong>Candidate Id:</strong> {log.candidateId}</p>
               <p><strong>Voter Id Card Number:</strong> {log.voterId}</p>
-              <p><strong>Block Mined:</strong> {log.blockHash} with index: {log.blockIndex}</p>
+              <p><strong>Block Mined:</strong> {log.blockHash}.</p>
             </div>
           ))
         ) : (
