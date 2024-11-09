@@ -1,4 +1,5 @@
 const Block = require("../models/block");
+const VoteLog = require("../models/log");
 const { mineBlock } = require("../utils/pow");
 const multichain = require("../configs/multichain");
 const { verifyToken } = require("../utils/auth");
@@ -18,8 +19,8 @@ async function submitVote(req, res) {
     try {
         const decoded = verifyToken(token);
         console.log(decoded);
-        const userId = decoded.id;
-        const key = `${eventId}_${userId}`;
+        const userVoterId = decoded.voterIdCardNumber;
+        const key = `${eventId}_${userVoterId}`;
 
         const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
 
@@ -52,7 +53,7 @@ async function submitVote(req, res) {
         const voteData = {
             eventId,
             candidateId,
-            userId,
+            userVoterId,
         };
 
         const block = new Block(newIndex, previousHash, Date.now(), voteData);
@@ -65,6 +66,17 @@ async function submitVote(req, res) {
             key: key,
             data: Buffer.from(JSON.stringify(block)).toString("hex")
         });
+
+        const logEntry = new VoteLog({
+            voterId: userVoterId,
+            eventId,
+            candidateId,
+            blockHash: block.hash,
+            blockIndex: block.index,
+            message: "Vote successfully submitted."
+        });
+
+        await logEntry.save();
 
         res.status(200).json({ message: "Vote successfully submitted." });
     } catch (err) {
@@ -119,8 +131,8 @@ async function hasUserVoted(req, res) {
     try {
         const decoded = verifyToken(token);
 
-        const userId = decoded.id;
-        const key = `${eventId}_${userId}`;
+        const userVoterId = decoded.voterIdCardNumber;
+        const key = `${eventId}_${userVoterId}`;
 
         const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
 

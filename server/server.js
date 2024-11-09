@@ -24,6 +24,7 @@ const partyRoute = require("./routes/parties");
 const candidateRoute = require("./routes/candidates");
 const userRoute = require("./routes/users");
 const eventRoute = require("./routes/events");
+const logRoute = require("./routes/log");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -52,6 +53,7 @@ app.use("/api-admin", partyRoute);
 app.use("/api-admin", candidateRoute);
 app.use("/api-admin", userRoute);
 app.use("/api-admin", eventRoute);
+app.use("/api-admin", logRoute);
 
 // Middleware to serve static files
 app.use("/uploads", express.static(path.join(__dirname, "scripts/uploads")));

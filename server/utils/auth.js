@@ -5,7 +5,8 @@ function generateToken(user) {
     const payload = {
         id: user._id,
         email: user.email,
-        role: user.role
+        role: user.role,
+        voterIdCardNumber: user.voterIdCardNumber
     };
     return jwt.sign(payload, secretKey, {expiresIn: "1h"});
 };

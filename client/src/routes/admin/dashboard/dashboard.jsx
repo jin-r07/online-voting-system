@@ -17,6 +17,8 @@ export default function Dashboard() {
 
   const [pageRankScores, setPageRankScores] = useState({ scores: {}, details: {} });
 
+  const [voteLogs, setVoteLogs] = useState([]);
+
   const fetchTotalCandidates = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api-admin/get-candidates-total");
@@ -106,12 +108,22 @@ export default function Dashboard() {
     setPageRankScores({ scores: combinedScores });
   };
 
+  const fetchVoteLogs = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api-admin/get-allVote-logs");
+      setVoteLogs(response.data);
+    } catch (err) {
+      toast.error("Error fetching votes for event", err);
+    }
+  };
+
   useEffect(() => {
     const loadData = async () => {
       await fetchTotalCandidates();
       await fetchTotalCompletedEvents();
       await fetchTotalParties();
       await fetchTotalUsers();
+      await fetchVoteLogs();
 
       const activeEvents = await fetchActiveEvents();
       await extractVoteData(activeEvents);
@@ -175,6 +187,24 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="w-full h-fit mt-10">
+        <h2 className="text-2xl font-bold">Vote Logs:</h2>
+        {voteLogs.length > 0 ? (
+          <div className="mt-6 border-[1px] border-gray-300 px-4 rounded-md shadow-lg overflow-y-auto max-h-64">
+            {voteLogs.map((log) => (
+              <div key={log._id} className="log-item p-4 border border-gray-300 rounded-md mb-4">
+                <p><strong>ID:</strong> {log._id}</p>
+                <p><strong>Email:</strong> {log.user?.email}</p>
+                <p><strong>Voter ID Card Number:</strong> {log.user?.voterIdCardNumber}</p>
+                <p><strong>Block Mined:</strong> {log.blockHash} with nonce: {log.blockIndex}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-600 text-center mt-4 text-lg">No vote logs available at the moment.</p>
+        )}
       </div>
 
       <div className="w-full h-fit mt-10">
