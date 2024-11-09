@@ -109,7 +109,7 @@ export default function VotePage() {
                                 <div className="flex-1">
                                     <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
                                     <div className="flex items-center">
-                                        <img src={candidate.image} alt={candidate.name} className="w-10 h-auto mr-2 rounded-md" />
+                                        <img src={candidate.image} alt={candidate.name} className="w-10 h-auto mr-2 rounded-sm" />
                                         <div>
                                             <p className="text-gray-700">{candidate.name}</p>
                                             <p className="text-base">Votes: {totalVotes}</p>
