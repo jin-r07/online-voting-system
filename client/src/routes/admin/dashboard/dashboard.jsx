@@ -225,7 +225,7 @@ export default function Dashboard() {
                 .sort((a, b) => b.score - a.score)
                 .slice(0, 3)
                 .map(({ candidateId, score, details }) => (
-                  <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-2">
+                  <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-1">
                     <div className="flex items-center">
                       <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
                       <div className="flex flex-col">
