@@ -33,19 +33,24 @@ export default function UserProfile() {
             if (response.data) {
                 const { parsedVoteData, event, candidate, party } = response.data;
 
-                const voteDetails = {
-                    eventName: event ? event.name : 'Unknown',
-                    candidateName: candidate ? candidate.name : 'Unknown',
-                    candidateImageUrl: candidate ? candidate.imageUrl : 'Unknown',
-                    partyName: party ? party.name : 'Unknown',
-                    partyImageUrl: party ? party.imageUrl : 'Unknown',
-                    timestamp: parsedVoteData && parsedVoteData.timestamp
-                        ? new Date(parsedVoteData.timestamp).toLocaleDateString()
-                        : 'Unknown',
-                    status: "Voted",
-                };
+                // Ensure voteHistory is populated with multiple entries if applicable
+                const voteDetails = response.data.map((vote) => {
+                    const { parsedVoteData, event, candidate, party } = vote; // destructure for each vote
 
-                setVoteHistory([voteDetails]);
+                    return {
+                        eventName: event ? event.name : 'Unknown',
+                        candidateName: candidate ? candidate.name : 'Unknown',
+                        candidateImageUrl: candidate ? candidate.imageUrl : 'Unknown',
+                        partyName: party ? party.name : 'Unknown',
+                        partyImageUrl: party ? party.imageUrl : 'Unknown',
+                        timestamp: parsedVoteData && parsedVoteData.timestamp
+                            ? new Date(parsedVoteData.timestamp).toLocaleDateString()
+                            : 'Unknown',
+                        status: "Voted",
+                    };
+                });
+
+                setVoteHistory(voteDetails);
             } else {
                 console.error("No valid data found in response:", response.data);
             }
@@ -101,23 +106,43 @@ export default function UserProfile() {
                 </div>
 
                 <div className="mt-8">
-                    <h2 className="lg:text-3xl text-xl font-extrabold">Voting History</h2>
+                    <h2 className="text-3xl font-extrabold text-blue-600 mb-6">Voting History</h2>
                     {voteHistory.length > 0 ? (
-                        <ul className="space-y-4 mt-4">
-                            {voteHistory.map((vote, index) => (
-                                <li key={index} className="border-b pb-2">
-                                    <p className="font-semibold">Event Name: {vote.eventName}</p>
-                                    <p className="font-semibold">Candidate: {vote.candidateName}</p>
-                                    <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-2 w-24 h-auto rounded-lg border-2 border-blue-500 shadow-md" />
-                                    <p className="font-semibold">Party: {vote.partyName}</p>
-                                    <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-2 w-24 h-auto rounded-lg border-2 border-blue-500 shadow-md" />
-                                    <p>Vote Date: {vote.timestamp}</p>
-                                    <p>Status: {vote.status}</p>
+                        <ul className="space-y-8 mt-4">
+                            {voteHistory.slice().reverse().map((vote, index) => (
+                                <li key={index} className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+                                    <div className="flex flex-col lg:flex-row items-start lg:space-x-12">
+                                        {/* Left Column: Event Info */}
+                                        <div className="lg:w-1/4 w-full mb-6 lg:mb-0">
+                                            <p className="text-lg font-semibold text-gray-800">Event:</p>
+                                            <p className="text-xl text-blue-600">{vote.eventName}</p>
+                                        </div>
+
+                                        {/* Center Column: Candidate Info */}
+                                        <div className="lg:w-1/4 w-full mb-6 lg:mb-0 flex flex-col items-center">
+                                            <p className="text-lg font-semibold text-gray-800">Candidate:</p>
+                                            <p className="text-xl text-blue-600">{vote.candidateName}</p>
+                                            <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-4 w-32 h-32 object-cover rounded-lg border-4 border-blue-500 shadow-xl hover:shadow-2xl transition-shadow duration-300" />
+                                        </div>
+
+                                        {/* Right Column: Party Info */}
+                                        <div className="lg:w-1/4 w-full flex flex-col items-center">
+                                            <p className="text-lg font-semibold text-gray-800">Party:</p>
+                                            <p className="text-xl text-blue-600">{vote.partyName}</p>
+                                            <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-4 w-28 h-28 object-cover rounded-lg border-4 border-blue-500 shadow-xl hover:shadow-2xl transition-shadow duration-300" />
+                                        </div>
+                                    </div>
+
+                                    {/* Vote Info: Date and Status */}
+                                    <div className="mt-6 space-y-4 lg:space-y-2">
+                                        <p className="text-gray-600">Vote Date: <span className="font-semibold text-gray-800">{vote.timestamp}</span></p>
+                                        <p className="text-gray-600">Status: <span className={`font-semibold ${vote.status === 'Approved' ? 'text-green-600' : 'text-red-600'}`}>{vote.status}</span></p>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
                     ) : (
-                        <p className="text-gray-600 lg:text-lg text-md py-8">No voting history available. You have not taken part in any voting event.</p>
+                        <p className="text-gray-600 text-md py-8">No voting history available. You have not participated in any voting event.</p>
                     )}
                 </div>
             </div>

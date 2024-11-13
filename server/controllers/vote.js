@@ -71,7 +71,6 @@ async function submitVote(req, res) {
         });
 
         const logEntry = new VoteLog({
-            index: newIndex,
             voterId: userVoterId,
             eventId,
             candidateId,
@@ -166,8 +165,10 @@ async function getUserVoteDetails(req, res) {
         const decoded = verifyToken(token);
         const userVoterId = decoded.voterIdCardNumber;
 
+        // Get all the vote entries from the "events" stream
         const existingVotes = await multichain.listStreamItems({ stream: "events" });
 
+        // Filter out the votes that match the user's voterIdCardNumber
         const filteredVotes = existingVotes.filter(vote => {
             return vote.keys.some(voteKey => {
                 const keyParts = voteKey.split('_');
@@ -179,63 +180,75 @@ async function getUserVoteDetails(req, res) {
             return res.status(404).json({ message: "No votes found for this voter." });
         }
 
-        const latestVote = filteredVotes[filteredVotes.length - 1];
+        // Process each filtered vote and collect the necessary data
+        const voteDetails = [];
 
-        if (!latestVote.data || latestVote.data === "") {
-            return res.status(500).json({ error: "No vote data available." });
-        }
-
-        let voteData;
-        try {
-            voteData = Buffer.from(latestVote.data, "hex").toString("utf8");
-        } catch (error) {
-            console.error("Error decoding vote data:", error);
-            return res.status(500).json({ error: "Error decoding vote data." });
-        }
-
-        if (!voteData || voteData === "null") {
-            return res.status(500).json({ error: "Unable to retrieve valid vote data." });
-        }
-
-        const parsedVoteData = JSON.parse(voteData);
-
-        // Fetch event details based on eventId in the vote data
-        const event = await Event.findById(parsedVoteData.data.eventId).populate({
-            path: "candidates",
-            populate: {
-                path: "party",
-                select: "name image"
+        for (const vote of filteredVotes) {
+            if (!vote.data || vote.data === "") {
+                continue; // Skip empty or invalid data
             }
-        });
 
-        if (!event) {
-            return res.status(404).json({ error: "Event not found." });
-        }
-
-        // Get the candidate details for the selected candidateId in the vote data
-        const candidate = event.candidates.find(candidate => candidate._id.toString() === parsedVoteData.data.candidateId);
-
-        if (!candidate) {
-            return res.status(404).json({ error: "Candidate not found." });
-        }
-
-        // Format the response
-        const response = {
-            parsedVoteData,
-            event: {
-                name: event.eventName,
-            },
-            candidate: {
-                name: candidate.name,
-                imageUrl: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
-            },
-            party: {
-                name: candidate.party ? candidate.party.name : null,
-                imageUrl: candidate.party ? `http://localhost:8080/uploads/parties/${candidate.party.image.split('\\').pop()}` : null,
+            let voteData;
+            try {
+                voteData = Buffer.from(vote.data, "hex").toString("utf8");
+            } catch (error) {
+                console.error("Error decoding vote data:", error);
+                continue; // Skip if there's an error decoding the vote data
             }
-        };
 
-        res.status(200).json(response);
+            if (!voteData || voteData === "null") {
+                continue; // Skip if invalid or null data
+            }
+
+            const parsedVoteData = JSON.parse(voteData);
+
+            // Fetch event details based on eventId in the vote data
+            const event = await Event.findById(parsedVoteData.data.eventId).populate({
+                path: "candidates",
+                populate: {
+                    path: "party",
+                    select: "name image"
+                }
+            });
+
+            if (!event) {
+                console.error("Event not found for vote:", parsedVoteData);
+                continue; // Skip if event not found
+            }
+
+            // Get the candidate details for the selected candidateId in the vote data
+            const candidate = event.candidates.find(candidate => candidate._id.toString() === parsedVoteData.data.candidateId);
+
+            if (!candidate) {
+                console.error("Candidate not found for vote:", parsedVoteData);
+                continue; // Skip if candidate not found
+            }
+
+            // Format the vote response
+            const voteResponse = {
+                parsedVoteData,
+                event: {
+                    name: event.eventName,
+                },
+                candidate: {
+                    name: candidate.name,
+                    imageUrl: `http://localhost:8080/uploads/candidates/${candidate.image.split('\\').pop()}`,
+                },
+                party: {
+                    name: candidate.party ? candidate.party.name : null,
+                    imageUrl: candidate.party ? `http://localhost:8080/uploads/parties/${candidate.party.image.split('\\').pop()}` : null,
+                }
+            };
+
+            voteDetails.push(voteResponse);
+        }
+
+        if (voteDetails.length === 0) {
+            return res.status(404).json({ message: "No valid vote data found for this voter." });
+        }
+
+        // Return all the vote details for the user
+        res.status(200).json(voteDetails);
 
     } catch (err) {
         console.error("Error fetching user vote details:", err);
