@@ -128,12 +128,12 @@ export default function UserProfile() {
                                     <div className="flex justify-center items-center xl:text-xl mt-2 xl:space-x-32 space-x-10">
                                         <div className="flex flex-col items-center">
                                             <p className="font-semibold">Party:</p>
-                                            <span className="text-gray-600">{vote.partyName}</span>
+                                            <span className="text-gray-600">{vote.partyName.replace(/_/g, " ")}</span>
                                             <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-2 w-24 h-auto object-cover" />
                                         </div>
                                         <div className="flex flex-col items-center">
                                             <p className="font-semibold">Candidate:</p>
-                                            <span className="text-gray-600">{vote.candidateName}</span>
+                                            <span className="text-gray-600">{vote.candidateName.replace(/_/g, " ")}</span>
                                             <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-2 w-24 h-auto object-cover" />
                                         </div>
                                     </div>
