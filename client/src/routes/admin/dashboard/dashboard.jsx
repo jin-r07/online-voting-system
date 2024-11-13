@@ -198,21 +198,23 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="w-full h-[22vh] mt-10 overflow-y-auto">
+      <div className="w-full h-full mt-10">
         <h2 className="sticky top-0 text-2xl font-bold mb-5 bg-white">Vote Logs:</h2>
-        {voteLogs.length > 0 ? (
-          voteLogs.map((log) => (
-            <div key={log._id} className="p-4 border border-gray-300 rounded-md mb-3">
-              <p><strong>Block Index:</strong> {log.index}</p>
-              <p><strong>Event Id:</strong> {log.eventId}</p>
-              <p><strong>Candidate Id:</strong> {log.candidateId}</p>
-              <p><strong>Voter Id Card Number:</strong> {log.voterId}</p>
-              <p><strong>Block Hash:</strong> {log.blockHash}</p>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600 text-center mt-4 text-lg">No vote logs available at the moment.</p>
-        )}
+        <div className="w-full max-h-[20vh] overflow-y-auto">
+          {voteLogs.length > 0 ? (
+            voteLogs.map((log) => (
+              <div key={log._id} className="p-4 border border-gray-300 rounded-md mb-3">
+                <p><strong>Block Index:</strong> {log.index}</p>
+                <p><strong>Event Id:</strong> {log.eventId}</p>
+                <p><strong>Candidate Id:</strong> {log.candidateId}</p>
+                <p><strong>Voter Id Card Number:</strong> {log.voterId}</p>
+                <p><strong>Block Hash:</strong> {log.blockHash}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600 text-center mt-4 text-lg">No vote logs available at the moment.</p>
+          )}
+        </div>
       </div>
 
       <div className="w-full h-fit mt-8">
