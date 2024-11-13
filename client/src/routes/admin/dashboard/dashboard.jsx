@@ -136,8 +136,6 @@ export default function Dashboard() {
       });
       return acc;
     }, {});
-
-    console.log("Combined Scores:", combinedScores); // Add this for debugging
     setPageRankScores({ scores: combinedScores });
 
   };
@@ -160,7 +158,6 @@ export default function Dashboard() {
       await fetchVoteLogs();
 
       const activeEvents = await fetchActiveEvents();
-      console.log(activeEvents)
       await extractVoteData(activeEvents);
     };
 
@@ -260,7 +257,7 @@ export default function Dashboard() {
                       <div className="flex items-center">
                         <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
                         <div className="flex flex-col">
-                          <p className="text-xl">{details.partyName}</p>
+                          <p className="text-xl">{details.partyName.replace(/_/g, " ")}</p>
                           <p>Score: {score.toFixed(2)}</p>
                         </div>
                       </div>
@@ -268,7 +265,7 @@ export default function Dashboard() {
                         <img src={details.image} alt={details.name} className="w-10 h-auto mr-2" />
                         <div className="flex flex-col">
                           <p className="text-gray-600">Candidate:</p>
-                          <p className="font-medium">{details.name}</p>
+                          <p className="font-medium">{details.name.replace(/_/g, " ")}</p>
                         </div>
                       </div>
                     </div>
