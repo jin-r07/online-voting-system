@@ -60,7 +60,11 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
 
     const passwordValidationSchema = Yup.object().shape({
         password: Yup.string()
-            .min(8, "Password must be at least 8 characters")
+            .min(8, "Password must be at least 8 characters long")
+            .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+            .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+            .matches(/\d/, "Password must contain at least one digit")
+            .matches(/[@$!%*?&]/, "Password must contain at least one special character")
             .required("Password is required"),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], "Passwords must match")
@@ -110,6 +114,12 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
         onSubmit: async (values) => {
             setLoading(true);
 
+            if (otpExpires) {
+                toast.error("OTP has expired, please try again.");
+                setLoading(false);
+                return;
+            }
+
             try {
                 const response = await fetch("http://localhost:8080/api/verify-otp", {
                     method: "POST",
@@ -121,9 +131,6 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
 
                 if (!response.ok) {
                     const result = await response.json();
-                    if (result.error) {
-                        toast.error("OTP has expired, please try again.");
-                    }
                     throw new Error(result.message || "Invalid OTP.");
                 } else {
                     toast.success("OTP verified successfully.");
