@@ -31,11 +31,8 @@ export default function UserProfile() {
             const response = await axios.get("http://localhost:8080/api/get-voted-details", { withCredentials: true });
 
             if (response.data) {
-                const { parsedVoteData, event, candidate, party } = response.data;
-
-                // Ensure voteHistory is populated with multiple entries if applicable
                 const voteDetails = response.data.map((vote) => {
-                    const { parsedVoteData, event, candidate, party } = vote; // destructure for each vote
+                    const { parsedVoteData, event, candidate, party } = vote;
 
                     return {
                         eventName: event ? event.name : 'Unknown',
@@ -106,43 +103,47 @@ export default function UserProfile() {
                 </div>
 
                 <div className="mt-8">
-                    <h2 className="text-3xl font-extrabold text-blue-600 mb-6">Voting History</h2>
+                    <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8 text-center">Voting History</h2>
                     {voteHistory.length > 0 ? (
-                        <ul className="space-y-8 mt-4">
+                        <div className="w-full max-h-[18vw] overflow-y-auto mx-2">
                             {voteHistory.slice().reverse().map((vote, index) => (
-                                <li key={index} className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-                                    <div className="flex flex-col lg:flex-row items-start lg:space-x-12">
-                                        {/* Left Column: Event Info */}
-                                        <div className="lg:w-1/4 w-full mb-6 lg:mb-0">
-                                            <p className="text-lg font-semibold text-gray-800">Event:</p>
-                                            <p className="text-xl text-blue-600">{vote.eventName}</p>
+                                <div key={index} className="bg-white p-6 border border-gray-200 mb-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                                    <div className="flex items-center justify-between w-full h-full">
+                                        <div className="flex flex-col items-start space-y-4">
+                                            <div className="flex flex-col">
+                                                <p className="text-xl font-semibold text-gray-800">Event:</p>
+                                                <span className="">{vote.eventName}</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <p className="text-xl font-semibold text-gray-800">Vote Date:</p>
+                                                <span className="font-medium">{vote.timestamp}</span>
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <p className="text-xl font-semibold text-gray-800">Status:</p>
+                                                <span>{vote.status}</span>
+                                            </div>
                                         </div>
 
-                                        {/* Center Column: Candidate Info */}
-                                        <div className="lg:w-1/4 w-full mb-6 lg:mb-0 flex flex-col items-center">
-                                            <p className="text-lg font-semibold text-gray-800">Candidate:</p>
-                                            <p className="text-xl text-blue-600">{vote.candidateName}</p>
-                                            <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-4 w-32 h-32 object-cover rounded-lg border-4 border-blue-500 shadow-xl hover:shadow-2xl transition-shadow duration-300" />
+                                        <div className="flex items-center justify-end">
+                                            <div className="flex flex-col items-center">
+                                                <p className="text-xl font-semibold text-gray-800">Party:</p>
+                                                <span className="text-gray-600">{vote.partyName}</span>
+                                                <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-2 w-28 h-auto object-cover" />
+                                            </div>
                                         </div>
-
-                                        {/* Right Column: Party Info */}
-                                        <div className="lg:w-1/4 w-full flex flex-col items-center">
-                                            <p className="text-lg font-semibold text-gray-800">Party:</p>
-                                            <p className="text-xl text-blue-600">{vote.partyName}</p>
-                                            <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-4 w-28 h-28 object-cover rounded-lg border-4 border-blue-500 shadow-xl hover:shadow-2xl transition-shadow duration-300" />
+                                        <div className="flex items-center justify-end">
+                                            <div className="flex flex-col items-center">
+                                                <p className="text-xl font-semibold text-gray-800">Candidate:</p>
+                                                <span className="text-gray-600">{vote.candidateName}</span>
+                                                <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-2 w-32 h-auto object-cover" />
+                                            </div>
                                         </div>
                                     </div>
-
-                                    {/* Vote Info: Date and Status */}
-                                    <div className="mt-6 space-y-4 lg:space-y-2">
-                                        <p className="text-gray-600">Vote Date: <span className="font-semibold text-gray-800">{vote.timestamp}</span></p>
-                                        <p className="text-gray-600">Status: <span className={`font-semibold ${vote.status === 'Approved' ? 'text-green-600' : 'text-red-600'}`}>{vote.status}</span></p>
-                                    </div>
-                                </li>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     ) : (
-                        <p className="text-gray-600 text-md py-8">No voting history available. You have not participated in any voting event.</p>
+                        <p className="text-gray-600 text-md py-8 text-center">No voting history available. You have not participated in any voting event.</p>
                     )}
                 </div>
             </div>
