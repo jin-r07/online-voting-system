@@ -8,5 +8,5 @@ multichaind evs -daemon
 multichain-cli evs create stream events true
 multichain-cli evs subscribe events
 
-// List all candidates in the multichain
+// List all events stream blocks in the multichain
 multichain-cli evs liststreamitems events
