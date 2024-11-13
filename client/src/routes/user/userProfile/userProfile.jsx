@@ -17,24 +17,44 @@ export default function UserProfile() {
 
     const [voteHistory, setVoteHistory] = useState([]);
 
+    const fetchUserData = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/api/get-loggedIn-user", { withCredentials: true });
+            setUser(response.data.user);
+        } catch (err) {
+            toast.error("Please log in to see your profile.");
+        }
+    };
+
+    const fetchVoteHistory = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/api/get-voted-details", { withCredentials: true });
+
+            if (response.data) {
+                const { parsedVoteData, event, candidate, party } = response.data;
+
+                const voteDetails = {
+                    eventName: event ? event.name : 'Unknown',
+                    candidateName: candidate ? candidate.name : 'Unknown',
+                    candidateImageUrl: candidate ? candidate.imageUrl : 'Unknown',
+                    partyName: party ? party.name : 'Unknown',
+                    partyImageUrl: party ? party.imageUrl : 'Unknown',
+                    timestamp: parsedVoteData && parsedVoteData.timestamp
+                        ? new Date(parsedVoteData.timestamp).toLocaleDateString()
+                        : 'Unknown',
+                    status: "Voted",
+                };
+
+                setVoteHistory([voteDetails]);
+            } else {
+                console.error("No valid data found in response:", response.data);
+            }
+        } catch (err) {
+            console.error("Error fetching vote history:", err);
+        }
+    };
+
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get("http://localhost:8080/api/get-loggedIn-user", { withCredentials: true });
-                setUser(response.data.user);
-            } catch (err) {
-                toast.error("Please log in to see your profile.");
-            }
-        };
-
-        const fetchVoteHistory = async () => {
-            try {
-                const response = await axios.get("http://localhost:8080/api/voted-details", { withCredentials: true });
-                setVoteHistory(response.data);
-            } catch (err) {
-            }
-        };
-
         fetchUserData();
         fetchVoteHistory();
     }, [toast]);
@@ -76,21 +96,23 @@ export default function UserProfile() {
                 <div className="relative bottom-0 -z-10">
                     <p className="text-gray-600 lg:text-lg text-md py-8">
                         This profile contains essential information about your voting credentials. If you notice any unexpected differences, please contact support.<br />
-                        <span className="text-red-500">Note: Regarding changing your Voter ID Card Picture: please reach out to us through contact us page.</span>
+                        <span className="text-red-500">Note: Regarding changing your Voter ID Card Picture: please reach out to us through the contact us page.</span>
                     </p>
                 </div>
 
-                {/* Vote History Section */}
                 <div className="mt-8">
                     <h2 className="lg:text-3xl text-xl font-extrabold">Voting History</h2>
                     {voteHistory.length > 0 ? (
                         <ul className="space-y-4 mt-4">
                             {voteHistory.map((vote, index) => (
                                 <li key={index} className="border-b pb-2">
-                                    <p className="font-semibold">{vote.candidateId}</p>
-                                    <p>Event ID: {vote.eventId}</p>
-                                    <p>Vote Date: {new Date(vote.timestamp).toLocaleDateString()}</p>
-                                    <p>Status: {vote.status || "Voted"}</p>
+                                    <p className="font-semibold">Event Name: {vote.eventName}</p>
+                                    <p className="font-semibold">Candidate: {vote.candidateName}</p>
+                                    <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-2 w-24 h-auto rounded-lg border-2 border-blue-500 shadow-md" />
+                                    <p className="font-semibold">Party: {vote.partyName}</p>
+                                    <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-2 w-24 h-auto rounded-lg border-2 border-blue-500 shadow-md" />
+                                    <p>Vote Date: {vote.timestamp}</p>
+                                    <p>Status: {vote.status}</p>
                                 </li>
                             ))}
                         </ul>
