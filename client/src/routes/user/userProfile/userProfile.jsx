@@ -103,40 +103,38 @@ export default function UserProfile() {
                 </div>
 
                 <div className="mt-8">
-                    <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8 text-center">Voting History</h2>
+                    <h2 className="lg:text-3xl text-xl font-extrabold lg:mb-12 mb-8">Voting History</h2>
                     {voteHistory.length > 0 ? (
-                        <div className="w-full max-h-[18vw] overflow-y-auto mx-2">
+                        <div className="w-full xl:max-h-[20vw] h-72 overflow-y-auto mx-2">
                             {voteHistory.slice().reverse().map((vote, index) => (
-                                <div key={index} className="bg-white p-6 border border-gray-200 mb-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                                    <div className="flex items-center justify-between w-full h-full">
-                                        <div className="flex flex-col items-start space-y-4">
+                                <div key={index} className="p-3 border border-gray-300 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                                    <div className="flex flex-col space-y-4">
+                                        <div className="flex items-center justify-between xl:text-xl">
                                             <div className="flex flex-col">
-                                                <p className="text-xl font-semibold text-gray-800">Event:</p>
-                                                <span className="">{vote.eventName}</span>
+                                                <p className="font-semibold">Vote Date:</p>
+                                                <span className="text-gray-600">{vote.timestamp}</span>
+                                            </div>
+                                            <div className="flex flex-col text-center">
+                                                <p className="font-semibold">Event:</p>
+                                                <span className="text-gray-800">{vote.eventName}</span>
                                             </div>
                                             <div className="flex flex-col">
-                                                <p className="text-xl font-semibold text-gray-800">Vote Date:</p>
-                                                <span className="font-medium">{vote.timestamp}</span>
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <p className="text-xl font-semibold text-gray-800">Status:</p>
-                                                <span>{vote.status}</span>
+                                                <p className="font-semibold">Status:</p>
+                                                <span className="text-gray-800">{vote.status}</span>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div className="flex items-center justify-end">
-                                            <div className="flex flex-col items-center">
-                                                <p className="text-xl font-semibold text-gray-800">Party:</p>
-                                                <span className="text-gray-600">{vote.partyName}</span>
-                                                <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-2 w-28 h-auto object-cover" />
-                                            </div>
+                                    <div className="flex justify-center items-center xl:text-xl mt-2 xl:space-x-32 space-x-10">
+                                        <div className="flex flex-col items-center">
+                                            <p className="font-semibold">Party:</p>
+                                            <span className="text-gray-600">{vote.partyName}</span>
+                                            <img src={vote.partyImageUrl} alt={vote.partyName} className="mt-2 w-24 h-auto object-cover" />
                                         </div>
-                                        <div className="flex items-center justify-end">
-                                            <div className="flex flex-col items-center">
-                                                <p className="text-xl font-semibold text-gray-800">Candidate:</p>
-                                                <span className="text-gray-600">{vote.candidateName}</span>
-                                                <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-2 w-32 h-auto object-cover" />
-                                            </div>
+                                        <div className="flex flex-col items-center">
+                                            <p className="font-semibold">Candidate:</p>
+                                            <span className="text-gray-600">{vote.candidateName}</span>
+                                            <img src={vote.candidateImageUrl} alt={vote.candidateName} className="mt-2 w-24 h-auto object-cover" />
                                         </div>
                                     </div>
                                 </div>
@@ -146,6 +144,7 @@ export default function UserProfile() {
                         <p className="text-gray-600 text-md py-8 text-center">No voting history available. You have not participated in any voting event.</p>
                     )}
                 </div>
+
             </div>
             <Footer />
         </div>
