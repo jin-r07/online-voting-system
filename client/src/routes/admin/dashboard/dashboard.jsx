@@ -67,34 +67,58 @@ export default function Dashboard() {
 
   const extractVoteData = async (activeEvents) => {
     const votesCount = {};
-    const candidateDetails = {};
+    const candidateDetails = {}; // Object to store candidate details
 
-    for (const event of activeEvents) {
+    // Loop through the active events
+    for (const events of activeEvents) {
       try {
-        const response = await axios.get(`http://localhost:8080/api/get-vote-data?eventId=${event._id}`);
+        // Fetch vote data for the current event
+        const response = await axios.get(`http://localhost:8080/api/get-vote-data?eventId=${events._id}`);
         const allVotes = response.data;
 
-        votesCount[event._id] = votesCount[event._id] || {};
+        // Initialize event-specific vote count for each event
+        votesCount[events._id] = votesCount[events._id] || {};
 
         for (const [candidateId, count] of Object.entries(allVotes)) {
-          if (!votesCount[event._id][candidateId]) {
-            votesCount[event._id][candidateId] = 0;
+          // Count votes per candidate per event
+          if (!votesCount[events._id][candidateId]) {
+            votesCount[events._id][candidateId] = 0;
           }
-          votesCount[event._id][candidateId] += count;
+          votesCount[events._id][candidateId] += count;
 
-          const candidate = event.candidates.find(c => c._id === candidateId);
-          if (candidate) {
-            candidateDetails[candidateId] = {
-              name: candidate.name,
-              image: candidate.image,
-              partyName: candidate.partyName,
-              partyImage: candidate.partyImage,
-              eventName: event.eventName,
-            };
+          // Ensure candidate details are stored and not overwritten
+          if (!candidateDetails[candidateId]) {
+            // First time the candidate details are being added
+            const candidate = events.candidates.find(c => c._id === candidateId);
+            if (candidate) {
+              candidateDetails[candidateId] = [{
+                name: candidate.name,
+                image: candidate.image,
+                partyName: candidate.partyName,
+                partyImage: candidate.partyImage,
+                eventName: events.eventName,
+              }];
+            }
+          } else {
+            // If candidate already exists, push new event data to the existing array
+            const candidate = events.candidates.find(c => c._id === candidateId);
+            if (candidate) {
+              // Check if the event is already added for this candidate
+              const existingEvent = candidateDetails[candidateId].some(entry => entry.eventName === events.eventName);
+              if (!existingEvent) {
+                candidateDetails[candidateId].push({
+                  name: candidate.name,
+                  image: candidate.image,
+                  partyName: candidate.partyName,
+                  partyImage: candidate.partyImage,
+                  eventName: events.eventName,
+                });
+              }
+            }
           }
         }
       } catch (err) {
-        toast.error(`Error fetching votes for event ${event._id}`);
+        toast.error(`Error fetching votes for event ${events._id}`);
       }
     }
 
@@ -107,14 +131,15 @@ export default function Dashboard() {
       Object.entries(eventScores).forEach(([candidateId, score]) => {
         acc[candidateId] = {
           score,
-          details: candidateDetails[candidateId],
-          eventName: candidateDetails[candidateId].eventName,
+          details: candidateDetails[candidateId], // Storing all event details for each candidate
         };
       });
       return acc;
     }, {});
 
+    console.log("Combined Scores:", combinedScores); // Add this for debugging
     setPageRankScores({ scores: combinedScores });
+
   };
 
   const fetchVoteLogs = async () => {
@@ -135,6 +160,7 @@ export default function Dashboard() {
       await fetchVoteLogs();
 
       const activeEvents = await fetchActiveEvents();
+      console.log(activeEvents)
       await extractVoteData(activeEvents);
     };
 
@@ -142,12 +168,15 @@ export default function Dashboard() {
   }, []);
 
   const groupedByEvent = Object.entries(pageRankScores.scores).reduce((acc, [candidateId, { score, details }]) => {
-    if (!acc[details.eventName]) {
-      acc[details.eventName] = [];
-    }
-    acc[details.eventName].push({ candidateId, score, details });
+    details.forEach(detail => {
+      if (!acc[detail.eventName]) {
+        acc[detail.eventName] = [];
+      }
+      acc[detail.eventName].push({ candidateId, score, details: detail });
+    });
     return acc;
   }, {});
+
 
   return (
     <div className="ml-64 p-8 bg-gray-100 min-h-screen">
@@ -217,33 +246,34 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="w-full h-fit mt-8">
+      <div className="w-full h-full mt-8">
         <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
         {Object.keys(groupedByEvent).length > 0 ? (
           Object.entries(groupedByEvent).map(([eventName, candidates]) => (
-            <div key={eventName} className="w-full max-h-72 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 px-4 rounded-md shadow-lg">
+            <div key={eventName} className="w-full h-72 overflow-y-auto flex flex-col mt-6 border-[1px] border-gray-300 px-4 rounded-md shadow-lg">
               <h3 className="sticky top-0 bg-white text-xl font-semibold p-4">{eventName}</h3>
-              {candidates
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 3)
-                .map(({ candidateId, score, details }) => (
-                  <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-1">
-                    <div className="flex items-center">
-                      <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
-                      <div className="flex flex-col">
-                        <p className="text-xl">{details.partyName}</p>
-                        <p>Score: {score.toFixed(2)}</p>
+              <div className="grid grid-cols-1 gap-4">
+                {candidates
+                  .sort((a, b) => b.score - a.score)
+                  .map(({ candidateId, score, details }) => (
+                    <div key={candidateId} className="flex items-center justify-between p-4 border-[1px] border-gray-200 rounded-md mb-1">
+                      <div className="flex items-center">
+                        <img src={details.partyImage} alt={details.partyName} className="w-16 h-auto rounded-sm mr-4" />
+                        <div className="flex flex-col">
+                          <p className="text-xl">{details.partyName}</p>
+                          <p>Score: {score.toFixed(2)}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <img src={details.image} alt={details.name} className="w-10 h-auto mr-2" />
+                        <div className="flex flex-col">
+                          <p className="text-gray-600">Candidate:</p>
+                          <p className="font-medium">{details.name}</p>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center">
-                      <img src={details.image} alt={details.name} className="w-10 h-auto mr-2" />
-                      <div className="flex flex-col">
-                        <p className="text-gray-600">Candidate:</p>
-                        <p className="font-medium">{details.name}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
             </div>
           ))
         ) : (
