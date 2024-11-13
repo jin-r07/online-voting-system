@@ -18,7 +18,7 @@ async function submitVote(req, res) {
 
     try {
         const decoded = verifyToken(token);
-        
+
         const userVoterId = decoded.voterIdCardNumber;
         const key = `${eventId}_${userVoterId}`;
 
@@ -50,6 +50,8 @@ async function submitVote(req, res) {
             }
         }
 
+        newIndex = newIndex;
+
         const voteData = {
             eventId,
             candidateId,
@@ -61,17 +63,21 @@ async function submitVote(req, res) {
 
         mineBlock(block, difficulty);
 
-        await multichain.publish({
+        const publishedVote = await multichain.publish({
             stream: "events",
             key: key,
             data: Buffer.from(JSON.stringify(block)).toString("hex")
         });
 
+        const txid = publishedVote.txid;
+
         const logEntry = new VoteLog({
+            index: newIndex,
             voterId: userVoterId,
             eventId,
             candidateId,
             blockHash: block.hash,
+            txid,
             message: "Vote successfully submitted."
         });
 
@@ -150,4 +156,65 @@ async function hasUserVoted(req, res) {
     }
 }
 
-module.exports = { submitVote, extractVoteData, hasUserVoted };
+async function getUserVoteDetails(req, res) {
+    const token = req.cookies.token;
+    const { eventId } = req.query;
+
+    if (!token) {
+        return res.status(401).json({ message: "You must be logged in to view your vote details." });
+    }
+
+    try {
+        const decoded = verifyToken(token);
+
+        const userVoterId = decoded.voterIdCardNumber;
+        const key = `${eventId}_${userVoterId}`;
+
+        const existingVotes = await multichain.listStreamKeyItems({ stream: "events", key });
+
+        if (existingVotes.length === 0) {
+            return res.status(404).json({ message: "You have not voted for this event." });
+        }
+
+        const latestVote = existingVotes[existingVotes.length - 1];
+        const voteData = Buffer.from(latestVote.data, "hex").toString("utf8");
+
+        if (!voteData) {
+            return res.status(500).json({ error: "Unable to retrieve vote data." });
+        }
+
+        const parsedVoteData = JSON.parse(voteData);
+        const candidateId = parsedVoteData.data?.candidateId;
+
+        if (!candidateId) {
+            return res.status(404).json({ message: "Vote data is incomplete, candidate ID is missing." });
+        }
+
+        const eventDetails = await multichain.listStreamKeyItems({ stream: "events", key: eventId });
+        const candidateDetails = await multichain.listStreamKeyItems({ stream: "candidates", key: candidateId });
+
+        if (!eventDetails.length || !candidateDetails.length) {
+            return res.status(404).json({ message: "Event or candidate details not found." });
+        }
+
+        const eventDetail = JSON.parse(Buffer.from(eventDetails[0].data, "hex").toString("utf8"));
+        const candidateDetail = JSON.parse(Buffer.from(candidateDetails[0].data, "hex").toString("utf8"));
+
+        res.status(200).json({
+            event: eventDetail,
+            candidate: candidateDetail,
+            voteDetails: parsedVoteData.data
+        });
+
+    } catch (err) {
+        console.error("Error fetching user vote details:", err);
+        if (err.name === "TokenExpiredError") {
+            return res.status(401).json({ message: "Token expired, please log in again." });
+        } else if (err.name === "JsonWebTokenError") {
+            return res.status(401).json({ message: "Invalid token." });
+        }
+        return res.status(500).json({ error: "Error fetching vote details" });
+    }
+}
+
+module.exports = { submitVote, extractVoteData, hasUserVoted, getUserVoteDetails };

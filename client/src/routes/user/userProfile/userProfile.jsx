@@ -15,19 +15,29 @@ export default function UserProfile() {
         voterIdCardPicture: null
     });
 
+    const [voteHistory, setVoteHistory] = useState([]);
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const response = await axios.get("http://localhost:8080/api/get-loggedIn-user", { withCredentials: true });
-
                 setUser(response.data.user);
             } catch (err) {
                 toast.error("Please log in to see your profile.");
             }
         };
 
+        const fetchVoteHistory = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/voted-details", { withCredentials: true });
+                setVoteHistory(response.data);  // Assuming the response contains an array of vote details
+            } catch (err) {
+            }
+        };
+
         fetchUserData();
-    }, []);
+        fetchVoteHistory();
+    }, [toast]);
 
     return (
         <div className="w-full h-full lg:mt-12 mt-8">
@@ -68,6 +78,25 @@ export default function UserProfile() {
                         This profile contains essential information about your voting credentials. If you notice any unexpected differences, please contact support.<br />
                         <span className="text-red-500">Note: Regarding changing your Voter ID Card Picture: please reach out to us through contact us page.</span>
                     </p>
+                </div>
+
+                {/* Vote History Section */}
+                <div className="mt-8">
+                    <h2 className="lg:text-3xl text-xl font-extrabold">Voting History</h2>
+                    {voteHistory.length > 0 ? (
+                        <ul className="space-y-4 mt-4">
+                            {voteHistory.map((vote, index) => (
+                                <li key={index} className="border-b pb-2">
+                                    <p className="font-semibold">{vote.candidateId}</p>
+                                    <p>Event ID: {vote.eventId}</p>
+                                    <p>Vote Date: {new Date(vote.timestamp).toLocaleDateString()}</p>
+                                    <p>Status: {vote.status || "Voted"}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="text-gray-600 lg:text-lg text-md py-8">No voting history available. You have not taken part in any voting event.</p>
+                    )}
                 </div>
             </div>
             <Footer />
