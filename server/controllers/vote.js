@@ -34,9 +34,11 @@ async function submitVote(req, res) {
 
         const eventKeyItems = await multichain.listStreamKeyItems({ stream: "events", key: eventId });
         if (eventKeyItems.length > 0) {
+            useDefaultValues = false;
+        } else {
             useDefaultValues = true;
         }
-
+        
         const latestBlocks = await multichain.listStreamItems({ stream: "events", count: 1, start: -1 });
 
         if (latestBlocks.length > 0 && !useDefaultValues) {
@@ -50,8 +52,6 @@ async function submitVote(req, res) {
             }
         }
 
-        newIndex = newIndex;
-
         const voteData = {
             eventId,
             candidateId,
@@ -63,13 +63,11 @@ async function submitVote(req, res) {
 
         mineBlock(block, difficulty);
 
-        const publishedVote = await multichain.publish({
+        const transactionId = await multichain.publish({
             stream: "events",
             key: key,
             data: Buffer.from(JSON.stringify(block)).toString("hex")
         });
-
-        const txid = publishedVote.txid;
 
         const logEntry = new VoteLog({
             index: newIndex,
@@ -77,7 +75,7 @@ async function submitVote(req, res) {
             eventId,
             candidateId,
             blockHash: block.hash,
-            txid,
+            txid: transactionId,
             message: "Vote successfully submitted."
         });
 

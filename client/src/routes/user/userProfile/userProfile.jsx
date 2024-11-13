@@ -30,7 +30,7 @@ export default function UserProfile() {
         const fetchVoteHistory = async () => {
             try {
                 const response = await axios.get("http://localhost:8080/api/voted-details", { withCredentials: true });
-                setVoteHistory(response.data);  // Assuming the response contains an array of vote details
+                setVoteHistory(response.data);
             } catch (err) {
             }
         };

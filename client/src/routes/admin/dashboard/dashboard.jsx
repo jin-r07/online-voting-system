@@ -203,11 +203,11 @@ export default function Dashboard() {
         {voteLogs.length > 0 ? (
           voteLogs.map((log) => (
             <div key={log._id} className="p-4 border border-gray-300 rounded-md mb-3">
-              <p><strong>Id:</strong> {log._id}</p>
+              <p><strong>Block Index:</strong> {log.index}</p>
               <p><strong>Event Id:</strong> {log.eventId}</p>
               <p><strong>Candidate Id:</strong> {log.candidateId}</p>
               <p><strong>Voter Id Card Number:</strong> {log.voterId}</p>
-              <p><strong>Block Mined:</strong> {log.blockHash}.</p>
+              <p><strong>Block Hash:</strong> {log.blockHash}</p>
             </div>
           ))
         ) : (
@@ -215,7 +215,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      <div className="w-full h-fit mt-10">
+      <div className="w-full h-fit mt-8">
         <h2 className="text-2xl font-bold">Active Events Candidates Rank Scores:</h2>
         {Object.keys(groupedByEvent).length > 0 ? (
           Object.entries(groupedByEvent).map(([eventName, candidates]) => (
