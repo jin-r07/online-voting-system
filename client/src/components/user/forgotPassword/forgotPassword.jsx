@@ -121,13 +121,16 @@ export default function ForgotPasswordForm({ onClose, showLoginForm }) {
 
                 if (!response.ok) {
                     const result = await response.json();
+                    if (result.error) {
+                        toast.error("OTP has expired, please try again.");
+                    }
                     throw new Error(result.message || "Invalid OTP.");
                 } else {
                     toast.success("OTP verified successfully.");
                     setOtpVerified(true);
                 }
             } catch (error) {
-                toast.error("OTP has expired, please try again.");
+                toast.error("Invalid OTP.");
             } finally {
                 setLoading(false);
             }
