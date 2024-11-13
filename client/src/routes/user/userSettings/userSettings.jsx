@@ -143,7 +143,7 @@ export default function UserSettings() {
                                     {showCurrentPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                                 </span>
                                 {formik.touched.currentPassword && formik.errors.currentPassword && (
-                                    <div className="text-red-600 text-sm">{formik.errors.currentPassword}</div>
+                                    <div className="text-red-500 text-base ml-2 mt-2">{formik.errors.currentPassword}</div>
                                 )}
                             </div>
 
@@ -164,7 +164,7 @@ export default function UserSettings() {
                                     {showNewPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                                 </span>
                                 {formik.touched.newPassword && formik.errors.newPassword && (
-                                    <div className="text-red-600 text-sm">{formik.errors.newPassword}</div>
+                                    <div className="text-red-500 text-base ml-2 mt-2">{formik.errors.newPassword}</div>
                                 )}
                             </div>
 
@@ -185,7 +185,7 @@ export default function UserSettings() {
                                     {showConfirmNewPassword ? <IoEye size={20} /> : <IoEyeOff size={20} />}
                                 </span>
                                 {formik.touched.confirmNewPassword && formik.errors.confirmNewPassword && (
-                                    <div className="text-red-600 text-sm">{formik.errors.confirmNewPassword}</div>
+                                    <div className="text-red-500 text-base ml-2 mt-2">{formik.errors.confirmNewPassword}</div>
                                 )}
                             </div>
 
