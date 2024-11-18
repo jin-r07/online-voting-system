@@ -107,11 +107,11 @@ export default function VotePage() {
                             <li key={candidate._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg hover:shadow-xl border border-gray-200">
                                 <img src={candidate.partyImage} alt={candidate.party.name} className="w-20 h-auto rounded-sm mr-4" />
                                 <div className="flex-1">
-                                    <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name}</h3>
+                                    <h3 className="lg:text-xl text-lg font-semibold text-gray-800 mb-1">{candidate.party.name.replace(/_/g, " ")}</h3>
                                     <div className="flex items-center">
                                         <img src={candidate.image} alt={candidate.name} className="w-10 h-auto mr-2 rounded-sm" />
                                         <div>
-                                            <p className="text-gray-700">{candidate.name}</p>
+                                            <p className="text-gray-700">{candidate.name.replace(/_/g, " ")}</p>
                                             <p className="text-base">Votes: {totalVotes}</p>
                                         </div>
                                     </div>
@@ -142,8 +142,8 @@ export default function VotePage() {
                                                 className="w-36 h-auto rounded-md mr-4"
                                             />
                                         )}
-                                        <h3 className="lg:text-xl text-lg font-semibold mt-4">{selectedCandidate.party.name}</h3>
-                                        <h3 className="lg:text-lg text-base mt-4">Candidate: {selectedCandidate.name}</h3>
+                                        <h3 className="lg:text-xl text-lg font-semibold mt-4">{selectedCandidate.party.name.replace(/_/g, " ")}</h3>
+                                        <h3 className="lg:text-lg text-base mt-4">Candidate: {selectedCandidate.name.replace(/_/g, " ")}</h3>
                                     </div>
                                 </div>
                             )}
