@@ -1,9 +1,19 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaHome, FaUsers, FaHistory, FaUserTie, FaAward, FaVoteYea } from "react-icons/fa";
+import { RiLogoutBoxFill } from "react-icons/ri";
 
 export default function AdminNavbar() {
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      navigate("/admin");
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 h-full w-64 bg-gray-900 text-white shadow-lg">
@@ -64,6 +74,14 @@ export default function AdminNavbar() {
           >
             <FaHistory className="mr-3" /> History
           </Link>
+        </li>
+        <li>
+          <button
+            onClick={handleLogout}
+            className={`w-full flex items-center hover:bg-gray-700 p-3 rounded transition-colors ${location.pathname === '/admin-history' ? 'bg-gray-700' : ''}`}
+          >
+            <RiLogoutBoxFill className="mr-3" /> Logout
+          </button>
         </li>
       </ul>
     </nav>
