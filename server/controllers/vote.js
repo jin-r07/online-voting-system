@@ -29,7 +29,7 @@ async function submitVote(req, res) {
             return res.status(400).json({ message: "You have already voted for this event." });
         }
 
-        let previousHash = "0";
+        let previousHash = "8f54a0a0b61e5b4d0215dc1083703e6f70e2d390c23f9a58c8b89b7b29d215f3";
         let newIndex = 1;
         let useDefaultValues = false;
 
@@ -60,6 +60,7 @@ async function submitVote(req, res) {
         };
 
         const block = new Block(newIndex, previousHash, Date.now(), voteData);
+        console.log(block);
         const difficulty = 4;
 
         mineBlock(block, difficulty);

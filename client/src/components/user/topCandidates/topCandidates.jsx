@@ -81,7 +81,7 @@ export default function TopCandidates() {
                                                     className="w-20 h-auto rounded-sm object-cover object-center"
                                                 />
                                                 <div className="ml-4">
-                                                    <p className="text-lg text-gray-800">{candidate.party.name}</p>
+                                                    <p className="text-lg text-gray-800">{candidate.party.name.replace(/_/g, " ")}</p>
                                                     <p className="text-base">Votes: {totalVotes}</p>
                                                 </div>
                                             </div>
