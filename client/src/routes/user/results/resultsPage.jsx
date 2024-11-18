@@ -73,7 +73,7 @@ export default function ResultsPage() {
                                         alt={candidate.party.name}
                                         className="w-24 h-auto object-cover rounded-sm mr-4"
                                     />
-                                    <h3 className="text-xl font-bold text-gray-800">{candidate.party.name}</h3>
+                                    <h3 className="text-xl font-bold text-gray-800">{candidate.party.name.replace(/_/g, " ")}</h3>
                                 </div>
                                 <div className="flex items-center">
                                     <img
@@ -82,7 +82,7 @@ export default function ResultsPage() {
                                         className="w-12 h-auto rounded-md mr-3"
                                     />
                                     <div className="flex-1">
-                                        <p className="text-lg text-gray-700 font-semibold">{candidate.name}</p>
+                                        <p className="text-lg text-gray-700 font-semibold">{candidate.name.replace(/_/g, " ")}</p>
                                         <p className="text-base text-gray-600"><strong>Votes:</strong> {totalVotes}</p>
                                     </div>
                                 </div>
