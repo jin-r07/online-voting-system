@@ -227,20 +227,6 @@ async function editEvent(req, res) {
 }
 
 
-async function deleteEvent(req, res) {
-  try {
-    const eventId = req.params.id;
-    const result = await Event.findByIdAndDelete(eventId);
-    if (result) {
-      res.status(200).json({ message: "Event deleted successfully" });
-    } else {
-      res.status(404).json({ message: "Event not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error deleting event", error });
-  }
-}
-
 async function getTotalCompletedEvents(req, res) {
   try {
     const totalCompletedEvents = await Event.find({ status: "completed" }).countDocuments();
@@ -250,4 +236,4 @@ async function getTotalCompletedEvents(req, res) {
   }
 }
 
-module.exports = { createEvent, getCandidates, getActiveEvents, getActiveEventsById, getInactiveEvents, getCompletedEvents, getCompletedEventsById, editEvent, deleteEvent, getTotalCompletedEvents };
+module.exports = { createEvent, getCandidates, getActiveEvents, getActiveEventsById, getInactiveEvents, getCompletedEvents, getCompletedEventsById, editEvent, getTotalCompletedEvents };

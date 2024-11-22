@@ -123,20 +123,6 @@ export default function History() {
     formik.setFieldValue("end", new Date(new Date(event.end).getTime() + (5 * 60 + 45) * 60 * 1000).toISOString().slice(0, 16));
   };
 
-  const handleDeleteEvent = async (eventId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this event?");
-    if (confirmed) {
-      try {
-        await axios.delete(`http://localhost:8080/api-admin/delete-event/${eventId}`);
-        setEvents(events.filter((event) => event._id !== eventId));
-        toast.success("Event deleted successfully!");
-        await fetchCompletedEvents();
-      } catch (err) {
-        toast.error("Error processing request");
-      }
-    }
-  };
-
   const toggleCandidates = (eventId) => {
     setOpenedEvents((prevOpenedEvents) => ({
       ...prevOpenedEvents,
@@ -287,12 +273,6 @@ export default function History() {
                     className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600 transition duration-200"
                   >
                     Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteEvent(event._id)}
-                    className="bg-red-600 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-200"
-                  >
-                    Delete
                   </button>
                   <button onClick={() => toggleCandidates(event._id)}>
                     {openedEvents[event._id] ? <RiArrowUpSFill className="text-4xl" /> : <RiArrowDownSFill className="text-4xl" />}

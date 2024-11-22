@@ -78,7 +78,7 @@ export default function AdminNavbar() {
         <li>
           <button
             onClick={handleLogout}
-            className={`w-full flex items-center hover:bg-gray-700 p-3 rounded transition-colors ${location.pathname === '/admin-history' ? 'bg-gray-700' : ''}`}
+            className="w-full flex items-center hover:bg-gray-700 p-3 rounded transition-colors"
           >
             <RiLogoutBoxFill className="mr-3" /> Logout
           </button>
