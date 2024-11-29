@@ -232,9 +232,9 @@ export default function Dashboard() {
               <div key={log._id} className="p-4 border border-gray-300 rounded-md mb-3">
                 <p><strong>Voter Id Card Number:</strong> {log.voterId}</p>
                 <p><strong>Event Id:</strong> {log.eventId}</p>
-                <p><strong>Candidate Id:</strong> {log.candidateId}</p>
                 <p><strong>Block Hash:</strong> {log.blockHash}</p>
                 <p><strong>Transaction Id:</strong> {log.txid}</p>
+                <p><strong>Message:</strong> {log.message}</p>
               </div>
             ))
           ) : (

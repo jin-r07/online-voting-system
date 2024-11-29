@@ -74,7 +74,6 @@ async function submitVote(req, res) {
         const logEntry = new VoteLog({
             voterId: userVoterId,
             eventId,
-            candidateId,
             blockHash: block.hash,
             txid: transactionId,
             message: "Vote successfully submitted."
