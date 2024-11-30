@@ -288,23 +288,29 @@ export default function History() {
                     <p><strong>Status:&nbsp;</strong>{capitalizeFirstLetter(event.status)}</p>
                     <p><strong>Candidates:</strong></p>
                   </div>
-                  {event.candidates.map((candidate) => {
-                    const totalVotes = votesData[event._id]?.[candidate._id] || 0;
-                    return (
-                      <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
-                        <img
-                          src={candidate.image}
-                          alt={candidate.name}
-                          className="w-14 h-auto rounded-sm mr-2"
-                        />
-                        <div className="flex flex-col">
-                          <span>{candidate.name}</span>
-                          <span className="text-gray-500">Party:&nbsp;{candidate.party?.name}</span>
-                          <span>Votes: {totalVotes}</span>
+                  {event.candidates
+                    .sort((a, b) => {
+                      const votesA = votesData[event._id]?.[a._id] || 0;
+                      const votesB = votesData[event._id]?.[b._id] || 0;
+                      return votesB - votesA;
+                    })
+                    .map((candidate) => {
+                      const totalVotes = votesData[event._id]?.[candidate._id] || 0;
+                      return (
+                        <div key={candidate._id} className="text-gray-700 flex items-center pb-4">
+                          <img
+                            src={candidate.image}
+                            alt={candidate.name}
+                            className="w-14 h-auto rounded-sm mr-2"
+                          />
+                          <div className="flex flex-col">
+                            <span>{candidate.name}</span>
+                            <span className="text-gray-500">Party:&nbsp;{candidate.party?.name}</span>
+                            <span>Votes: {totalVotes}</span>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </ul>
               )}
             </div>
