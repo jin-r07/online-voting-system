@@ -8,8 +8,6 @@ export default function TopCandidates() {
 
     const [votingData, setVotingData] = useState(null);
 
-    const [votesData, setVotesData] = useState({});
-
     const navigate = useNavigate();
 
     const fetchOngoingEvents = async () => {
@@ -25,7 +23,6 @@ export default function TopCandidates() {
                     const eventVotes = await fetchVoteData(eventId);
                     allVotesData[eventId] = eventVotes;
                 }
-                setVotesData(allVotesData);
             }
         } catch (err) {
             toast.error("Error fetching candidates");
@@ -66,10 +63,8 @@ export default function TopCandidates() {
                             <h3 className="text-xl mb-4 font-semibold">{event.eventName}</h3>
                             <div className="space-y-6">
                                 {event.candidates
-                                    .sort((a, b) => (votesData[event._id]?.[b._id] || 0) - (votesData[event._id]?.[a._id] || 0))
                                     .slice(0, 3)
                                     .map((candidate) => {
-                                        const totalVotes = votesData[event._id]?.[candidate._id] || 0;
                                         return (
                                             <div
                                                 key={candidate._id}
@@ -82,7 +77,7 @@ export default function TopCandidates() {
                                                 />
                                                 <div className="ml-4">
                                                     <p className="text-lg text-gray-800">{candidate.party.name.replace(/_/g, " ")}</p>
-                                                    <p className="text-base">Votes: {totalVotes}</p>
+                                                    <p className="text-base">Candidate: {candidate.name.replace(/_/g, " ")}</p>
                                                 </div>
                                             </div>
                                         );

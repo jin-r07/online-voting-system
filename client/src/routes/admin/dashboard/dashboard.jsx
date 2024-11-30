@@ -137,7 +137,6 @@ export default function Dashboard() {
       return acc;
     }, {});
     setPageRankScores({ scores: combinedScores });
-
   };
 
   const fetchVoteLogs = async () => {
