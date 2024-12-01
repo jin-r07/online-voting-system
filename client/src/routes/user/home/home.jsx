@@ -8,7 +8,7 @@ export default function Home() {
     return (
         <div className="w-full h-full">
             <div className="lg:px-28 px-4 pt-10">
-                <h1 className="lg:text-2xl text-xl font-bold mb-4">Welcome to the Electronic Voting System (EVS),</h1>
+                <h1 className="lg:text-2xl text-xl font-bold mb-4">Welcome to the Online Voting System (OVS),</h1>
                 <p className="lg:text-xl text-lg">
                     Stay informed about the latest voting events and play an active role in shaping the future. Our platform is designed to provide a seamless and secure voting experience, empowering you to express your voice with confidence. Join us in making democracy accessible for everyone!
                 </p>

@@ -178,7 +178,7 @@ export default function Dashboard() {
     <div className="ml-64 p-8 bg-gray-100 min-h-screen">
       <div className="mb-10">
         <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
-        <p className="text-gray-600 text-lg mt-2">Welcome to the electronic voting system. Manage events, parties, candidates, and users from here.</p>
+        <p className="text-gray-600 text-lg mt-2">Welcome to the online voting system. Manage events, parties, candidates, and users from here.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
